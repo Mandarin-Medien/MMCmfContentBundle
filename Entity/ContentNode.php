@@ -87,7 +87,7 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
      */
     public function getTemplate()
     {
-        return $this->template?:$this->getDefaultTemplate();
+        return $this->template;
     }
 
     /**
@@ -97,22 +97,8 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
-    }
-
-    public function getDefaultTemplate()
-    {
-        $class = $this->parse_classname(__CLASS__);
-
-        return 'MMCmfContentBundle:cmf:'.$class['classname'].'/'.$class['classname'] .'_default.html.twig';
-    }
-
-    private function parse_classname ($name)
-    {
-        return array(
-            'namespace' => array_slice(explode('\\', $name), 0, -1),
-            'classname' => join('', array_slice(explode('\\', $name), -1)),
-        );
     }
 }
 
