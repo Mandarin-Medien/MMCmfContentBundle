@@ -2,11 +2,13 @@
 
 {% block cmf_node_widget %}
     {% block cmf_contentNode_widget %}
-        <div class="contentNode">
-            <h2>{{ node.name }}</h2>
-            {% for child in node.nodes %}
-                {{ child|cmfParse }}<br>
-            {% endfor %}
+        <div class="contentNode {{ node.classes }}">
+            {% block cmf_contentNode_widget_content %}
+                <h2>{{ node.name }}</h2>
+                {% for child in node.nodes %}
+                    {{ child|cmfParse }}<br>
+                {% endfor %}
+            {% endblock %}
         </div>
     {% endblock cmf_contentNode_widget %}
 {% endblock cmf_node_widget %}

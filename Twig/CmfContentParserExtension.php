@@ -38,20 +38,17 @@ class CmfContentParserExtension extends \Twig_Extension
     /**
      * @param \Twig_Environment $twig
      * @param ContentNode $node
+     * @param array $options
      *
      * @return string
      */
-    public function cmfParse(\Twig_Environment $twig, ContentNode $node)
+    public function cmfParse(\Twig_Environment $twig, ContentNode $node, array $options = array())
     {
-        $html = "";
-
-        foreach ($node->getNodes() as $childNode) {
-            $template = $this->cmfContentParser->findTemplate($childNode);
-
-            $html .= $twig->render($template, array('node' => $childNode));
-        }
-
-        return $html;
+        /**
+         * @var ContentNode $childNode
+         */
+        $template = $this->cmfContentParser->findTemplate($node);
+        return $twig->render($template, array_merge_recursive(array('node' => $node), $options));
     }
 
     /**
