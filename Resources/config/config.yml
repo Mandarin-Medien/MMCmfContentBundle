@@ -1,0 +1,8 @@
+mm_cmf_content:
+    content_nodes:
+        contentNode: {
+            templates: [
+              { name: 'normale' },
+              { name: 'tile' }
+            ]
+        }

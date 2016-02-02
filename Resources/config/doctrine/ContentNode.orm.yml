@@ -1,0 +1,21 @@
+MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
+    type: entity
+    table: null
+    repositoryClass: MandarinMedien\MMCmfContentBundle\Entity\ContentNodeRepository
+    fields:
+        position:
+            type: integer
+            length: 4
+            nullable: true
+        classes:
+            type: string
+            length: 100
+            nullable: true
+        attributes:
+            type: json_array
+            nullable: true
+        template:
+            type: string
+            nullable: true
+
+    lifecycleCallbacks: {  }

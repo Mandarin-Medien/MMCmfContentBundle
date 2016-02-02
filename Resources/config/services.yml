@@ -1,0 +1,9 @@
+services:
+    mm_cmf_content.content_parser:
+        class: MandarinMedien\MMCmfContentBundle\Controller\ContentParserController
+        arguments: ["content_nodes"]
+    mm_cmf_content.mm_cmf_parse_twig_extension:
+          class: MandarinMedien\MMCmfContentBundle\Twig\CmfContentParserExtension
+          public: false
+          tags:
+              - { name: twig.extension }

@@ -1,0 +1,25 @@
+{
+    "name": "mandarinmedien/mmcmfcontentbundle",
+    "description": "is the bridge between doctrine content entities and twig which will be the base of the MM-CMF",
+    "type" : "symfony-bundle",
+    "require": {
+        "mandarinmedien/mmcmfnodebundle": "^0.*"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:Mandarin-Medien/MMCmfNodeBundle.git"
+        }
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christof Hufnagel",
+            "email": "ch@mandarin-medien.de"
+        },
+        {
+            "name": "Toni Gurski",
+            "email": "tg@mandarin-medien.de"
+        }
+    ]
+}
