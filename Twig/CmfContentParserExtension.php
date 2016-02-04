@@ -4,6 +4,7 @@ namespace MandarinMedien\MMCmfContentBundle\Twig;
 
 use MandarinMedien\MMCmfContentBundle\Controller\ContentParserController;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
+use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 
 class CmfContentParserExtension extends \Twig_Extension
 {
@@ -37,23 +38,32 @@ class CmfContentParserExtension extends \Twig_Extension
 
     /**
      * @param \Twig_Environment $twig
-     * @param ContentNode $node
+     * @param Node $node
      * @param array $options
      *
      * @return string
      */
-    public function cmfParse(\Twig_Environment $twig, ContentNode $node, array $options = array())
+    public function cmfParse(\Twig_Environment $twig, Node $node, array $options = array())
     {
-        /**
-         * @var ContentNode $childNode
-         */
-        $template = $this->cmfContentParser->findTemplate($node);
+        $html = "";
 
-        $refClass = $this->cmfContentParser->getNativeClassnamimg($node);
+        if($node instanceof ContentNode)
+        {
+            /**
+             * @var ContentNode $node
+             */
+            $template = $this->cmfContentParser->findTemplate($node);
 
-        $className = $refClass['name'];
+            $refClass = $this->cmfContentParser->getNativeClassnamimg($node);
 
-        return $twig->render($template, array_merge_recursive(array('node' => $node,'node_class'=> $className), $options));
+            $className = $refClass['name'];
+
+            $html = $twig->render($template, array_merge_recursive(array('node' => $node,'node_class'=> $className), $options));
+        }
+
+        return $html;
+
+
     }
 
     /**
