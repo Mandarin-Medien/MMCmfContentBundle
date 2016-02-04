@@ -1,0 +1,10 @@
+{% extends 'MMCmfContentBundle:cmf/contentNode:contentNode_default.html.twig' %}
+
+{% block cmf_rowContentNode_widget_content %}
+    {% block cmf_contentNode_widget_content %}
+        <h2>{{ node.name }}</h2>
+        {% for child in node.nodes %}
+            {{ child|cmfParse }}<br>
+        {% endfor %}
+    {% endblock %}
+{% endblock %}

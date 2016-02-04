@@ -3,6 +3,7 @@
 namespace MandarinMedien\MMCmfContentBundle\Controller;
 
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
+use MandarinMedien\MMCmfContentBundle\Entity\RowContentNode;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -11,7 +12,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $node = new ContentNode();
+        $node = new RowContentNode();
         $node->setName("Parent Node");
         $node->setAttributes(Array('data-custom-data'=>'foobar'));
 
