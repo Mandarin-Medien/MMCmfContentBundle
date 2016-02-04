@@ -1,8 +1,0 @@
-{% block cmf_node_widget %}
-<div class="node">
-    <h2>{{ node.name }}</h2>
-    {% for child in node.nodes %}
-        {{ child|cmfParse }}<br>
-    {% endfor %}
-</div>
-{% endblock cmf_node_widget %}

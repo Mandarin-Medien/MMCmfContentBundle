@@ -8,11 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
 
         $node = new ContentNode();
         $node->setName("Parent Node");
+        $node->setAttributes(Array('data-custom-data'=>'foobar'));
 
         $node1 = new ContentNode();
         $node1->setName("Child Node 1");
@@ -28,7 +29,6 @@ class DefaultController extends Controller
 
         return $this->render('MMCmfContentBundle:Default:index.html.twig',
             array(
-                'name' => $name,
                 'node' => $node
             )
         );

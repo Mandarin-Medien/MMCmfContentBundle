@@ -1,14 +1,19 @@
-{% extends 'MMCmfContentBundle:cmf/node:node_default.html.twig' %}
+{% block cmf_contentNode_widget %}
+    <div
+        class="{{ node_class }} {{ node.classes }}"
+        {% for key,value in node.attributes %}
+            {{ key }}="{{ value }}"
+        {% endfor %}
+        >
 
-{% block cmf_node_widget %}
-    {% block cmf_contentNode_widget %}
-        <div class="contentNode {{ node.classes }}">
-            {% block cmf_contentNode_widget_content %}
-                <h2>{{ node.name }}</h2>
-                {% for child in node.nodes %}
-                    {{ child|cmfParse }}<br>
-                {% endfor %}
-            {% endblock %}
-        </div>
-    {% endblock cmf_contentNode_widget %}
-{% endblock cmf_node_widget %}
+        {#Real Content#}
+
+        {% block cmf_contentNode_widget_content %}
+            <h2>{{ node.name }}</h2>
+            {% for child in node.nodes %}
+                {{ child|cmfParse }}<br>
+            {% endfor %}
+        {% endblock %}
+
+    </div>
+{% endblock cmf_contentNode_widget %}

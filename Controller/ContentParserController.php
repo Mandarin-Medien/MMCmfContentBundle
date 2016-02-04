@@ -31,6 +31,14 @@ class ContentParserController extends Controller
 
     }
 
+    public function getNativeClassnamimg($node)
+    {
+        $refClass = new \ReflectionClass($node);
+        $className = trim(str_replace($refClass->getNamespaceName(),'',$refClass->getName()),'\\');
+
+        return array('name'=>$className , 'namespace'=> $refClass->getNamespaceName());
+    }
+
 
     public function findTemplate(ContentNode $node)
     {
@@ -40,15 +48,16 @@ class ContentParserController extends Controller
         // if no template is set try to guess one
         if (!$template) {
 
-            $refClass = new \ReflectionClass($node);
-            $className = trim(str_replace($refClass->getNamespaceName(),'',$refClass->getName()),'\\');
+            $refClass = $this->getNativeClassnamimg($node);
 
+            $className = $refClass['name'];
+            $namespace = $refClass['namespace'];
 
             if (!empty($this->contentNodeTemplates[$className]) && count($this->contentNodeTemplates[$className]) > 0)
                 $template = reset($this->contentNodeTemplates[$className]);
             else {
 
-                $bundleName = $this->getBundleNameFromEntity($refClass->getNamespaceName(), $this->get('kernel')->getBundles());
+                $bundleName = $this->getBundleNameFromEntity($namespace, $this->get('kernel')->getBundles());
 
                 $template = $this->getDefaultTemplate($className,$bundleName);
             }
