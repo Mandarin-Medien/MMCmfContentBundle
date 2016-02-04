@@ -12,11 +12,6 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
 {
 
     /**
-     * @var integer
-     */
-    private $position;
-
-    /**
      * @var string
      */
     private $classes;
@@ -31,23 +26,6 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
      */
     private $template;
 
-    /**
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param int $position
-     * @return ContentNode
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-        return $this;
-    }
 
     /**
      * @return string

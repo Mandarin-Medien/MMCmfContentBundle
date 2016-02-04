@@ -3,10 +3,6 @@ MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
     table: null
     repositoryClass: MandarinMedien\MMCmfContentBundle\Entity\ContentNodeRepository
     fields:
-        position:
-            type: integer
-            length: 4
-            nullable: true
         classes:
             type: string
             length: 100
