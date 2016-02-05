@@ -1,0 +1,25 @@
+MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode:
+    type: entity
+    table: null
+    repositoryClass: MandarinMedien\MMCmfContentBundle\Entity\ContentNodeRepository
+    fields:
+
+        headline:
+            type: string
+            length: 100
+            nullable: true
+        text:
+            type: text
+            length: 100
+            nullable: true
+        headlineType:
+            type: string
+            length: 3
+            nullable: true
+            options:
+        imageSource:
+            type: string
+            length: 100
+            nullable: true
+
+    lifecycleCallbacks: {  }
