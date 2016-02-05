@@ -11,7 +11,7 @@
         {% block cmf_contentNode_widget_content %}
             <h2>{{ node.name }}</h2>
             {% for child in node.nodes %}
-                {{ child|cmfParse }}<br>
+                {{ child|cmfParse }}
             {% endfor %}
         {% endblock %}
 
