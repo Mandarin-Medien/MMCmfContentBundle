@@ -17,9 +17,9 @@ class PageHookManager
 
     /**
      * add PageHook for Page postLoad callback chain
-     * @param PageHook $hook
+     * @param PageHookInterface $hook
      */
-    public function addHook(PageHook $hook)
+    public function addHook(PageHookInterface $hook)
     {
       $this->hooks[] = $hook;
     }
@@ -27,7 +27,7 @@ class PageHookManager
 
     /**
      * get all defined PageHooks
-     * @return PageHook[]
+     * @return PageHookInterface[]
      */
     public function getHooks()
     {
