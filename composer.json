@@ -1,25 +1,31 @@
 {
-    "name": "mandarinmedien/mmcmfcontentbundle",
-    "description": "This is the bridge between doctrine content entities and twig which will be the base of the MMCmfBundle",
-    "type" : "symfony-bundle",
-    "require": {
-        "mandarinmedien/mmcmfnodebundle": "dev-master"
+  "name": "mandarinmedien/mmcmfcontentbundle",
+  "description": "This is the bridge between doctrine content entities and twig which will be the base of the MMCmfBundle",
+  "type": "symfony-bundle",
+  "require": {
+    "mandarinmedien/mmcmfnodebundle": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:Mandarin-Medien/MMCmfNodeBundle.git"
+    }
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Christof Hufnagel",
+      "email": "ch@mandarin-medien.de"
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:Mandarin-Medien/MMCmfNodeBundle.git"
-        }
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Christof Hufnagel",
-            "email": "ch@mandarin-medien.de"
-        },
-        {
-            "name": "Toni Gurski",
-            "email": "tg@mandarin-medien.de"
-        }
-    ]
+    {
+      "name": "Toni Gurski",
+      "email": "tg@mandarin-medien.de"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "MandarinMedien\\MMCmfContentBundle": ""
+    }
+  },
+  "target-dir": "MandarinMedien/MMCmfContentBundle"
 }
