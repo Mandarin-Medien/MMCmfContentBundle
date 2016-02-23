@@ -44,7 +44,7 @@ class PageHookListener
         $hookManager = $this->container->get('mm_cmf_content.page_hook_manager');
 
         foreach($hookManager->getHooks() as $hook) {
-            $hook->call($page);
+            $hook->process($page);
         };
     }
 
