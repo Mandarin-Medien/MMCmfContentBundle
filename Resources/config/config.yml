@@ -1,8 +1,8 @@
 mm_cmf_content:
     content_nodes:
-        contentNode: {
-            templates: [
-              { name: 'normale' },
-              { name: 'tile' }
-            ]
-        }
+        contentNode:
+            templates:
+              - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
+        rowContentNode:
+            templates:
+              - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }

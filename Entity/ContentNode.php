@@ -2,16 +2,14 @@
 
 namespace MandarinMedien\MMCmfContentBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
+
 /**
  * ContentNode
  */
 class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
 {
-
-    /**
-     * @var integer
-     */
-    private $position;
 
     /**
      * @var string
@@ -28,23 +26,6 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
      */
     private $template;
 
-    /**
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param int $position
-     * @return ContentNode
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-        return $this;
-    }
 
     /**
      * @return string
@@ -87,7 +68,7 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
      */
     public function getTemplate()
     {
-        return $this->template?:$this->getDefaultTemplate();
+        return $this->template;
     }
 
     /**
@@ -97,22 +78,59 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
-    public function getDefaultTemplate()
+    /**
+     * @param ArrayCollection $nodes
+     *
+     * @return Node
+     */
+    public function setNodes(ArrayCollection $nodes)
     {
-        $class = $this->parse_classname(__CLASS__);
+        $finalNodes = array();
 
-        return 'MMCmfContentBundle:cmf:'.$class['classname'].'/'.$class['classname'] .'_default.html.twig';
+        foreach ($nodes as $node) {
+            if ($this->checkChildNode($node)) {
+                $node->setParent($this);
+                $finalNodes[] = $node;
+            }
+        }
+
+        $this->nodes = $finalNodes;
+
+        return $this;
     }
 
-    private function parse_classname ($name)
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return $this
+     */
+    public function addNode(NodeInterface $node)
     {
-        return array(
-            'namespace' => array_slice(explode('\\', $name), 0, -1),
-            'classname' => join('', array_slice(explode('\\', $name), -1)),
-        );
+        if ($this->checkChildNode($node)) {
+            $this->nodes->add($node);
+            $node->setParent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Function to check if the child node is valid
+     * will be called by this::addNode and this::setNodes
+     * > please overwrite
+     *
+     * @param NodeInterface $node
+     *
+     * @return bool
+     */
+    protected function checkChildNode(NodeInterface $node)
+    {
+        return true;
     }
 }
 
