@@ -4,6 +4,9 @@
         {% for key,value in node.attributes %}
             {{ key }}="{{ value }}"
         {% endfor %}
+
+        data-cmf-position="{{ node.getPosition() }}"
+        data-cmf-id="{{ node.id }}"
         >
 
         {#Real Content#}

@@ -113,6 +113,8 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
     {
         if ($this->checkChildNode($node)) {
             $this->nodes->add($node);
+
+            $node->setPosition(count($this->getNodes()));
             $node->setParent($this);
         }
 

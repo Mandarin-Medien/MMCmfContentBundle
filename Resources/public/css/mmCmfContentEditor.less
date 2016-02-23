@@ -1,0 +1,55 @@
+.ContentNode-settings {
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.5);
+
+  padding: 10px;
+
+  .inner {
+    display: none;
+  }
+
+  b {
+    cursor: pointer;
+    width: 100%;
+    display: inline-block;
+  }
+
+  .select-container {
+    display: inline-block;
+
+    select {
+      float: right;
+    }
+  }
+
+  &.open {
+    width: 120px;
+    b {
+      cursor: move;
+    }
+
+    .inner {
+      display: block;
+    }
+  }
+
+  .posiswitch > div {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    margin-top: 10px;
+    border-top: 1px solid #d4d4d4;
+    cursor: pointer;
+    &:hover {
+      color: #d4d4d4;
+    }
+  }
+}
+
+
+
+
+
