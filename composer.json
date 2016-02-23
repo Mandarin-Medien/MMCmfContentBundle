@@ -21,5 +21,11 @@
             "name": "Toni Gurski",
             "email": "tg@mandarin-medien.de"
         }
-    ]
+    ],
+    "autoload" : {
+        "psr-0" : {
+            "MandarinMedien\\MMCmfContentBundle" : ""
+        }
+    },
+    "target-dir" : "MandarinMedien/MMCmfContentBundle"
 }
