@@ -11,3 +11,17 @@ services:
           arguments: [@mm_cmf_content.content_parser]
           tags:
               - { name: twig.extension }
+
+
+    # PageHook Manager
+    # to add PageHooks, tag your service with mm_cmf_content.page_hook
+    mm_cmf_content.page_hook_manager:
+        class: MandarinMedien\MMCmfContentBundle\Services\PageHookManager
+
+
+    # Doctrine Event Listener
+    mm_cmf_content.page_listener:
+        class: MandarinMedien\MMCmfContentBundle\EventListeners\PageHookListener
+        arguments: [@service_container]
+        tags:
+            - {name: doctrine.orm.entity_listener, entity: MandarinMedien\MMCmfContentBundle\Entity\Page, event: postLoad }
