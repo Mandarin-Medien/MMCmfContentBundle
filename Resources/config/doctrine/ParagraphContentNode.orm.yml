@@ -1,17 +1,25 @@
-MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
+MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode:
     type: entity
     table: null
     repositoryClass: MandarinMedien\MMCmfContentBundle\Entity\ContentNodeRepository
     fields:
-        classes:
+
+        headline:
             type: string
             length: 100
             nullable: true
-        attributes:
-            type: json_array
+        text:
+            type: text
+            length: 100
             nullable: true
-        template:
+        headlineType:
             type: string
+            length: 3
+            nullable: true
+            options:
+        imageSource:
+            type: string
+            length: 100
             nullable: true
 
     lifecycleCallbacks: {  }

@@ -1,0 +1,25 @@
+MandarinMedien\MMCmfContentBundle\Entity\Page:
+    type: entity
+    table: null
+    fields:
+        title:
+            type: string
+            length: 255
+            nullable: true
+        keywords:
+            type: string
+            length: 255
+            nullable: true
+        description:
+            type: text
+            nullable: true
+        robots:
+            type: string
+            length: 255
+            nullable: true
+        author:
+            type: string
+            length: 255
+            nullable: true
+
+    lifecycleCallbacks: {  }

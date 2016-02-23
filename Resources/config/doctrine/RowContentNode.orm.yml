@@ -1,0 +1,5 @@
+MandarinMedien\MMCmfContentBundle\Entity\RowContentNode:
+    type: entity
+    table: null
+    fields:
+    lifecycleCallbacks: {  }

@@ -1,0 +1,19 @@
+{% extends 'MMCmfContentBundle:cmf/contentNode:contentNode_default.html.twig' %}
+
+{% block cmf_parapgraphContentNode_widget_content %}
+    {% block cmf_contentNode_widget_content %}
+
+        {%  if node.headlineType %}<{{ node.headlineType }}>{% endif %}
+        {{ node.headline }}
+        {%  if node.headlineType %}</{{ node.headlineType }}>{% endif %}
+
+        {%  if node.imageSource %}<img src="{{ node.imageSource }}" class="image" alt="" title="" />{% endif %}
+
+        {{ node.text|raw }}
+
+        {% for child in node.nodes %}
+            {{ child|cmfParse }}
+        {% endfor %}
+
+    {% endblock %}
+{% endblock %}

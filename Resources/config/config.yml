@@ -1,8 +1,20 @@
 mm_cmf_content:
     content_nodes:
-        contentNode: {
-            templates: [
-              { name: 'normale' },
-              { name: 'tile' }
-            ]
-        }
+        contentNode:
+            templates:
+              - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
+        rowContentNode:
+            templates:
+              - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
+
+
+assetic:
+    assets:
+        mm_cmf_content_assets_js:
+            inputs:
+            - %kernel.root_dir%/../web/assets/vendor/dragula.js/dist/dragula.min.js
+            - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
+        mm_cmf_content_assets_css:
+            inputs:
+                - "@MMCmfContentBundle/Resources/public/css/mmCmfContentEditor.less"
+                - %kernel.root_dir%/../web/assets/vendor/dragula.js/dist/dragula.min.css
