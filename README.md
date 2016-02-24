@@ -32,3 +32,11 @@ mm_cmf_content:
               - { name: 'default' }
 ...
 ```
+
+### install and initiate assets
+
+```
+...
+shell:PROJECT_ROOT: cd vendor/mandarinmedien/mmcmfadminbundle/MandarinMedien/MMCmfContentBundle && bower update && cd ../../../../../ && app/console as:in --symlink && app/console assetic:dump
+...
+```

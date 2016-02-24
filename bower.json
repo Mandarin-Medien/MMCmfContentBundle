@@ -1,0 +1,22 @@
+{
+  "name": "MMCmfContentBundle",
+  "authors": [
+    "Toni Gurski <tg@mandarin-medien.de>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dragula.js": "dragula#~3.6.6"
+  }
+}
