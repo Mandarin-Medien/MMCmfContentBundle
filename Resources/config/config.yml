@@ -12,9 +12,12 @@ assetic:
     assets:
         mm_cmf_content_assets_js:
             inputs:
-            - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
-            - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
+              - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
+              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
+              - "@MMCmfContentBundle/Resources/public/js/core.js"
         mm_cmf_content_assets_css:
+            filters:
+                - 'less'
             inputs:
                 - "@MMCmfContentBundle/Resources/public/css/mmCmfContentEditor.less"
                 - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.css'

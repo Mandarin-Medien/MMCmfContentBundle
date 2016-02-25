@@ -1,9 +1,31 @@
+@import "../vendor/font-awesome/less/font-awesome.less";
+@fa-font-path: "/bundles/mmcmfcontent/vendor/font-awesome/fonts";
+
+*[data-cmf-field]
+{
+  cursor: text;
+}
+
+.ContentNode-highlighted{
+
+  box-shadow: 0 0 1px #FFF;
+}
+
 .ContentNode-settings {
+
+  &,
+  .inner
+  {
+    -moz-transition: all .8s ;
+    -webkit-transition: all .8s;
+    transition: all .8s linear;
+  }
+
 
   position: absolute;
   top: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.5);
+
 
   padding: 10px;
 
@@ -26,13 +48,23 @@
   }
 
   &.open {
+    background: rgba(140, 140, 140, 0.5);
+
     width: 120px;
     b {
       cursor: move;
+      text-align: right;
     }
 
     .inner {
       display: block;
+      & > div{
+        width: 100%;
+        select{
+          float: right;
+        }
+      }
+
     }
   }
 
