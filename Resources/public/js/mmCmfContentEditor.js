@@ -95,6 +95,8 @@
             e.preventDefault();
 
             $(this).parent().toggleClass('open');
+            $(this).parent().parent().toggleClass('ContentNode-highlighted');
+
         });
 
         return $div;

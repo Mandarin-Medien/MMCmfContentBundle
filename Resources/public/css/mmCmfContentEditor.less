@@ -6,11 +6,21 @@
   cursor: text;
 }
 
+.ContentNode-highlighted{
+
+  box-shadow: 0 0 1px #FFF;
+}
+
 .ContentNode-settings {
 
-  -moz-transition: all .8s ;
-  -webkit-transition: all .8s;
-  transition: all .8s linear;
+  &,
+  .inner
+  {
+    -moz-transition: all .8s ;
+    -webkit-transition: all .8s;
+    transition: all .8s linear;
+  }
+
 
   position: absolute;
   top: 0;
