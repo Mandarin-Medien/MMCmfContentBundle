@@ -174,7 +174,7 @@
         var $draggableContainers = new Array();
 
         $elements.parent().each(function () {
-            if ($(this).attr('class').indexOf('ContentNode') != -1)
+            if ( $(this).attr('class') != "" && $(this).attr('class').indexOf('ContentNode') != -1)
                 $draggableContainers.push(this);
 
         });
