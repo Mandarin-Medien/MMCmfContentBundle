@@ -9,7 +9,7 @@
 
         {%  if node.imageSource %}<img src="{{ node.imageSource }}" class="image" alt="" title="" />{% endif %}
 
-        <div data-cmf-field="headline">{{ node.text|raw }}</div>
+        <div data-cmf-field="text">{{ node.text|raw }}</div>
 
         {% for child in node.nodes %}
             {{ child|cmfParse }}
