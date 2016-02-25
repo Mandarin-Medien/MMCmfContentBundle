@@ -3,6 +3,71 @@
  */
 (function ($) {
 
+
+    /**
+     *
+     * @param elements
+     * @param options
+     * @constructor
+     */
+    var MmCmfContentController = function(elements, options) {
+
+        console.log('MmCmfContentController::__construct');
+        var $this = this;
+        this.elements = elements;
+        this.settings = options;
+
+        $(document).on('MmCmfContentController.save',function(){
+            console.log('trigger MmCmfContentController::prepareJson');
+            var $json = $this.prepareJson();
+
+            $this.save($json);
+        });
+    };
+
+    MmCmfContentController.prototype.save = function ($json) {
+
+        console.log('MmCmfContentController::save',$json);
+        $.ajax({
+                method: "POST",
+                url: this.settings.saveRoute,
+                data: { nodes: $json}
+            })
+            .done(function( msg ) {
+                console.log( "Data Saved: " , msg );
+            });
+
+    };
+
+    MmCmfContentController.prototype.prepareJson = function () {
+
+        console.log('MmCmfContentController::prepareJson');
+
+        var $json = {};
+        this.elements.find('[data-cmf-field]').each(function(){
+
+            var $cmfId = $(this).parents( ".ContentNode" ).data('cmf-id');
+
+            if( typeof $json[$cmfId] == "undefined")
+            {
+                $json[$cmfId] = {};
+
+                var $parentCmf = $(this).parents( ".ContentNode" ).parents( ".ContentNode" );
+
+                if($parentCmf.length>0 && $parentCmf.data('cmf-id'))
+                    $json[$cmfId].parent = $parentCmf.data('cmf-id');
+
+            }
+
+            $json[$cmfId][$(this).data('cmf-field')] = $(this).html();
+
+        });
+
+
+
+        return $json;
+    };
+
     /**
      *
      * @param element
@@ -40,11 +105,13 @@
             var $ele = $(this);
 
             if ($ele.hasClass('upper')) {
-                $contentNode.prev().before($contentNode);
+                if ($contentNode.prev().hasClass('ContentNode'))
+                    $contentNode.prev().before($contentNode);
             }
 
             if ($ele.hasClass('downer')) {
-                $contentNode.next().after($contentNode);
+                if ($contentNode.next().hasClass('ContentNode'))
+                    $contentNode.next().after($contentNode);
             }
         });
 
@@ -159,11 +226,21 @@
         /**
          * bin editable transformation
          */
-        $dataFields.on('dblclick', function () {
-            $(this).attr('contenteditable', 'true').focus();
-        }).on('blur', function () {
-            $(this).attr('contenteditable', 'false');
-        });
+        $dataFields
+            .on('dblclick', function () {
+                $(this).attr('contenteditable', 'true').focus();
+            })
+            .on('blur', function () {
+                $(this).attr('contenteditable', 'false');
+            })
+            .on('DOMCharacterDataModified', function () {
+                var $parent = $(this).parents('[data-cmf-id]');
+
+                if ($parent.length > 0)
+                    $parent.addClass('cmf-changed');
+            });
+
+
     }
 
 
@@ -176,7 +253,7 @@
         var $draggableContainers = new Array();
 
         $elements.parent().each(function () {
-            if ( typeof $(this).attr('class') != "undefined" && $(this).attr('class').indexOf('ContentNode') != -1)
+            if (typeof $(this).attr('class') != "undefined" && $(this).attr('class').indexOf('ContentNode') != -1)
                 $draggableContainers.push(this);
 
         });
@@ -184,6 +261,14 @@
         console.log($elements.parent(), $draggableContainers);
 
         var $draguala = dragula($draggableContainers, {
+
+            moves: function (el, source, handle, sibling) {
+
+                if (!($(el).hasClass('ContentNode') ))
+                    return false;
+
+                return true;
+            },
 
             accepts: function (el, target, source, sibling) {
 
@@ -214,19 +299,27 @@
 
         // Establish our default settings
         var settings = $.extend({
+
+            // MmCmfContentEditor
             gridCount: 12,
-            gridSizes: ['xs', 'sm', 'md', 'lg']
+            gridSizes: ['xs', 'sm', 'md', 'lg'],
+
+            // MmCmfContentController
+            saveRoute: '/app_dev.php/mmcmfcontent/save'
+
         }, options);
 
 
         this.each(function () {
 
             var $MmCmfContentEditor = new MmCmfContentEditor(this, settings);
-            var $frontendEditWidget = $MmCmfContentEditor.buildGUI(settings);
+            var $frontendEditWidget = $MmCmfContentEditor.buildGUI();
 
             $(this).append($frontendEditWidget);
 
         });
+
+        new MmCmfContentController(this,settings);
 
         initiateContenteditable(this);
         initiateDragula(this);
