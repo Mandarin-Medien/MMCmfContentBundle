@@ -1,3 +1,7 @@
-mm_cmf_content_homepage:
-    path:     /hello
-    defaults: { _controller: MMCmfContentBundle:Default:index }
+mm_cmf_content_save:
+    path:     /save
+    defaults: { _controller: MMCmfContentBundle:ContentNode:save}
+    condition: "request.isXmlHttpRequest()"
+    requirements:
+        _format: json
+        _method: POST
