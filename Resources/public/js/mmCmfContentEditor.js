@@ -176,7 +176,7 @@
         var $draggableContainers = new Array();
 
         $elements.parent().each(function () {
-            if ( $(this).attr('class') != "" && $(this).attr('class').indexOf('ContentNode') != -1)
+            if ( typeof $(this).attr('class') != "undefined" && $(this).attr('class').indexOf('ContentNode') != -1)
                 $draggableContainers.push(this);
 
         });
