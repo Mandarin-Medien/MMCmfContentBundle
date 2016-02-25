@@ -185,7 +185,7 @@ class Page extends Node
      */
     function __toString()
     {
-        return $this->getTitle();
+        return $this->getName();
     }
 }
 
