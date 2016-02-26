@@ -3,7 +3,7 @@
   "description": "This is the bridge between doctrine content entities and twig which will be the base of the MMCmfBundle",
   "type": "symfony-bundle",
   "require": {
-    "mandarinmedien/mmcmfnodebundle": "dev-master"
+    "mandarinmedien/mmcmfnodebundle": "^0.0"
   },
   "repositories": [
     {
