@@ -10,7 +10,6 @@ MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode:
             nullable: true
         text:
             type: text
-            length: 100
             nullable: true
         headlineType:
             type: string
