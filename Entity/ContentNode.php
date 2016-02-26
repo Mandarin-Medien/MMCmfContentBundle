@@ -14,17 +14,17 @@ class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
     /**
      * @var string
      */
-    private $classes;
+    protected $classes;
 
     /**
      * @var array
      */
-    private $attributes;
+    protected $attributes;
 
     /**
      * @var string
      */
-    private $template;
+    protected $template;
 
 
     /**
