@@ -10,31 +10,53 @@
      * @param options
      * @constructor
      */
-    var MmCmfContentController = function(elements, options) {
+    var MmCmfContentController = function (elements, options) {
 
         console.log('MmCmfContentController::__construct');
         var $this = this;
         this.elements = elements;
         this.settings = options;
 
-        $(document).on('MmCmfContentController.save',function(){
+        $(document).on('MmCmfContentController.save', function () {
             console.log('trigger MmCmfContentController::prepareJson');
             var $json = $this.prepareJson();
 
             $this.save($json);
         });
+
+        this.saveContainer = this.createSaveContainer();
+
+        $('body').append(this.saveContainer);
+    };
+
+    MmCmfContentController.prototype.createSaveContainer = function () {
+
+        var $saveBtn = $('<div class="cmf-save-container"><div class="cmf-save-btn ' + this.settings.classes.save_btn + '">' + this.settings.lang.save_btn + '</div></div>')
+        $saveBtn.on('click','.cmf-save-btn',function(){
+            $(document).trigger('MmCmfContentController.save');
+        });
+
+        $(document).on('MmCmfContentController.enableSave', function () {
+            $saveBtn.addClass('enable');
+        });
+
+        $(document).on('MmCmfContentController.disableSave', function () {
+            $saveBtn.removeClass('enable');
+        });
+
+        return $saveBtn;
     };
 
     MmCmfContentController.prototype.save = function ($json) {
 
-        console.log('MmCmfContentController::save',$json);
+        console.log('MmCmfContentController::save', $json);
         $.ajax({
                 method: "POST",
                 url: this.settings.saveRoute,
-                data: { nodes: $json}
+                data: {nodes: $json}
             })
-            .done(function( msg ) {
-                console.log( "Data Saved: " , msg );
+            .done(function (msg) {
+                console.log("Data Saved: ", msg);
             });
 
     };
@@ -44,17 +66,23 @@
         console.log('MmCmfContentController::prepareJson');
 
         var $json = {};
-        this.elements.find('[data-cmf-field]').each(function(){
+        this.elements.find('[data-cmf-field]').each(function () {
 
-            var $cmfId = $(this).parents( ".ContentNode" ).data('cmf-id');
+            var $cmfObj = $(this).parents(".ContentNode");
+            var $cmfId = $cmfObj.data('cmf-id');
 
-            if( typeof $json[$cmfId] == "undefined")
-            {
+            if (typeof $json[$cmfId] == "undefined") {
                 $json[$cmfId] = {};
 
-                var $parentCmf = $(this).parents( ".ContentNode" ).parents( ".ContentNode" );
+                if ($cmfObj.length > 0 && $cmfObj.data('cmf-class'))
+                    $json[$cmfId].class = $cmfObj.data('cmf-class');
 
-                if($parentCmf.length>0 && $parentCmf.data('cmf-id'))
+                if ($cmfObj.length > 0 && $cmfObj.data('cmf-position'))
+                    $json[$cmfId].position = $cmfObj.data('cmf-position');
+
+                var $parentCmf = $cmfObj.parents(".ContentNode");
+
+                if ($parentCmf.length > 0 && $parentCmf.data('cmf-id'))
                     $json[$cmfId].parent = $parentCmf.data('cmf-id');
 
             }
@@ -62,7 +90,6 @@
             $json[$cmfId][$(this).data('cmf-field')] = $(this).html();
 
         });
-
 
 
         return $json;
@@ -237,7 +264,11 @@
                 var $parent = $(this).parents('[data-cmf-id]');
 
                 if ($parent.length > 0)
+                {
                     $parent.addClass('cmf-changed');
+                    $(document).trigger('MmCmfContentController.enableSave');
+                }
+
             });
 
 
@@ -303,6 +334,13 @@
             // MmCmfContentEditor
             gridCount: 12,
             gridSizes: ['xs', 'sm', 'md', 'lg'],
+            lang: {
+                save_btn: 'Seite speichern'
+            },
+            classes:
+            {
+                save_btn: 'btn btn-primary'
+            },
 
             // MmCmfContentController
             saveRoute: '/app_dev.php/mmcmfcontent/save'
@@ -319,7 +357,7 @@
 
         });
 
-        new MmCmfContentController(this,settings);
+        new MmCmfContentController(this, settings);
 
         initiateContenteditable(this);
         initiateDragula(this);

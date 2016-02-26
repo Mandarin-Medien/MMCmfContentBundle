@@ -47,8 +47,7 @@ class CmfContentParserExtension extends \Twig_Extension
     {
         $html = "";
 
-        if($node instanceof ContentNode)
-        {
+        if ($node instanceof ContentNode) {
             /**
              * @var ContentNode $node
              */
@@ -56,9 +55,7 @@ class CmfContentParserExtension extends \Twig_Extension
 
             $refClass = $this->cmfContentParser->getNativeClassnamimg($node);
 
-            $className = $refClass['name'];
-
-            $html = $twig->render($template, array_merge_recursive(array('node' => $node,'node_class'=> $className), $options));
+            $html = $twig->render($template, array_merge_recursive(array('node' => $node, 'node_class' => $refClass['name'], 'node_namespace' => $refClass['namespace']), $options));
         }
 
         return $html;

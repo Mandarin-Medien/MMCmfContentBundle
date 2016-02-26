@@ -1,12 +1,14 @@
 {% block cmf_contentNode_widget %}
     <div
         class="{{ node_class }} {{ node.classes }} ContentNode"
+
         {% for key,value in node.attributes %}
             {{ key }}="{{ value }}"
         {% endfor %}
 
         data-cmf-position="{{ node.getPosition() }}"
         data-cmf-id="{{ node.id }}"
+        data-cmf-class="{{ node_namespace }}\{{ node_class }}"
         >
 
         {#Real Content#}

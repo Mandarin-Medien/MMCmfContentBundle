@@ -61,7 +61,6 @@ class ContentParserController extends Controller
 
                 $template = $this->getDefaultTemplate($className,$bundleName);
             }
-
         }
 
         return $template;

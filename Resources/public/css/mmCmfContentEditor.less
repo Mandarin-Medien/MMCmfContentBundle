@@ -1,12 +1,50 @@
 @import "../vendor/font-awesome/less/font-awesome.less";
+
 @fa-font-path: "/bundles/mmcmfcontent/vendor/font-awesome/fonts";
 
-*[data-cmf-field]
-{
+*[data-cmf-field] {
   cursor: text;
 }
 
-.ContentNode-highlighted{
+.cmf-save-container {
+  &.enable {
+    bottom: 0;
+  }
+
+  -webkit-transition: all 0.8s ease;
+  -moz-transition: all 0.8s ease;
+  transition: all 0.8s ease;
+
+  display: block;
+
+  border: 1px solid #d4d4d4;
+
+  padding: 10px;
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  background: #FFF;
+  width: 100%;
+  text-align: center;
+
+  .cmf-save-btn {
+    cursor: pointer;
+    margin: 0 auto;
+    display: inline-block;
+    padding: 3px 10px;
+    &:hover {
+      text-decoration: underline;
+
+    }
+  }
+}
+
+.ContentNode {
+  position: relative;
+}
+
+.ContentNode:hover,
+.ContentNode-highlighted {
 
   box-shadow: 0 0 1px #FFF;
 }
@@ -14,18 +52,15 @@
 .ContentNode-settings {
 
   &,
-  .inner
-  {
-    -moz-transition: all .8s ;
+  .inner {
+    -moz-transition: all .8s;
     -webkit-transition: all .8s;
     transition: all .8s linear;
   }
 
-
   position: absolute;
   top: 0;
   right: 0;
-
 
   padding: 10px;
 
@@ -58,9 +93,9 @@
 
     .inner {
       display: block;
-      & > div{
+      & > div {
         width: 100%;
-        select{
+        select {
           float: right;
         }
       }
