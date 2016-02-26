@@ -32,7 +32,7 @@
     MmCmfContentController.prototype.createSaveContainer = function () {
 
         var $saveBtn = $('<div class="cmf-save-container"><div class="cmf-save-btn ' + this.settings.classes.save_btn + '">' + this.settings.lang.save_btn + '</div></div>')
-        $saveBtn.on('click','.cmf-save-btn',function(){
+        $saveBtn.on('click', '.cmf-save-btn', function () {
             $(document).trigger('MmCmfContentController.save');
         });
 
@@ -49,7 +49,6 @@
 
     MmCmfContentController.prototype.save = function ($json) {
 
-        console.log('MmCmfContentController::save', $json);
         $.ajax({
                 method: "POST",
                 url: this.settings.saveRoute,
@@ -63,7 +62,6 @@
 
     MmCmfContentController.prototype.prepareJson = function () {
 
-        console.log('MmCmfContentController::prepareJson');
 
         var $json = {};
         this.elements.find('[data-cmf-field]').each(function () {
@@ -77,13 +75,13 @@
                 if ($cmfObj.length > 0 && $cmfObj.data('cmf-class'))
                     $json[$cmfId].class = $cmfObj.data('cmf-class');
 
-                if ($cmfObj.length > 0 && $cmfObj.data('cmf-position'))
-                    $json[$cmfId].position = $cmfObj.data('cmf-position');
+                if ($cmfObj.length > 0 && typeof $cmfObj.data('cmf-position') != "undefined")
+                    $json[$cmfId].position = parseInt($cmfObj.data('cmf-position'));
 
                 var $parentCmf = $cmfObj.parents(".ContentNode");
 
                 if ($parentCmf.length > 0 && $parentCmf.data('cmf-id'))
-                    $json[$cmfId].parent = $parentCmf.data('cmf-id');
+                    $json[$cmfId].parent = parseInt($parentCmf.data('cmf-id'));
 
             }
 
@@ -91,7 +89,7 @@
 
         });
 
-
+        console.log($json);
         return $json;
     };
 
@@ -105,6 +103,19 @@
 
         this.element = $(element)
         this.settings = options;
+
+        var $this = this;
+
+        $(document).on('MmCmfContentEditor.refreshPositions', function () {
+            $this.element.children('.ContentNode').each(function (i) {
+                console.log('dragend inner ', i, $(this));
+                $(this).attr('data-cmf-position', i);
+            });
+
+
+            $(document).trigger('MmCmfContentController.enableSave');
+        });
+
     };
 
 
@@ -140,6 +151,8 @@
                 if ($contentNode.next().hasClass('ContentNode'))
                     $contentNode.next().after($contentNode);
             }
+
+            $(document).trigger('MmCmfContentEditor.refreshPositions');
         });
 
         return $posiswitch;
@@ -263,8 +276,7 @@
             .on('DOMCharacterDataModified', function () {
                 var $parent = $(this).parents('[data-cmf-id]');
 
-                if ($parent.length > 0)
-                {
+                if ($parent.length > 0) {
                     $parent.addClass('cmf-changed');
                     $(document).trigger('MmCmfContentController.enableSave');
                 }
@@ -317,6 +329,8 @@
 
         $draguala.on('dragend', function (el) {
             $(el).css('background-color', 'transparent');
+
+            $(document).trigger('MmCmfContentEditor.refreshPositions');
         });
 
     }
@@ -337,8 +351,7 @@
             lang: {
                 save_btn: 'Seite speichern'
             },
-            classes:
-            {
+            classes: {
                 save_btn: 'btn btn-primary'
             },
 
