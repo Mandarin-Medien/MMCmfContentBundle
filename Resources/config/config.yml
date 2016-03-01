@@ -15,9 +15,27 @@ assetic:
               - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/core.js"
+
+        mm_cmf_content_summernote_assets_css:
+            filters:
+                - 'cssrewrite'
+            inputs:
+                - 'bundles/mmcmfcontent/vendor/summernote/dist/summernote.css'
+#               - '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css'
+#               - '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css'
+
+#        mm_cmf_content_summernote_assets_js:
+#            filters: ~
+#            inputs:
+#
+#                #- '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js'
+#                #- '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js'
+#                #- '//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js'
+
         mm_cmf_content_assets_css:
             filters:
                 - 'less'
             inputs:
                 - "@MMCmfContentBundle/Resources/public/css/mmCmfContentEditor.less"
                 - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.css'
+                - '@mm_cmf_content_summernote_assets_css'
