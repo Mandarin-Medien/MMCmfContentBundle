@@ -56,6 +56,7 @@
             })
             .done(function (msg) {
                 console.log("Data Saved: ", msg);
+                $(document).trigger('MmCmfContentController.disableSave');
             });
 
     };
@@ -261,17 +262,87 @@
      */
     function initiateContenteditable($elements) {
 
-        var $dataFields = $($elements).find('[data-cmf-field]');
+        var $dataFields = $($elements);
 
         /**
-         * bin editable transformation
+         * initiates WYSIWYG fields with summernote | www.summernote.org
          */
-        $dataFields
-            .on('dblclick', function () {
-                $(this).attr('contenteditable', 'true').focus();
+        var $htmlFields = $dataFields.find('[data-cmf-field][data-cmf-field-type=WYSIWYG]');
+
+        $htmlFields
+            .on('click', function (e) {
+
+                e.preventDefault();
+
+                var getChangeTimer;
+
+                $(this).summernote({
+
+                    airMode: true,
+                    dialogsFade: true,
+                    codemirror: {theme: 'monokai'},
+                    focus: true,
+
+                    popover: {
+                        image: [
+                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']]
+                        ],
+                        link: [
+                            ['link', ['linkDialogShow', 'unlink']]
+                        ],
+                        air: [
+                            ['color', ['color']],
+                            ['font', ['bold', 'underline', 'clear']],
+                            ['para', ['ul', 'paragraph']],
+                            ['insert', ['link', 'picture', 'video']]
+                        ]
+                    },
+
+                    callbacks: {
+                        onChange: function (contents) {
+                            // do new request
+                            clearTimeout(getChangeTimer);
+
+                            var $this = $(this);
+                            getChangeTimer = setTimeout(
+                                function () {
+                                    console.log('save me', $this.html($this.summernote('code')));
+                                    $(document).trigger('MmCmfContentController.enableSave');
+                                },
+                                300);
+                        }
+                    },
+                });
+
+            });
+
+        /**
+         * initiates standard fields with nativ contenteditable
+         */
+
+        var $normalFields = $dataFields.find('[data-cmf-field]').not('[data-cmf-field-type]');
+
+        $normalFields
+            .on('click', function () {
+
+                var $this = $(this);
+                var $cssDisplay = $this.css('display');
+
+                $this
+                    .attr('contenteditable', 'true')
+                    .data('pre-css-display', $cssDisplay)
+                    .css('display', 'inline-block').focus();
             })
             .on('blur', function () {
-                $(this).attr('contenteditable', 'false');
+
+                var $this = $(this);
+                var $cssDisplay = $(this).data('pre-css-display');
+
+                $this
+                    .attr('contenteditable', 'false')
+                    .css('display', $cssDisplay);
             })
             .on('DOMCharacterDataModified', function () {
                 var $parent = $(this).parents('[data-cmf-id]');
@@ -282,8 +353,6 @@
                 }
 
             });
-
-
     }
 
 
@@ -304,6 +373,7 @@
         console.log($elements.parent(), $draggableContainers);
 
         var $draguala = dragula($draggableContainers, {
+            ignoreInputTextSelection: true,
 
             moves: function (el, source, handle, sibling) {
 

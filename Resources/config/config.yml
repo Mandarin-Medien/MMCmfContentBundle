@@ -7,11 +7,11 @@ mm_cmf_content:
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
 
-
 assetic:
     assets:
         mm_cmf_content_assets_js:
             inputs:
+              - '@MMCmfContentBundle/Resources/public/js/summernote/summernote.js'
               - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/core.js"
