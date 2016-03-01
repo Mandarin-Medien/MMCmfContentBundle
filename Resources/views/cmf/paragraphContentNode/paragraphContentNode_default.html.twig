@@ -4,12 +4,12 @@
     {% block cmf_contentNode_widget_content %}
 
         {%  if node.headlineType %}<{{ node.headlineType }} data-cmf-field="headline">{% endif %}
-        {{ node.headline }}
+        {{ node.headline|raw }}
         {%  if node.headlineType %}</{{ node.headlineType }}>{% endif %}
 
         {%  if node.imageSource %}<img src="{{ node.imageSource }}" class="image" alt="" title="" />{% endif %}
 
-        <div data-cmf-field="text">{{ node.text|raw }}</div>
+        <div data-cmf-field="text" data-cmf-field-type="WYSIWYG">{{ node.text|raw }}</div>
 
         {% for child in node.nodes %}
             {{ child|cmfParse }}
