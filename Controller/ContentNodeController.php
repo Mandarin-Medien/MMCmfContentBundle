@@ -52,13 +52,13 @@ class ContentNodeController extends Controller
 
                             //check if its just a standard relation
                             if (
-                                in_array(
-                                    $fieldMetaData['type'],
-                                    array(
-                                        ClassMetadataInfo::ONE_TO_MANY,
-                                        ClassMetadataInfo::MANY_TO_MANY
-                                    )
+                            in_array(
+                                $fieldMetaData['type'],
+                                array(
+                                    ClassMetadataInfo::ONE_TO_MANY,
+                                    ClassMetadataInfo::MANY_TO_MANY
                                 )
+                            )
                             )
                                 $value = $repo->findById($value);
                             else
@@ -80,6 +80,70 @@ class ContentNodeController extends Controller
 
         return new JsonResponse(array('status' => 'saved'));
     }
+
+    /**
+     * return the general ContentNode Form
+     */
+    public function getFormAction(ContentNode $contentNode)
+    {
+        return $this->render('@MMCmfContent/Form/general_form.html.twig', array(
+            'form' => $this->getEditForm($contentNode)->createView()
+        ));
+    }
+
+
+    /**
+     * return the general ContentNode Form
+     */
+    public function updateAction(Request $request, ContentNode $contentNode)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $editForm = $this->getEditForm($contentNode);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            $markup = $this->get('mm_cmf_content.mm_cmf_parse_twig_extension')->cmfParse(
+                $this->get('twig'),
+                $contentNode
+            );
+            return new JsonResponse(array(
+                    'success' => true,
+                    'data' => array(
+                        'id' => $contentNode->getId(),
+                        'markup' => $markup
+                    ))
+            );
+
+        }
+
+        return new JsonResponse(array('success' => false));
+    }
+
+
+    public function getEditForm(ContentNode $contentNode)
+    {
+        return $this->createForm(
+            $this->get('mm_cmf_admin.form_type.content_node'),
+            $contentNode,
+            array(
+                'action' => $this->get('router')->generate('mm_cmf_content_node_update', array(
+                    'id' => $contentNode->getId()
+                ))
+            )
+        );
+    }
+
+
+    public function getDiscrimatorsModalAction()
+    {
+        return $this->render('@MMCmfContent/Modal/Form/content_node_select.html.twig', array(
+            'discrimators' => $this->get('mm_cmf_content.content_node_factory')->getDiscrimators()
+        ));
+    }
+
+
 
     private function getClassMetaData($className)
     {

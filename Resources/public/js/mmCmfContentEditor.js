@@ -433,8 +433,13 @@
 
         this.each(function () {
 
+            if($(this).data('MmCmfContentEditor'))
+                return;
+
             var $MmCmfContentEditor = new MmCmfContentEditor(this, settings);
             var $frontendEditWidget = $MmCmfContentEditor.buildGUI();
+
+            $(this).data('MmCmfContentEditor',$MmCmfContentEditor);
 
             $(this).append($frontendEditWidget);
 

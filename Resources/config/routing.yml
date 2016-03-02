@@ -1,7 +1,20 @@
 mm_cmf_content_save:
-    path:     /save
+    path:     /mmcmfcontent/save
     defaults: { _controller: MMCmfContentBundle:ContentNode:save}
     condition: "request.isXmlHttpRequest()"
     requirements:
         _format: json
         _method: POST
+
+mm_cmf_content_node_form:
+    path:     /mmcmfcontent/{id}/edit
+    defaults: { _controller: MMCmfContentBundle:ContentNode:getForm}
+
+mm_cmf_content_node_update:
+    path: /mmcmfcontent/{id}/update
+    defaults:  { _controller: MMCmfContentBundle:ContentNode:update}
+
+
+mm_cmf_content_node_select:
+    path: /mmcmfcontent/discrimators
+    defaults:  { _controller: MMCmfContentBundle:ContentNode:getDiscrimatorsModal}

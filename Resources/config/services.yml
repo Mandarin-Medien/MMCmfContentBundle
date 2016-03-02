@@ -7,7 +7,6 @@ services:
 
     mm_cmf_content.mm_cmf_parse_twig_extension:
           class: MandarinMedien\MMCmfContentBundle\Twig\CmfContentParserExtension
-          public: false
           arguments: [@mm_cmf_content.content_parser]
           tags:
               - { name: twig.extension }

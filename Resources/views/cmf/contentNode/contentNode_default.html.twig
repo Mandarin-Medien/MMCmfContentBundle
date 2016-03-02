@@ -11,6 +11,8 @@
         data-cmf-class="{{ node_namespace }}\{{ node_class }}"
         >
 
+        <a href="{{ path('mm_cmf_content_node_form', {'id': node.id }) }}" onclick="loadForm(this); return false;">load my form!</a>
+
         {#Real Content#}
 
         {% block cmf_contentNode_widget_content %}

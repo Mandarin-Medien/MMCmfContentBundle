@@ -1,0 +1,11 @@
+{% extends "@MMCmfContent/Modal/default_modal.html.twig" %}
+
+{% block modal_title %}Bitte wählen Sie einen Inhaltstypen{% endblock %}
+
+{% block modal_body %}
+    {% for discrimator in discrimators %}
+        <a href="#">{{ discrimator }}</a>
+    {% endfor %}
+{% endblock %}
+
+{% block modal_footer %}{% endblock %}

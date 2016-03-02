@@ -47,7 +47,21 @@ class ContentNodeFactory
      */
     public function getDiscrimators($exclude = array())
     {
-        return array_diff(array_keys($this->meta->discriminatorMap), $exclude);
+
+        // prefilter discrimators by subclasses
+        $subclasses = $this->meta->subClasses;
+
+        $discrimators = array_filter(
+            $this->meta->discriminatorMap,
+            function($class) use ($subclasses)
+            {
+                return in_array($class, $subclasses);
+            }
+        );
+
+
+        // filter discrimators by exlude array
+        return array_diff(array_keys($discrimators), $exclude);
     }
 
 
