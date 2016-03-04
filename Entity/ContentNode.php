@@ -4,6 +4,7 @@ namespace MandarinMedien\MMCmfContentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
+use MandarinMedien\MMCmfContentBundle\FormTypeMeta as FormType;
 
 /**
  * ContentNode

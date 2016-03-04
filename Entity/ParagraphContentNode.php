@@ -9,11 +9,23 @@
 namespace MandarinMedien\MMCmfContentBundle\Entity;
 
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
+use MandarinMedien\MMCmfContentBundle\Form\FormTypeMeta as FormType;
+use MandarinMedien\MMCmfAdminBundle\Form\Types\HTMLType;
+use MandarinMedien\MMCmfAdminBundle\Form\Types\HeadlineType;
 
 class ParagraphContentNode extends ContentNode
 {
     protected $headline;
+
+
+    /**
+     * @FormType(HTMLType::class)
+     */
     protected $text;
+
+    /**
+     * @FormType(HeadlineType::class)
+     */
     protected $headlineType;
     protected $imageSource;
 
