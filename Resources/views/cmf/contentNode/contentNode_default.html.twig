@@ -11,15 +11,17 @@
         data-cmf-class="{{ node_namespace }}\{{ node_class }}"
         >
 
-        <a href="{{ path('mm_cmf_content_node_form', {'id': node.id }) }}" onclick="loadForm(this); return false;">load my form!</a>
+        {#<a href="{{ path('mm_cmf_content_node_form', {'id': node.id }) }}" onclick="loadForm(this); return false;">load my form!</a>#}
 
         {#Real Content#}
 
         {% block cmf_contentNode_widget_content %}
-            <h2 data-cmf-field="name">{{ node.name|raw }}</h2>
-            {% for child in node.nodes %}
-                {{ child|cmfParse }}
-            {% endfor %}
+            <h2 data-cmf-field="name" data-cmf-field-type="string">{{ node.name|raw }}</h2>
+            <div class="ContentNodeChildren">
+                {% for child in node.nodes %}
+                   {{ child|cmfParse }}
+                {% endfor %}
+            </div>
         {% endblock %}
 
     </div>

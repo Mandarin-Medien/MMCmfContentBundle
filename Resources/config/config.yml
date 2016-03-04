@@ -13,7 +13,14 @@ assetic:
             inputs:
               - '@MMCmfContentBundle/Resources/public/js/summernote/summernote.js'
               - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
+
+              #cmfFieldPlugins
+              - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldString.js"
+              - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldWYSIWYG.js"
+
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
+              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentFieldEditor.js"
+              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentStructureEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/core.js"
 
         mm_cmf_content_summernote_assets_css:

@@ -3,8 +3,10 @@
 {% block cmf_rowContentNode_widget_content %}
     {% block cmf_contentNode_widget_content %}
         {#<h2 data-cmf-field="name">{{ node.name }}</h2>#}
-        {% for child in node.nodes %}
-            {{ child|cmfParse }}
-        {% endfor %}
+        <div class="ContentNodeChildren">
+            {% for child in node.nodes %}
+                {{ child|cmfParse }}
+            {% endfor %}
+        </div>
     {% endblock %}
 {% endblock %}
