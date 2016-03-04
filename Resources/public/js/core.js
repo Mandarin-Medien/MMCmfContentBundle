@@ -1,16 +1,5 @@
 $(document).ready(function () {
-
     $('.ContentNode').mmCmfContentEditor();
-
-    $(document).keypress(function(e) {
-
-        console.log(e);
-
-        if(e.keyCode == 78) {
-            fetchModal('/app_dev.php/mmcmfcontent/discrimators');
-        }
-    });
-
 });
 
 var fetchModal = function(url) {
