@@ -41,15 +41,36 @@
 
 .ContentNode {
   position: relative;
+
+  .gu-transit{
+    background-color: rgba( 255 , 0 , 255 ,.5);
+  }
+  /*
+    body > & {
+      .gu-transit{
+        height: inherit;
+        border-bottom: inherit;
+        overflow: auto;
+      }
+    }*/
+
+  &.hover{
+    & > .ContentNode-settings{
+      display: block;
+    };
+  }
+
 }
 
 .ContentNode:hover,
 .ContentNode-highlighted {
 
   box-shadow: 0 0 1px #FFF;
+
 }
 
 .ContentNode-settings {
+  display: none;
 
   &,
   .inner {
@@ -60,7 +81,7 @@
 
   position: absolute;
   top: 0;
-  right: 0;
+  right: 15px;
 
   padding: 10px;
 
