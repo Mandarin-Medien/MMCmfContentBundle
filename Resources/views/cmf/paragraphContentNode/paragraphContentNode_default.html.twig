@@ -3,17 +3,13 @@
 {% block cmf_parapgraphContentNode_widget_content %}
     {% block cmf_contentNode_widget_content %}
 
-        {%  if node.headlineType %}<{{ node.headlineType }} data-cmf-field="headline">{% endif %}
+        {%  if node.headlineType %}<{{ node.headlineType }} data-cmf-field="headline" data-cmf-field-type="string">{% endif %}
         {{ node.headline|raw }}
         {%  if node.headlineType %}</{{ node.headlineType }}>{% endif %}
 
         {%  if node.imageSource %}<img src="{{ node.imageSource }}" class="image" alt="" title="" />{% endif %}
 
         <div data-cmf-field="text" data-cmf-field-type="WYSIWYG">{{ node.text|raw }}</div>
-
-        {% for child in node.nodes %}
-            {{ child|cmfParse }}
-        {% endfor %}
 
     {% endblock %}
 {% endblock %}

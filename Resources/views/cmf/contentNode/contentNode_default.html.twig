@@ -16,10 +16,12 @@
         {#Real Content#}
 
         {% block cmf_contentNode_widget_content %}
-            <h2 data-cmf-field="name">{{ node.name|raw }}</h2>
-            {% for child in node.nodes %}
-                {{ child|cmfParse }}
-            {% endfor %}
+            <h2 data-cmf-field="name" data-cmf-field-type="string">{{ node.name|raw }}</h2>
+            <div class="ContentNodeChildren">
+                {% for child in node.nodes %}
+                   {{ child|cmfParse }}
+                {% endfor %}
+            </div>
         {% endblock %}
 
     </div>
