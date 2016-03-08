@@ -73,6 +73,7 @@
 
 .ContentNode-settings {
   display: none;
+  text-align: right;
 
   &,
   .inner {
@@ -93,8 +94,8 @@
 
   b {
     cursor: pointer;
-    width: 100%;
     display: inline-block;
+    margin-left: 10px;
   }
 
   .select-container {
@@ -108,10 +109,14 @@
   &.open {
     background: rgba(140, 140, 140, 0.5);
 
+    display: block;
+
     width: 120px;
     b {
       cursor: move;
-      text-align: right;
+      &.ContentNode-settings-gear{
+        display: none;
+      }
     }
 
     .inner {
