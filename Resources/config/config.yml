@@ -9,6 +9,7 @@ mm_cmf_content:
         paragraphContentNode:
             hiddenFields:
                 - "headline"
+                - "text"
 
 assetic:
     assets:
