@@ -11,6 +11,11 @@ mm_cmf_content:
                 - "headline"
                 - "text"
 
+twig:
+    form:
+        resources:
+            - MMCmfContentBundle:Form:nodetree.html.twig
+
 assetic:
     assets:
         mm_cmf_content_assets_js:
