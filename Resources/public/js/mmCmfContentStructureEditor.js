@@ -13,6 +13,7 @@
         var $this = this;
         this.contentNodes = $contentNodes;
         this.settings = $options;
+        this.modalParent = $('body');
 
         this.initiateDragula($('.ContentNodeChildren'));
 
@@ -178,16 +179,48 @@
 
     };
 
+
+    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url) {
+
+        var $this = this;
+
+        console.log('loadSettingsForm',this);
+
+
+
+        if($url != "")
+            $.ajax({
+                'url': $url,
+                'method': 'GET',
+                'success': function (request) {
+                    $this.modalParent.append(request);
+                    $('.modal')
+                        .modal()
+                        .on('hidden.bs.modal', function () {
+                            $(this).remove();
+                        });
+
+                    mmFormFieldhandler.init();
+                }
+            });
+
+    };
+
     /**
      * Returns the CMF-Settings DOM-Element which lets the user control some ContentNode attributes
      *
      * @returns {*|HTMLElement}
      */
-    mmCmfContentStructureEditor.prototype.generateSettingsBox = function () {
+    mmCmfContentStructureEditor.prototype.generateSettingsBox = function ($contentNode) {
 
-        var $div = $('<div class="ContentNode-settings"><b class="ContentNode-settings-gear"><i class="fa fa-gear"></i></b><br></div>');
+        var $this = this;
 
-        $div.on('click', 'b', function (e) {
+        var $div = $('<div class="ContentNode-settings">' +
+            '<b class="ContentNode-settings-arrows"><i class="fa fa-arrows"></i></b>' +
+            '<br>' +
+            '</div>');
+
+        $div.on('click', 'b.ContentNode-settings-arrows', function (e) {
 
             e.preventDefault();
 
@@ -195,6 +228,22 @@
             $(this).parent().parent().toggleClass('ContentNode-highlighted');
 
         });
+
+
+        // append settings simple form opener
+        var $gearButton =  $('<b class="ContentNode-settings-gear"><i class="fa fa-gear"></i></b>');
+        $gearButton.click(function(e){
+
+            e.preventDefault();
+
+            var $route = $contentNode.data('cmf-simple-form');
+
+            $this.loadSettingsForm($route);
+        });
+
+        $div.prepend($gearButton);
+
+
 
         return $div;
     };

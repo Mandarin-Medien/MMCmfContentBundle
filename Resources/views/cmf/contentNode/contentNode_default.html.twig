@@ -9,9 +9,8 @@
         data-cmf-position="{{ node.getPosition() }}"
         data-cmf-id="{{ node.id }}"
         data-cmf-class="{{ node_namespace }}\{{ node_class }}"
+        data-cmf-simple-form="{{ path('mm_cmf_content_node_simple_form', {'id': node.id }) }}"
         >
-
-        {#<a href="{{ path('mm_cmf_content_node_form', {'id': node.id }) }}" onclick="loadForm(this); return false;">load my form!</a>#}
 
         {#Real Content#}
 

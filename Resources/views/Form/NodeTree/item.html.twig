@@ -1,0 +1,6 @@
+<li class="node-tree-item" data-id="{{ node.id }}">
+    <span><i class="fa fa-file-o"></i> {{ node.name }}</span>
+    {% if node.nodes %}
+        {{ renderNodeTree(node) }}
+    {% endif %}
+</li>

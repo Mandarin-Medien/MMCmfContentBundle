@@ -10,8 +10,8 @@ namespace MandarinMedien\MMCmfContentBundle\Entity;
 
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use MandarinMedien\MMCmfContentBundle\Form\FormTypeMeta as FormType;
-use MandarinMedien\MMCmfAdminBundle\Form\Types\HTMLType;
-use MandarinMedien\MMCmfAdminBundle\Form\Types\HeadlineType;
+use MandarinMedien\MMCmfContentBundle\Form\Type\HTMLType;
+use MandarinMedien\MMCmfContentBundle\Form\Type\HeadlineType;
 
 class ParagraphContentNode extends ContentNode
 {

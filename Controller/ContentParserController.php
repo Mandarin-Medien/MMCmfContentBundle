@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ContentParserController extends Controller
 {
-    private $contentNodeTemplates;
+    private $contentNodeTemplates = array();
+    private $contentNodeHiddenFields = array();
+    private $contentNodeSimpleFormType = array();
 
     public function __construct(Array $contentNodeConfig)
     {
@@ -21,14 +23,36 @@ class ContentParserController extends Controller
 
             $className = ucfirst($nodeName);
 
+            // templates
             $this->contentNodeTemplates[$className] = array();
 
-            foreach ($nodeAttributes['templates'] as $templateItem) {
-                $this->contentNodeTemplates[$className][$templateItem['name']] = $templateItem['template'];
-            }
+            if( isset($nodeAttributes['templates']) )
+                foreach ($nodeAttributes['templates'] as $templateItem) {
+                    $this->contentNodeTemplates[$className][$templateItem['name']] = $templateItem['template'];
+                }
+
+            // hiddenFields
+            $this->contentNodeHiddenFields[$className]= array();
+            if( isset($nodeAttributes['hiddenFields']) )
+                foreach ($nodeAttributes['hiddenFields'] as $field) {
+                    $this->contentNodeHiddenFields[$className][] = $field;
+                }
+
+            // simpleFormType
+            $this->contentNodeSimpleFormType[$className]= array();
+            if( isset($nodeAttributes['simpleFormType']) )
+                foreach ($nodeAttributes['simpleFormType'] as $field) {
+                    $this->contentNodeSimpleFormType[$className] = $field;
+                }
 
         }
+    }
 
+    public function getHiddenFields($node)
+    {
+        $classNameing = $this->getNativeClassnamimg($node);
+
+        return (isset($this->contentNodeHiddenFields[$classNameing['name']]))?$this->contentNodeHiddenFields[$classNameing['name']]:array();
     }
 
     public function getNativeClassnamimg($node)

@@ -1,0 +1,13 @@
+{% block mm_cmf_admin_node_tree_widget %}
+    <div class="form_group">
+        {{ form_label(form) }}
+        <div class="node-tree-type">
+            <ul class="node-tree node-tree-root" rel="{{ form.vars.full_name }}">
+                {% for node in nodes %}
+                    {{ renderNodeTreeItem(node) }}
+                {% endfor %}
+            </ul>
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}

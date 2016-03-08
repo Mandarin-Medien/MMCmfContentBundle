@@ -1,3 +1,8 @@
+/**
+ * @todo: needs to be refactored to not set in global scope
+ */
+var mmFormFieldhandler;
+
 function BootUpMmCmfContentBundle()
 {
     var $contentNodes = $('.ContentNode');
@@ -12,40 +17,14 @@ function BootUpMmCmfContentBundle()
 $(document).ready(function () {
 
     BootUpMmCmfContentBundle();
+
+
+    // admin form field types
+    mmFormFieldhandler = new FormHandler();
+    mmFormFieldhandler.init();
+
 });
 
-
-var fetchModal = function (url) {
-    $.ajax({
-        'url': url,
-        'method': 'GET',
-        'success': function (request) {
-            $('body').append(request);
-            $('.modal')
-                .modal()
-                .on('hidden.bs.modal', function () {
-                    $(this).remove();
-                })
-        }
-    });
-};
-
-var loadForm = function (item) {
-
-    $.ajax({
-        'url': item.getAttribute('href'),
-        'method': 'GET',
-        'success': function (request) {
-            $('body').append(request);
-            $('.modal')
-                .modal()
-                .on('hidden.bs.modal', function () {
-                    $(this).remove();
-                })
-        }
-    });
-
-};
 
 var submitForm = function (form) {
 
@@ -65,7 +44,7 @@ var submitForm = function (form) {
                 var target = $("[data-cmf-id='" + data.data.id + "']");
 
                 $(target).replaceWith(data.data.markup);
-                $('.modal').modal('toggle');
+                $('.modal').modal('hide');
 
                 BootUpMmCmfContentBundle();
 

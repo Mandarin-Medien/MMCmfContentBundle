@@ -3,7 +3,7 @@ services:
         class: MandarinMedien\MMCmfContentBundle\Controller\ContentParserController
         arguments: ["content_nodes"]
         calls:
-          - [setContainer, ['@service_container']]
+          - [setContainer, ["@service_container"]]
 
     mm_cmf_content.mm_cmf_parse_twig_extension:
           class: MandarinMedien\MMCmfContentBundle\Twig\CmfContentParserExtension
@@ -11,6 +11,11 @@ services:
           tags:
               - { name: twig.extension }
 
+    mm_cmf_admin.twig_node_tree_extension:
+        class: MandarinMedien\MMCmfContentBundle\Twig\NodeTreeRenderExtension
+        arguments: ["@service_container"]
+        tags:
+            - {name: twig.extension }
 
     # PageHook Manager
     # to add PageHooks, tag your service with mm_cmf_content.page_hook
@@ -21,10 +26,29 @@ services:
     # Doctrine Event Listener
     mm_cmf_content.page_listener:
         class: MandarinMedien\MMCmfContentBundle\EventListeners\PageHookListener
-        arguments: [@service_container]
+        arguments: ["@service_container"]
         tags:
             - {name: doctrine.orm.entity_listener, entity: MandarinMedien\MMCmfContentBundle\Entity\Page, event: postLoad }
 
     mm_cmf_content.content_node_factory:
         class: MandarinMedien\MMCmfContentBundle\Entity\Factory\ContentNodeFactory
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    ### FORMTYPES ####
+    mm_cmf_content.form_type.entity_hidden:
+        class: MandarinMedien\MMCmfContentBundle\Form\Type\EntityHiddenType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - {name: form.type, alias: entity_hidden}
+
+    mm_cmf_content.form_type.node_tree:
+        class: MandarinMedien\MMCmfContentBundle\Form\Type\NodeTreeType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - {name: form.type, alias: mm_cmf_content_node_tree}
+
+    mm_cmf_content.form_type.content_node:
+        class: MandarinMedien\MMCmfContentBundle\Form\ContentNodeType
+        arguments: ["@service_container"]
+        tags:
+            - {name: form.type, alias: mm_cmf_content_content_node}

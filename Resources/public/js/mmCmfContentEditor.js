@@ -67,7 +67,6 @@
 
             var $MMCmfContentFieldEditor = $(this).data('MMCmfContentFieldEditor');
 
-
             if ($MMCmfContentFieldEditor && $MMCmfContentFieldEditor.hasChanged) {
 
                 var $contentNodeFields = new Object();
@@ -79,41 +78,11 @@
                     }
                 }
 
-
                 $json[$MMCmfContentFieldEditor.cmfId] = $contentNodeFields;
 
             }
         });
 
-
-        /*
-
-         this.elements.find('[data-cmf-field]').each(function () {
-
-         var $cmfObj = $(this).parents(".ContentNode");
-         var $cmfId = $cmfObj.data('cmf-id');
-
-         if (typeof $json[$cmfId] == "undefined") {
-         $json[$cmfId] = {};
-
-         if ($cmfObj.length > 0 && $cmfObj.data('cmf-class'))
-         $json[$cmfId].class = $cmfObj.data('cmf-class');
-
-         if ($cmfObj.length > 0 && typeof $cmfObj.data('cmf-position') != "undefined")
-         $json[$cmfId].position = parseInt($cmfObj.data('cmf-position'));
-
-         var $parentCmf = $cmfObj.parents(".ContentNode");
-
-         if ($parentCmf.length > 0 && $parentCmf.data('cmf-id'))
-         $json[$cmfId].parent = parseInt($parentCmf.data('cmf-id'));
-
-         }
-
-         $json[$cmfId][$(this).data('cmf-field')] = $(this).html();
-
-         });*/
-
-        console.log($json);
         return $json;
     };
 

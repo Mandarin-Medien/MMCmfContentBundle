@@ -10,6 +10,10 @@ mm_cmf_content_node_form:
     path:     /{id}/edit
     defaults: { _controller: MMCmfContentBundle:ContentNode:getForm}
 
+mm_cmf_content_node_simple_form:
+    path:     /{id}/simple/edit
+    defaults: { _controller: MMCmfContentBundle:ContentNode:getSimpleForm}
+
 mm_cmf_content_node_update:
     path: /{id}/update
     defaults:  { _controller: MMCmfContentBundle:ContentNode:update}

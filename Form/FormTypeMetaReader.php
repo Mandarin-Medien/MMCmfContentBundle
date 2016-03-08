@@ -14,10 +14,6 @@ class FormTypeMetaReader
 
         $annotation = $reader->getPropertyAnnotation($property, FormTypeMeta::class);
 
-        //var_dump($annotation->getValue());
-
-        dump($annotation);
-
         if($annotation) {
             return $annotation->getValue();
         }

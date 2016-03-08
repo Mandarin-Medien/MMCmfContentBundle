@@ -6,6 +6,9 @@ mm_cmf_content:
         rowContentNode:
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
+        paragraphContentNode:
+            hiddenFields:
+                - "headline"
 
 assetic:
     assets:
@@ -22,6 +25,12 @@ assetic:
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentFieldEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentStructureEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/core.js"
+
+              #formType Types
+              - '@MMCmfContentBundle/Resources/public/js/form/HTMLType.js'
+              - '@MMCmfContentBundle/Resources/public/js/form/NodeTreeType.js'
+              - '@MMCmfContentBundle/Resources/public/js/form/MenuType.js'
+              - '@MMCmfContentBundle/Resources/public/js/form/FormHandler.js'
 
         mm_cmf_content_summernote_assets_css:
             filters:
