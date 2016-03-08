@@ -58,7 +58,7 @@ class CmfContentParserExtension extends \Twig_Extension
             /**
              * parse css classes
              */
-            $display_classes = split(" ",trim($node->getClasses()));
+            $display_classes = explode(" ",trim($node->getClasses()));
 
             $generated_classes = array("ContentNode", $refClass['name']);
 
