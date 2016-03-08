@@ -55,7 +55,28 @@ class CmfContentParserExtension extends \Twig_Extension
 
             $refClass = $this->cmfContentParser->getNativeClassnamimg($node);
 
-            $html = $twig->render($template, array_merge_recursive(array('node' => $node, 'node_class' => $refClass['name'], 'node_namespace' => $refClass['namespace']), $options));
+            /**
+             * parse css classes
+             */
+            $display_classes = split(" ",trim($node->getClasses()));
+
+            $generated_classes = array("ContentNode", $refClass['name']);
+
+            $display_classes = array_merge($display_classes, $generated_classes);
+            $display_classes = array_unique($display_classes);
+
+            $html = $twig->render($template,
+                array_merge_recursive(
+                    array(
+                        'node' => $node,
+                        'node_class' => $refClass['name'],
+                        'node_namespace' => $refClass['namespace'],
+                        'display_classes' => implode(" ", $display_classes),
+                        'generated_classes' => implode(" ", $generated_classes)
+                    )
+                    , $options
+                )
+            );
         }
 
         return $html;

@@ -2,13 +2,18 @@
  * @todo: needs to be refactored to not set in global scope
  */
 var mmFormFieldhandler;
+var mmCmfContentEditorIntilized = false;
 
 function BootUpMmCmfContentBundle()
 {
     var $contentNodes = $('.ContentNode');
     var $options = {};
 
-    $contentNodes.mmCmfContentEditor($options);
+    if(!mmCmfContentEditorIntilized)
+        $contentNodes.mmCmfContentEditor($options);
+
+    mmCmfContentEditorIntilized = true;
+
     $contentNodes.mmCmfContentFieldEditor($options);
     $contentNodes.mmCmfContentStructureEditor($options);
 }

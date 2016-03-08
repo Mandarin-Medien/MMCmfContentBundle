@@ -71,13 +71,13 @@
 
             e.preventDefault();
             e.stopPropagation();
-            $(this).addClass('hover');
+            $(this).addClass($settings.hoverClass);
         });
         $contentNode.mouseout(
             function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                $(this).removeClass('hover');
+                $(this).removeClass($settings.hoverClass);
             }
         );
 
@@ -95,12 +95,23 @@
         });
 
         var $fieldName = 'classes';
-        var $cmfId = $contentNode.data('cmf-id');
         var $value = $contentNode.attr('class');
+
+        var $cmfId = $contentNode.data('cmf-id');
+
+        var $cmfForbiddenClasses = $contentNode.data('cmf-css-generated-classes') +
+            " " + this.settings.highlightClass +
+            " " + this.settings.hoverClass;
+
+        var $cmfForbiddenClassesArray = $cmfForbiddenClasses.split(" ");
+
+        for (var i = 0; i < $cmfForbiddenClassesArray.length; i++) {
+            $value = $value.replace($cmfForbiddenClassesArray[i],'');
+        }
 
         $(document).trigger('updated.MMCmfContentFieldEditor',
             {
-                value: $value,
+                value: $value.trim(),
                 name: $fieldName,
                 'cmf-id': $cmfId
             }
@@ -181,7 +192,7 @@
 
         var $this = this;
 
-        if($url != "")
+        if ($url != "")
             $.ajax({
                 'url': $url,
                 'method': 'GET',
@@ -218,14 +229,14 @@
             e.preventDefault();
 
             $(this).parent().toggleClass('open');
-            $(this).parent().parent().toggleClass('ContentNode-highlighted');
+            $(this).parent().parent().toggleClass($this.settings.highlightClass);
 
         });
 
 
         // append settings simple form opener
-        var $gearButton =  $('<b class="ContentNode-settings-gear"><i class="fa fa-gear"></i></b>');
-        $gearButton.click(function(e){
+        var $gearButton = $('<b class="ContentNode-settings-gear"><i class="fa fa-gear"></i></b>');
+        $gearButton.click(function (e) {
 
             e.preventDefault();
 
@@ -235,7 +246,6 @@
         });
 
         $div.prepend($gearButton);
-
 
 
         return $div;
@@ -314,7 +324,9 @@
 
             // mmCmfContentStructureEditor
             gridCount: 12,
-            gridSizes: ['xs', 'sm', 'md', 'lg']
+            gridSizes: ['xs', 'sm', 'md', 'lg'],
+            highlightClass: 'ContentNode-highlighted',
+            hoverClass: 'hover'
 
         }, options);
 
