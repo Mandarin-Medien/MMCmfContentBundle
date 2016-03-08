@@ -36,8 +36,6 @@ MMCmfContentFieldEditor.prototype.onFieldUpdate = function ($event, $data) {
     this.hasChanged = true;
     this.updatedFields[$data.name] = $data.value;
 
-    console.log('this.updatedFields', $data, this.updatedFields);
-
     $(document).trigger('hasChanged.MMCmfContentFieldEditor', {
         MMCmfContentFieldEditor: this,
         contentNode: this.contentNode

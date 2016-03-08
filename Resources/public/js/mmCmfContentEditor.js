@@ -6,8 +6,6 @@
 
     var MMCmfContentEditor = function ($contentNodes, $options) {
 
-        console.log('MMCmfContentEditor::__construct');
-
         var $this = this;
         this.contentNodes = $contentNodes;
         this.settings = $options;
@@ -28,11 +26,7 @@
          * $data : {  MMCmfContentFieldEditor: this, contentNode : this.contentNode }
          */
         $(document).on('hasChanged.MMCmfContentFieldEditor', function ($event, $data) {
-
-            console.log('hasChanged.MMCmfContentFieldEditor', $data);
-
-            $this.showSaveButton();
-
+             $this.showSaveButton();
         });
 
     };
@@ -48,10 +42,7 @@
             })
             .done(function (msg) {
 
-                console.log("Data Saved: ", msg);
-
                 $(document).trigger('saved.MMCmfContentFieldEditor');
-
 
                 $this.hideSaveButton();
             });

@@ -12,8 +12,6 @@ mmCmfFieldStringPlugin.prototype.bindEvents = function () {
     var $this = this;
 
     $(document).on(this.fieldType + '.init.MMCmfContentFieldEditor', function ($event, $data) {
-
-        console.log('mmCmfFieldStringPlugin.initField');
         $this.onInit($event, $data)
     });
 };
@@ -25,8 +23,6 @@ mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
 
     if (typeof $field != "undefined") {
         $field.data('mmCmfFieldStringPlugin', $this);
-
-        console.log('mmCmfFieldStringPlugin.initField inner',$field);
 
         $field
             //activate editing by click
@@ -54,10 +50,7 @@ mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
             })
             // fire event to the FieldEditor if something changed
             .on('DOMCharacterDataModified', function ($event) {
-
-                console.log("DOMCharacterDataModified", $this);
-
-                $this.onUpdate($field);
+                 $this.onUpdate($field);
             });
     }
 
@@ -69,8 +62,6 @@ mmCmfFieldStringPlugin.prototype.getPreparedData = function ($field) {
 
 
 mmCmfFieldStringPlugin.prototype.onUpdate = function ($field) {
-
-    console.log("mmCmfFieldStringPlugin.onUpdate", $field);
 
     var $type = $field.data('cmf-field-type');
     var $fieldName = $field.data('cmf-field');

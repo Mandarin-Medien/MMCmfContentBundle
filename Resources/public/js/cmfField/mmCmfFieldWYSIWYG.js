@@ -11,8 +11,6 @@ mmCmfFieldWYSIWYGPlugin.prototype.bindEvents = function () {
     var $this = this;
 
     $(document).on(this.fieldType + '.init.MMCmfContentFieldEditor', function ($event, $data) {
-
-        console.log('mmCmfFieldWYSIWYGPlugin.initField');
         $this.onInit($event, $data)
     });
 };
@@ -24,8 +22,6 @@ mmCmfFieldWYSIWYGPlugin.prototype.onInit = function ($event, $data) {
 
     if (typeof $field != "undefined") {
         $field.data('mmCmfFieldWYSIWYGPlugin', $this);
-
-        console.log('mmCmfFieldWYSIWYGPlugin.initField inner', $field);
 
         $field
             .on('click', function (e) {
@@ -84,8 +80,6 @@ mmCmfFieldWYSIWYGPlugin.prototype.getPreparedData = function ($field) {
 
 
 mmCmfFieldWYSIWYGPlugin.prototype.onUpdate = function ($field) {
-
-    console.log("mmCmfFieldWYSIWYGPlugin.onUpdate", $field);
 
     var $type = $field.data('cmf-field-type');
     var $fieldName = $field.data('cmf-field');

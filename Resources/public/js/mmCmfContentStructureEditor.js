@@ -28,7 +28,6 @@
      */
     mmCmfContentStructureEditor.prototype.appendSettingsMenu = function ($contentNode) {
 
-        console.log('$contentNode', $contentNode);
         var $this = this;
         var $settings = this.settings;
         /**
@@ -94,8 +93,6 @@
         $boxInner.find('select').each(function () {
             $box.parent().addClass($(this).val());
         });
-
-        console.log("mmCmfContentStructureEditor.onChangeGridsystem", $contentNode);
 
         var $fieldName = 'classes';
         var $cmfId = $contentNode.data('cmf-id');
@@ -184,10 +181,6 @@
 
         var $this = this;
 
-        console.log('loadSettingsForm',this);
-
-
-
         if($url != "")
             $.ajax({
                 'url': $url,
@@ -269,8 +262,6 @@
 
         });
 
-        console.log('$draggableContainers', $draggableContainers);
-
         var $draguala = dragula($draggableContainers, {
             ignoreInputTextSelection: true,
 
@@ -306,10 +297,7 @@
 
     mmCmfContentStructureEditor.prototype.refreshPositions = function ($contentNode) {
 
-        console.log("refreshPositions", $($contentNode).parent());
-
         $($contentNode).parent().children('.contentNode').each(function (i) {
-            console.log('dragend inner ', i, $(this));
             $(this).attr('data-cmf-position', i);
         });
     };
