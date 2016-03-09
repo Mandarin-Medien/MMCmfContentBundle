@@ -321,10 +321,13 @@
         $($contentNode).parent().children('.ContentNode').each(function (i) {
 
             var $contentNodeInner = $(this);
+            var prefIndex = $contentNodeInner.attr('data-cmf-position');
 
-            $contentNodeInner.attr('data-cmf-position', i);
+            if (i != prefIndex) {
+                $contentNodeInner.attr('data-cmf-position', i);
 
-            $this.onObjectPositionChanged($contentNodeInner, i);
+                $this.onObjectPositionChanged($contentNodeInner, i);
+            }
         });
     };
 
