@@ -1,0 +1,7 @@
+MandarinMedien\MMCmfContentBundle\Entity\ContainerContentNode:
+    type: entity
+    table: null
+    fields:
+        fluid:
+            type: boolean
+    lifecycleCallbacks: {  }

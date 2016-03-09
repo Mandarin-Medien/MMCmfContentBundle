@@ -29,8 +29,7 @@ class ContentNodeController extends Controller
     {
         $json_nodes = $request->get('nodes');
 
-        if($json_nodes)
-        {
+        if ($json_nodes) {
             $this->em = $this->getDoctrine()->getManager();
 
             foreach ($json_nodes as $id => $obj) {
@@ -83,9 +82,8 @@ class ContentNodeController extends Controller
             $this->em->flush();
 
             return new JsonResponse(array('status' => 'saved'));
-        }else
-        {
-            return new JsonResponse(array('status' => 'failed','msg'=> 'Nothing to update.'));
+        } else {
+            return new JsonResponse(array('status' => 'failed', 'msg' => 'Nothing to update.'));
         }
 
     }
@@ -102,21 +100,59 @@ class ContentNodeController extends Controller
 
     /**
      * return the general ContentNode Form
+     *
+     * @param ContentNode $contentNode
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function getSimpleFormAction(ContentNode $contentNode)
     {
-        return $this->render('@MMCmfContent/Form/general_form.html.twig', array(
-            'form' => $this->getSimpleEditForm($contentNode)->createView()
+        $contentNodeParser = $this->get('mm_cmf_content.content_parser');
+        $simpleFormData = $contentNodeParser->getSimpleForm($contentNode);
+
+        //set FormTemplate
+        if (isset($simpleFormData['template']))
+            $simpleFormTemplate = $simpleFormData['template'];
+        else
+            $simpleFormTemplate = '@MMCmfContent/Form/general_form.html.twig';
+
+        $simpleFormType = $this->getSimpleEditForm($contentNode);
+
+        // render form
+        return $this->render($simpleFormTemplate, array(
+            'form' => $simpleFormType->createView()
         ));
     }
 
     /**
-     * return the general ContentNode Form
+     * validates the simple ContentNode Form
+     *
+     * @param Request $request
+     * @param ContentNode $contentNode
+     * @return JsonResponse
      */
-    public function updateAction(Request $request, ContentNode $contentNode)
+    public function simpleUpdateAction(Request $request, ContentNode $contentNode)
+    {
+        return $this->updateAction($request,$contentNode,true);
+    }
+
+    /**
+     * validates the general ContentNode Form
+     *
+     * @param Request $request
+     * @param ContentNode $contentNode
+     * @param bool $isSimpleForm
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, ContentNode $contentNode, $isSimpleForm = false)
     {
         $em = $this->getDoctrine()->getManager();
-        $editForm = $this->getEditForm($contentNode);
+
+        //check if node need "simple" validation
+        if($isSimpleForm)
+            $editForm = $this->getSimpleEditForm($contentNode);
+        else
+            $editForm = $this->getEditForm($contentNode);
+
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -147,28 +183,39 @@ class ContentNodeController extends Controller
      */
     public function getSimpleEditForm(ContentNode $contentNode)
     {
-        $simpleForm = $this->get('mm_cmf_content.form_type.content_node');
-
         $contentNodeParser = $this->get('mm_cmf_content.content_parser');
+
+        $simpleFormData = $contentNodeParser->getSimpleForm($contentNode);
+
+        //set FormType
+        if (isset($simpleFormData['type']))
+            $simpleFormType = $simpleFormData['type'];
+        else
+            $simpleFormType = $this->get('mm_cmf_content.form_type.content_node');
+
+
+        //get fields to hide
         $hiddenFields = $contentNodeParser->getHiddenFields($contentNode);
 
-        foreach($hiddenFields as $field)
-        {
-            $simpleForm->addHiddenField($field);
+        foreach ($hiddenFields as $field) {
+            $simpleFormType->addHiddenField($field);
         }
 
         return $this->createForm(
-            $simpleForm,
+            $simpleFormType,
             $contentNode,
             array(
-                'action' => $this->get('router')->generate('mm_cmf_content_node_update', array(
+                'action' => $this->get('router')->generate('mm_cmf_content_node_simple_update', array(
                     'id' => $contentNode->getId()
                 ))
             )
         );
     }
 
-
+    /**
+     * @param ContentNode $contentNode
+     * @return \Symfony\Component\Form\Form
+     */
     public function getEditForm(ContentNode $contentNode)
     {
         return $this->createForm(

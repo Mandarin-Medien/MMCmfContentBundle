@@ -1,7 +1,9 @@
 {% block cmf_contentNode_widget %}
 
-    <div
-        class="{{ display_classes }}"
+    {#Real headerr#}
+    {% block cmf_contentNode_widget_header %}
+        <div
+                class="{{ display_classes }}"
 
         {% for key,value in node.attributes %}
             {{ key }}="{{ value }}"
@@ -12,18 +14,25 @@
         data-cmf-class="{{ node_namespace }}\{{ node_class }}"
         data-cmf-simple-form="{{ path('mm_cmf_content_node_simple_form', {'id': node.id }) }}"
         data-cmf-css-generated-classes="{{ generated_classes }}"
-    >
+        >
+    {% endblock %}
 
     {#Real Content#}
 
     {% block cmf_contentNode_widget_content %}
-        <h2 data-cmf-field="name" data-cmf-field-type="string">{{ node.name|raw }}</h2>
+        {#<h2 data-cmf-field="name" data-cmf-field-type="string">{{ node.name|raw }}</h2>#}
         <div class="ContentNodeChildren">
             {% for child in node.nodes %}
                 {{ child|cmfParse }}
+            {% else %}
+                {{ 'No Children for ' ~ node.name|trans }}
             {% endfor %}
         </div>
     {% endblock %}
 
+    {#Real Footer#}
+
+    {% block cmf_contentNode_widget_footer %}
     </div>
+    {% endblock %}
 {% endblock cmf_contentNode_widget %}

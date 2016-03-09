@@ -1,0 +1,28 @@
+.RowContentNode
+{
+  & > h1,
+  & > h2,
+  & > h3,
+  & > h4,
+  & > h5,
+  & > h6
+  {
+    .make-xs-column(12);
+  }
+
+  .make-row();
+}
+
+.ContainerContentNode.standard
+{
+  .container;
+}
+
+.ContainerContentNode.fluid
+{
+  .container-fluid;
+}
+
+.ContentNodeChildren {
+  .clearfix();
+}

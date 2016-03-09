@@ -9,7 +9,7 @@ class ContentParserController extends Controller
 {
     private $contentNodeTemplates = array();
     private $contentNodeHiddenFields = array();
-    private $contentNodeSimpleFormType = array();
+    private $contentNodeSimpleForm = array();
 
     public function __construct(Array $contentNodeConfig)
     {
@@ -26,44 +26,67 @@ class ContentParserController extends Controller
             // templates
             $this->contentNodeTemplates[$className] = array();
 
-            if( isset($nodeAttributes['templates']) )
+            if (isset($nodeAttributes['templates']))
                 foreach ($nodeAttributes['templates'] as $templateItem) {
                     $this->contentNodeTemplates[$className][$templateItem['name']] = $templateItem['template'];
                 }
 
             // hiddenFields
-            $this->contentNodeHiddenFields[$className]= array();
-            if( isset($nodeAttributes['hiddenFields']) )
+            $this->contentNodeHiddenFields[$className] = array();
+
+            if (isset($nodeAttributes['hiddenFields']))
                 foreach ($nodeAttributes['hiddenFields'] as $field) {
                     $this->contentNodeHiddenFields[$className][] = $field;
                 }
 
             // simpleFormType
-            $this->contentNodeSimpleFormType[$className]= array();
-            if( isset($nodeAttributes['simpleFormType']) )
-                foreach ($nodeAttributes['simpleFormType'] as $field) {
-                    $this->contentNodeSimpleFormType[$className] = $field;
-                }
+            $this->contentNodeSimpleFormType[$className] = array();
 
+            if (isset($nodeAttributes['simpleForm']))
+                foreach ($nodeAttributes['simpleForm'] as $key => $field) {
+                    $this->contentNodeSimpleForm[$className][$key] = $field;
+                }
         }
     }
 
+    /**
+     * @param $node
+     * @return array|null
+     */
+    public function getSimpleForm($node)
+    {
+        $classNameing = $this->getNativeClassnamimg($node);
+
+        return (isset($this->contentNodeSimpleForm[$classNameing['name']])) ? $this->contentNodeSimpleForm[$classNameing['name']] : null;
+    }
+
+    /**
+     * @param $node
+     * @return array
+     */
     public function getHiddenFields($node)
     {
         $classNameing = $this->getNativeClassnamimg($node);
 
-        return (isset($this->contentNodeHiddenFields[$classNameing['name']]))?$this->contentNodeHiddenFields[$classNameing['name']]:array();
+        return (isset($this->contentNodeHiddenFields[$classNameing['name']])) ? $this->contentNodeHiddenFields[$classNameing['name']] : array();
     }
 
+    /**
+     * @param $node
+     * @return array
+     */
     public function getNativeClassnamimg($node)
     {
         $refClass = new \ReflectionClass($node);
-        $className = trim(str_replace($refClass->getNamespaceName(),'',$refClass->getName()),'\\');
+        $className = trim(str_replace($refClass->getNamespaceName(), '', $refClass->getName()), '\\');
 
-        return array('name'=>$className , 'namespace'=> $refClass->getNamespaceName());
+        return array('name' => $className, 'namespace' => $refClass->getNamespaceName());
     }
 
-
+    /**
+     * @param ContentNode $node
+     * @return mixed|string
+     */
     public function findTemplate(ContentNode $node)
     {
         //check if the node is already related to a template
@@ -83,7 +106,7 @@ class ContentParserController extends Controller
 
                 $bundleName = $this->getBundleNameFromEntity($namespace, $this->get('kernel')->getBundles());
 
-                $template = $this->getDefaultTemplate($className,$bundleName);
+                $template = $this->getDefaultTemplate($className, $bundleName);
             }
         }
 
@@ -114,7 +137,7 @@ class ContentParserController extends Controller
      * @param string $bundleName
      * @return string
      */
-    public function getDefaultTemplate($className ,$bundleName = "MMCmfContentBundle")
+    public function getDefaultTemplate($className, $bundleName = "MMCmfContentBundle")
     {
         return $bundleName . ':cmf:' . $className . '/' . $className . '_default.html.twig';
     }

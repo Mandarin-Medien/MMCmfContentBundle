@@ -15,7 +15,7 @@
         this.settings = $options;
         this.modalParent = $('body');
 
-        this.initiateDragula($('.ContentNodeChildren'));
+        this.initiateDragula($('.ContentNodeChildren.dragable'));
 
 
         $(this.contentNodes).each(function (key, $contentNode) {

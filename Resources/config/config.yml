@@ -9,7 +9,10 @@ mm_cmf_content:
         paragraphContentNode:
             hiddenFields:
                 - "headline"
-                - "text"
+        containerContentNode:
+            simpleForm:
+                type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
+                template: "MMCmfContentBundle:Form:container_form.html.twig"
 
 twig:
     form:

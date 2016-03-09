@@ -18,6 +18,10 @@ mm_cmf_content_node_update:
     path: /{id}/update
     defaults:  { _controller: MMCmfContentBundle:ContentNode:update}
 
+mm_cmf_content_node_simple_update:
+    path: /{id}/simple/update
+    defaults:  { _controller: MMCmfContentBundle:ContentNode:simpleUpdate}
+
 
 mm_cmf_content_node_select:
     path: /discrimators

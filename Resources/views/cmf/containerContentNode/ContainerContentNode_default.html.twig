@@ -1,0 +1,12 @@
+{% extends 'MMCmfContentBundle:cmf/contentNode:contentNode_default.html.twig' %}
+
+{% block cmf_contentNode_widget %}
+
+    {% if node.fluid %}
+        {% set display_classes = display_classes ~ ' fluid' %}
+    {% else %}
+        {% set display_classes = display_classes ~ ' standard' %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
