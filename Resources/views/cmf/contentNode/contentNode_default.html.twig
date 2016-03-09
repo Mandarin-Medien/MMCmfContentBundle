@@ -25,7 +25,7 @@
             {% for child in node.nodes %}
                 {{ child|cmfParse }}
             {% else %}
-                {{ 'No Children for ' ~ node.name|trans }}
+                <i>{{ 'No Children for ' ~ node.name|trans }}</i>
             {% endfor %}
         </div>
     {% endblock %}

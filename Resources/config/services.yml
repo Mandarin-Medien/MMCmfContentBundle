@@ -52,3 +52,9 @@ services:
         arguments: ["@service_container"]
         tags:
             - {name: form.type, alias: mm_cmf_content_content_node}
+
+    mm_cmf_content.form_type.node_template:
+        class: MandarinMedien\MMCmfContentBundle\Form\Type\ContentNodeTemplateType
+        arguments: ["@service_container"]
+        tags:
+            - {name: form.type, alias: mm_cmf_content_content_node_template}

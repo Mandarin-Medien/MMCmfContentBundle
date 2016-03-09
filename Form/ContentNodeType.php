@@ -60,13 +60,15 @@ class ContentNodeType extends AbstractType
             if(in_array($field, array(
                 'parent',
                 'nodes',
-                'routes'
+                'routes',
+                'template'
             ))) continue;
 
             $builder->add($field, $formTypeReader->get($className, $field));
         }
 
         $builder->add('parent', $this->container->get('mm_cmf_content.form_type.node_tree')->setParentNode($options['parent_node']));
+        $builder->add('template', $this->container->get('mm_cmf_content.form_type.node_template')->setClass($className));
     }
 
 

@@ -33,9 +33,6 @@ class ContainerContentNode extends ContentNode
     }
 
 
-
-
-
     /**
      * @param NodeInterface $node
      *

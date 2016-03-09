@@ -7,8 +7,12 @@ mm_cmf_content:
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
         paragraphContentNode:
-            hiddenFields:
-                - "headline"
+            templates:
+                - { name: 'default', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_default.html.twig" }
+                - { name: 'Upside-Down', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_upside_down.html.twig" }
+            #hiddenFields:
+                #- "headline"
+                #- "text"
         containerContentNode:
             simpleForm:
                 type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'

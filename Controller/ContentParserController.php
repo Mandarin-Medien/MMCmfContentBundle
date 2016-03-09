@@ -5,6 +5,12 @@ namespace MandarinMedien\MMCmfContentBundle\Controller;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * @todo: may need a new name couz of new purpose
+ *
+ * Class ContentParserController
+ * @package MandarinMedien\MMCmfContentBundle\Controller
+ */
 class ContentParserController extends Controller
 {
     private $contentNodeTemplates = array();
@@ -69,6 +75,17 @@ class ContentParserController extends Controller
         $classNameing = $this->getNativeClassnamimg($node);
 
         return (isset($this->contentNodeHiddenFields[$classNameing['name']])) ? $this->contentNodeHiddenFields[$classNameing['name']] : array();
+    }
+
+    /**
+     * @param $node
+     * @return array
+     */
+    public function getTemplates($node)
+    {
+        $classNameing = $this->getNativeClassnamimg($node);
+
+        return (isset($this->contentNodeTemplates[$classNameing['name']])) ? $this->contentNodeTemplates[$classNameing['name']] : null;
     }
 
     /**
