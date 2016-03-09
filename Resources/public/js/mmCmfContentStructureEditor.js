@@ -19,7 +19,11 @@
 
 
         $(this.contentNodes).each(function (key, $contentNode) {
-            $this.appendSettingsMenu($($contentNode));
+            if (!$($contentNode).data('mmCmfContentStructureEditor')) {
+                $this.appendSettingsMenu($($contentNode));
+                $($contentNode).data('mmCmfContentStructureEditor', $this);
+            }
+
         });
     };
 
@@ -106,7 +110,7 @@
         var $cmfForbiddenClassesArray = $cmfForbiddenClasses.split(" ");
 
         for (var i = 0; i < $cmfForbiddenClassesArray.length; i++) {
-            $value = $value.replace($cmfForbiddenClassesArray[i],'');
+            $value = $value.replace($cmfForbiddenClassesArray[i], '');
         }
 
         $(document).trigger('updated.MMCmfContentFieldEditor',
@@ -151,7 +155,7 @@
                     $contentNode.next().after($contentNode);
             }
 
-            $this.refreshPositions();
+            $this.refreshPositions($contentNode);
         });
 
         return $posiswitch;
@@ -305,12 +309,45 @@
 
     };
 
+    /**
+     * refreshs siblings of changed ContentNode
+     *
+     * @param $contentNode
+     */
     mmCmfContentStructureEditor.prototype.refreshPositions = function ($contentNode) {
 
-        $($contentNode).parent().children('.contentNode').each(function (i) {
-            $(this).attr('data-cmf-position', i);
+        var $this = this;
+
+        $($contentNode).parent().children('.ContentNode').each(function (i) {
+
+            var $contentNodeInner = $(this);
+
+            $contentNodeInner.attr('data-cmf-position', i);
+
+            $this.onObjectPositionChanged($contentNodeInner, i);
         });
     };
+
+    /**
+     * triggeres update functions to the MainController
+     *
+     * @param $contentNode
+     * @param $value
+     */
+    mmCmfContentStructureEditor.prototype.onObjectPositionChanged = function ($contentNode, $value) {
+
+        var $cmfId = $contentNode.data('cmf-id');
+
+        $(document).trigger('updated.MMCmfContentFieldEditor',
+            {
+                value: $value,
+                name: 'position',
+                'cmf-id': $cmfId
+            }
+        );
+
+    };
+
 
     /**
      * bootstrap jquery plugin
