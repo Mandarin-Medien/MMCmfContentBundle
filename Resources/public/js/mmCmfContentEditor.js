@@ -129,7 +129,7 @@
             },
 
             // MmCmfContentController
-            saveRoute: '/app_dev.php/mmcmfcontent/save'
+            saveRoute: '/app_dev.php/admin/mmcmfcontent/save'
 
         }, options);
 

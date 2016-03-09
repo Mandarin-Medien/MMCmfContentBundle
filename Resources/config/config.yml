@@ -1,9 +1,13 @@
 mm_cmf_content:
     content_nodes:
         contentNode:
+            hiddenFields:
+                - "attributes"
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
         rowContentNode:
+            hiddenFields:
+                  - "attributes"
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
         paragraphContentNode:

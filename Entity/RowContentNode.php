@@ -12,6 +12,28 @@ use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 
 class RowContentNode extends ContentNode
 {
+    protected $draggable = false;
+
+    /**
+     * @return boolean
+     */
+    public function isDraggable()
+    {
+        return $this->draggable;
+    }
+
+    /**
+     * @param boolean $draggable
+     * @return RowContentNode
+     */
+    public function setDraggable($draggable)
+    {
+        $this->draggable = $draggable;
+        return $this;
+    }
+
+
+
     /**
      * @param NodeInterface $node
      *
