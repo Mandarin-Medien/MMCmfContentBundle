@@ -1,5 +1,5 @@
 /**
- * @todo: needs to be refactored to not set in global scope
+ * @todo: needs to be refactored to not sit in global scope
  */
 var mmFormFieldhandler;
 var mmCmfContentEditorIntilized = false;
