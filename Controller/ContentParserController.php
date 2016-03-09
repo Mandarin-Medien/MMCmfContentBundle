@@ -15,7 +15,8 @@ class ContentParserController extends Controller
 {
     private $contentNodeTemplates = array();
     private $contentNodeHiddenFields = array();
-    private $contentNodeSimpleForm = array();
+    private $contentNodeSimpleForms = array();
+    private $contentNodeIcons = array();
 
     public function __construct(Array $contentNodeConfig)
     {
@@ -46,13 +47,33 @@ class ContentParserController extends Controller
                 }
 
             // simpleFormType
-            $this->contentNodeSimpleFormType[$className] = array();
+            $this->contentNodeSimpleFormsType[$className] = array();
 
             if (isset($nodeAttributes['simpleForm']))
                 foreach ($nodeAttributes['simpleForm'] as $key => $field) {
-                    $this->contentNodeSimpleForm[$className][$key] = $field;
+                    $this->contentNodeSimpleForms[$className][$key] = $field;
                 }
+
+            // icons
+            $this->contentNodeSimpleForms[$className] = array();
+
+            if (isset($nodeAttributes['icon']))
+                $this->contentNodeIcons[$className] = $nodeAttributes['icon'];
+            else
+                $this->contentNodeIcons[$className] = 'fa fa-file-o';
+
         }
+    }
+
+    /**
+     * @param $node
+     * @return array|null
+     */
+    public function getIcon($node)
+    {
+        $classNameing = $this->getNativeClassnamimg($node);
+
+        return (isset($this->contentNodeIcons[$classNameing['name']])) ? $this->contentNodeIcons[$classNameing['name']] : '';
     }
 
     /**
@@ -63,7 +84,7 @@ class ContentParserController extends Controller
     {
         $classNameing = $this->getNativeClassnamimg($node);
 
-        return (isset($this->contentNodeSimpleForm[$classNameing['name']])) ? $this->contentNodeSimpleForm[$classNameing['name']] : null;
+        return (isset($this->contentNodeSimpleForms[$classNameing['name']])) ? $this->contentNodeSimpleForms[$classNameing['name']] : null;
     }
 
     /**

@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('content_nodes')
                     ->prototype('array')
                         ->children()
+                            ->scalarNode('icon')->end()
                             ->arrayNode('simpleForm')
                                 ->children()
                                     ->scalarNode('type')->end()

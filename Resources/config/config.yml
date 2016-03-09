@@ -6,22 +6,27 @@ mm_cmf_content:
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
         rowContentNode:
+            icon: 'fa fa-columns'
             hiddenFields:
                   - "attributes"
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
         paragraphContentNode:
+            icon: 'fa fa-paragraph'
             templates:
                 - { name: 'default', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_default.html.twig" }
                 - { name: 'Upside-Down', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_upside_down.html.twig" }
-            #hiddenFields:
+            hiddenFields:
+                - "attributes"
                 #- "headline"
                 #- "text"
         containerContentNode:
+            icon: 'fa fa-sitemap'
             simpleForm:
                 type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
                 template: "MMCmfContentBundle:Form:container_form.html.twig"
-
+            hiddenFields:
+                - "attributes"
 twig:
     form:
         resources:

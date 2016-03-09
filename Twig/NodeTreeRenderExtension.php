@@ -9,10 +9,12 @@ class NodeTreeRenderExtension extends \Twig_Extension
 {
 
     private $container;
+    private $contentNodeParser;
 
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->contentNodeParser = $this->container->get('mm_cmf_content.content_parser');
     }
 
 
@@ -43,12 +45,17 @@ class NodeTreeRenderExtension extends \Twig_Extension
      */
     public function renderNodeTreeFunction(\Twig_Environment $twig, NodeInterface $node, array $options=array())
     {
-        return $twig->render('MMCmfContentBundle:Form/NodeTree:list.html.twig', array('node' => $node, 'options' => $options));
+        return $twig->render('MMCmfContentBundle:Form/NodeTree:list.html.twig', array('node' => $node, 'icon' => $this->getIcon($node), 'options' => $options));
     }
 
     public function renderNodeTreeItemFunction(\Twig_Environment $twig, NodeInterface $node, array $options=array())
     {
-        return $twig->render('MMCmfContentBundle:Form/NodeTree:item.html.twig', array('node' => $node, 'options' => $options));
+        return $twig->render('MMCmfContentBundle:Form/NodeTree:item.html.twig', array('node' => $node, 'icon' => $this->getIcon($node), 'options' => $options));
+    }
+
+    function getIcon($node)
+    {
+        return $this->contentNodeParser->getIcon($node);
     }
 
     /**
