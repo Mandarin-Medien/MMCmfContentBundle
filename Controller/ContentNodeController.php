@@ -93,8 +93,12 @@ class ContentNodeController extends Controller
      */
     public function getFormAction(ContentNode $contentNode)
     {
+        $contentNodeParser = $this->get('mm_cmf_content.content_parser');
+        $icon = $contentNodeParser->getIcon($contentNode);
+
         return $this->render('@MMCmfContent/Form/general_form.html.twig', array(
-            'form' => $this->getEditForm($contentNode)->createView()
+            'form' => $this->getEditForm($contentNode)->createView(),
+            'node_icon' => $icon
         ));
     }
 
@@ -117,9 +121,13 @@ class ContentNodeController extends Controller
 
         $simpleFormType = $this->getSimpleEditForm($contentNode);
 
+        // load icon
+        $icon = $contentNodeParser->getIcon($contentNode);
+
         // render form
         return $this->render($simpleFormTemplate, array(
-            'form' => $simpleFormType->createView()
+            'form' => $simpleFormType->createView(),
+            'node_icon' => $icon
         ));
     }
 
