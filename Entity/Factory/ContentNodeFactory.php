@@ -3,6 +3,7 @@
 namespace MandarinMedien\MMCmfContentBundle\Entity\Factory;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 
 
@@ -18,7 +19,7 @@ class ContentNodeFactory
      * ContentNodeFactory constructor.
      * @param EntityManager $manager
      */
-    public function __construct(EntityManager $manager)
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
         $this->meta = $this->manager->getClassMetadata(
@@ -79,10 +80,10 @@ class ContentNodeFactory
     /**
      * get the ContentNode subclass by discrimator value
      * @param string $discrimator
-     * @return ContentNodeInterface
+     * @return string
      * @throws \Exception
      */
-    protected function getClassByDiscrimator($discrimator)
+    public function getClassByDiscrimator($discrimator)
     {
         if ($class = ($this->meta->discriminatorMap[$discrimator])) {
             return $class;
