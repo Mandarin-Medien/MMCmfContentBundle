@@ -6,7 +6,7 @@ mm_cmf_content:
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
         rowContentNode:
-            icon: 'fa fa-columns'
+            icon: 'fa fa-th-list'
             hiddenFields:
                   - "attributes"
             templates:
@@ -21,7 +21,7 @@ mm_cmf_content:
                 #- "headline"
                 #- "text"
         containerContentNode:
-            icon: 'fa fa-sitemap'
+            icon: 'fa fa-folder-o'
             simpleForm:
                 type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
                 template: "MMCmfContentBundle:Form:container_form.html.twig"
