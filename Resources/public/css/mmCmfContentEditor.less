@@ -1,5 +1,4 @@
 @import "../vendor/font-awesome/less/font-awesome.less";
-
 @import "type/nodeTreeType";
 
 @fa-font-path: "/bundles/mmcmfcontent/vendor/font-awesome/fonts";
@@ -44,8 +43,8 @@
 .ContentNode {
   position: relative;
 
-  .gu-transit{
-    background-color: rgba( 255 , 0 , 255 ,.5);
+  .gu-transit {
+    background-color: rgba(255, 0, 255, .5);
   }
   /*
     body > & {
@@ -56,11 +55,11 @@
       }
     }*/
 
-  &.hover{
-    & > .ContentNode-settings{
+  /*&.hover {
+    & > .ContentNode-settings {
       display: block;
-    };
-  }
+    }
+  }*/
 
 }
 
@@ -69,6 +68,31 @@
 
   box-shadow: 0 0 1px #FFF;
 
+}
+
+body.cmf-content-edit-modus .ContentNode-settings {
+  display: block;
+}
+
+.RowContentNode,
+.ContainerContentNode {
+
+  &.RowContentNode > .ContentNode-settings {
+    top: -40px;
+    margin-left: 40px;
+    background: rgba(0, 0, 0, .2);
+  }
+
+  &.ContainerContentNode > .ContentNode-settings {
+    top: -40px;
+    margin-right: 40px;
+    background: rgba(0, 0, 0, .5);
+  }
+
+  /*  &:hover > .ContentNode-settings
+    {
+      display:block;
+    }*/
 }
 
 .ContentNode-settings {
@@ -84,7 +108,10 @@
 
   position: absolute;
   top: 0;
-  right: 15px;
+
+  margin: 0 50%;
+  width: 58px;
+  left: -29px;
 
   padding: 10px;
 
@@ -95,7 +122,10 @@
   b {
     cursor: pointer;
     display: inline-block;
-    margin-left: 10px;
+
+    &:first-child {
+      margin-right: 10px;
+    }
   }
 
   .select-container {
@@ -114,7 +144,7 @@
     width: 120px;
     b {
       cursor: move;
-      &.ContentNode-settings-gear{
+      &.ContentNode-settings-gear {
         display: none;
       }
     }
@@ -144,24 +174,38 @@
   }
 }
 
-.ContentNodeChildren.draggable
-{
+.ContentNodeChildren.draggable {
   min-height: 50px;
 }
 
-.modal-dialog > .modal-content
-{
+.modal-dialog > .modal-content {
 
   &,
-  .form-control
-  {
+  .form-control {
     border-radius: 0;
 
-    &.form-control
-    {
+    &.form-control {
       box-shadow: none;
     }
 
   }
 
+}
+
+/**
+ * Actionbar / Toolbar cmf-content-edit-modus-toggle
+ */
+
+.cmf-content-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  background: #d4d4d4;
+
+  .cmf-content-edit-modus-toggle {
+    cursor: pointer;
+    margin: 10px;
+
+  }
 }

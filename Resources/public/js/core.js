@@ -16,6 +16,8 @@ function BootUpMmCmfContentBundle()
 
     $contentNodes.mmCmfContentFieldEditor($options);
     $contentNodes.mmCmfContentStructureEditor($options);
+
+    $('body').mmCmfContentActionBar();
 }
 
 

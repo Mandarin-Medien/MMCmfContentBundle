@@ -46,6 +46,7 @@ assetic:
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentFieldEditor.js"
               - "@MMCmfContentBundle/Resources/public/js/mmCmfContentStructureEditor.js"
+              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentActionBar.js"
               - "@MMCmfContentBundle/Resources/public/js/core.js"
 
               #formType Types

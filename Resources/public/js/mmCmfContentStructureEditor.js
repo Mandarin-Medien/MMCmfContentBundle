@@ -70,21 +70,6 @@
 
         $contentNode.append($box);
 
-
-        $contentNode.mouseover(function (e) {
-
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).addClass($settings.hoverClass);
-        });
-        $contentNode.mouseout(
-            function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $(this).removeClass($settings.hoverClass);
-            }
-        );
-
     };
 
 
