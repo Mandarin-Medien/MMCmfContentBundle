@@ -7,33 +7,40 @@ use MandarinMedien\MMCmfRoutingBundle\Entity\AutoNodeRoute;
 /**
  * Page
  */
-class Page extends Node
+class Page extends Node implements TemplatableNodeInterface
 {
 
     /**
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @var string
      */
-    private $keywords;
+    protected $keywords;
 
     /**
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      */
-    private $robots;
+    protected $robots;
 
     /**
      * @var string
      */
-    private $author;
+    protected $author;
+
+
+    /**
+     * @var string
+     */
+    protected $template;
+
 
     /**
      * @var boolean
@@ -177,6 +184,25 @@ class Page extends Node
 
         return null;
     }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param string $template
+     * @return Page
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
 
     /**
      * to string function

@@ -1,17 +1,25 @@
 mm_cmf_content:
+
+    page_nodes:
+        MandarinMedien\MMCmfContentBundle\Entity\Page:
+            templates:
+                - { name: 'default', template: 'MMCmfContentBundle:cmf:Page/default.html.twig' }
+
     content_nodes:
-        contentNode:
+        MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
             hiddenFields:
                 - "attributes"
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
-        rowContentNode:
+
+        MandarinMedien\MMCmfContentBundle\Entity\RowContentNode:
             icon: 'fa fa-th-list'
             hiddenFields:
                   - "attributes"
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
-        paragraphContentNode:
+
+        MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode:
             icon: 'fa fa-paragraph'
             templates:
                 - { name: 'default', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_default.html.twig" }
@@ -20,7 +28,8 @@ mm_cmf_content:
                 - "attributes"
                 #- "headline"
                 #- "text"
-        containerContentNode:
+
+        MandarinMedien\MMCmfContentBundle\Entity\ContainerContentNode:
             icon: 'fa fa-folder-o'
             simpleForm:
                 type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'

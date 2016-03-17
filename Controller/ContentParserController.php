@@ -4,6 +4,7 @@ namespace MandarinMedien\MMCmfContentBundle\Controller;
 
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @todo: may need a new name couz of new purpose
@@ -11,17 +12,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * Class ContentParserController
  * @package MandarinMedien\MMCmfContentBundle\Controller
  */
-class ContentParserController extends Controller
+class ContentParserController
 {
-    private $contentNodeTemplates = array();
+
+    protected $container;
+
+
     private $contentNodeHiddenFields = array();
     private $contentNodeSimpleForms = array();
     private $contentNodeIcons = array();
+    protected $templateManager;
 
-    public function __construct(Array $contentNodeConfig)
+    public function __construct(Container $container, Array $contentNodeConfig)
     {
-        $this->parseContentNodeConfig($contentNodeConfig);
 
+        $this->container = $container;
+        $this->templateManager = $this->container->get('mm_cmf_content.template_manager');
+
+        $this->parseContentNodeConfig($contentNodeConfig);
     }
 
     private function parseContentNodeConfig($contentNodeConfig)
@@ -31,12 +39,12 @@ class ContentParserController extends Controller
             $className = ucfirst($nodeName);
 
             // templates
-            $this->contentNodeTemplates[$className] = array();
+           /* $this->contentNodeTemplates[$className] = array();
 
             if (isset($nodeAttributes['templates']))
                 foreach ($nodeAttributes['templates'] as $templateItem) {
                     $this->contentNodeTemplates[$className][$templateItem['name']] = $templateItem['template'];
-                }
+                }*/
 
             // hiddenFields
             $this->contentNodeHiddenFields[$className] = array();
@@ -47,7 +55,7 @@ class ContentParserController extends Controller
                 }
 
             // simpleFormType
-            $this->contentNodeSimpleFormsType[$className] = array();
+            $this->contentNodeSimpleForms[$className] = array();
 
             if (isset($nodeAttributes['simpleForm']))
                 foreach ($nodeAttributes['simpleForm'] as $key => $field) {
@@ -104,9 +112,12 @@ class ContentParserController extends Controller
      */
     public function getTemplates($node)
     {
-        $classNameing = $this->getNativeClassnamimg($node);
+        //$classNameing = $this->getNativeClassnamimg($node);
 
-        return (isset($this->contentNodeTemplates[$classNameing['name']])) ? $this->contentNodeTemplates[$classNameing['name']] : null;
+        $this->templateManager->getTemplates(get_class($node));
+
+
+        //return (isset($this->contentNodeTemplates[$classNameing['name']])) ? $this->contentNodeTemplates[$classNameing['name']] : null;
     }
 
     /**
@@ -127,28 +138,7 @@ class ContentParserController extends Controller
      */
     public function findTemplate(ContentNode $node)
     {
-        //check if the node is already related to a template
-        $template = $node->getTemplate();
-
-        // if no template is set try to guess one
-        if (!$template) {
-
-            $refClass = $this->getNativeClassnamimg($node);
-
-            $className = $refClass['name'];
-            $namespace = $refClass['namespace'];
-
-            if (!empty($this->contentNodeTemplates[$className]) && count($this->contentNodeTemplates[$className]) > 0)
-                $template = reset($this->contentNodeTemplates[$className]);
-            else {
-
-                $bundleName = $this->getBundleNameFromEntity($namespace, $this->get('kernel')->getBundles());
-
-                $template = $this->getDefaultTemplate($className, $bundleName);
-            }
-        }
-
-        return $template;
+        return $this->templateManager->getTemplate($node);
 
     }
 

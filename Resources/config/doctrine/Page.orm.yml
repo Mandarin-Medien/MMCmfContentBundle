@@ -22,4 +22,8 @@ MandarinMedien\MMCmfContentBundle\Entity\Page:
             length: 255
             nullable: true
 
+        template:
+            type: string
+            nullable: true
+
     lifecycleCallbacks: {  }

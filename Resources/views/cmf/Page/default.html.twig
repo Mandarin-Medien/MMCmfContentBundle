@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>{{ node.title }}</title>
+        <meta name="author" content="{{ node.author }}">
+        <meta name="keywords" content="{{ node.author }}">
+        <meta name="discription" content="{{ node.author }}">
+        <meta name="robots" content="{{ node.robots }}">
+    </head>
+    <body>
+        <!--
+        -------------------------------------------------------------------
+        | this is the Page default template                               |
+        | you can overwrite and configure your own in your app config     |
+        -------------------------------------------------------------------
+        -->
+
+        {% for node in node.nodes %}
+            {{ node|cmfParse }}
+        {% endfor %}
+    </body>
+</html>

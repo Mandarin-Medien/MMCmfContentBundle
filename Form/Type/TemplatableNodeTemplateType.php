@@ -3,6 +3,7 @@
 namespace MandarinMedien\MMCmfContentBundle\Form\Type;
 
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
+use MandarinMedien\MMCmfContentBundle\Entity\TemplatableNodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -10,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ContentNodeTemplateType extends AbstractType
+class TemplatableNodeTemplateType extends AbstractType
 {
     private $container;
     private $class;
@@ -23,8 +24,8 @@ class ContentNodeTemplateType extends AbstractType
     /**
      * define a node as entry point for the node tree
      *
-     * @param ContentNode|string $node
-     * @return ContentNodeTemplateType
+     * @param TemplatableNodeInterface|string $node
+     * @return TemplatableNodeTemplateType
      */
     public function setClass($node = null)
     {
@@ -33,7 +34,7 @@ class ContentNodeTemplateType extends AbstractType
     }
 
     /**
-     * @return ContentNode|string
+     * @return TemplatableNodeInterface|string
      */
     protected function getClass()
     {
@@ -64,10 +65,12 @@ class ContentNodeTemplateType extends AbstractType
      */
     public function getTemplates($node = null)
     {
-        $contentNodeParser = $this->container->get('mm_cmf_content.content_parser');
-        $templates = $contentNodeParser->getTemplates($node);
+        /*$contentNodeParser = $this->container->get('mm_cmf_content.content_parser');
+        $templates = $contentNodeParser->getTemplates($node);*/
 
-        return $templates;
+        return $this->container->get('mm_cmf_content.template_manager')->getTemplates($node);
+
+        //return $templates;
     }
 
     /**
@@ -91,7 +94,7 @@ class ContentNodeTemplateType extends AbstractType
      */
     public function getName()
     {
-        return 'mm_cmf_content_content_node_template';
+        return 'mm_cmf_content_templatable_node_template';
     }
 
 

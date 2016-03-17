@@ -31,14 +31,58 @@ class MMCmfContentExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        $this->processConfig($container, $config);
         $this->configureContentNodes($container,$config);
 
+    }
+
+
+    public function processConfig(ContainerBuilder $container, $config)
+    {
+
+        $templateManager = $container->getDefinition('mm_cmf_content.template_manager');
+
+        if($config['page_nodes']) {
+
+            foreach($config['page_nodes'] as $class => $pageConfig) {
+
+                if($pageConfig['templates']) {
+                    foreach($pageConfig['templates'] as $template) {
+                        $templateManager->addMethodCall(
+                            'registerTemplate', array(
+                                $class,
+                                $template['name'],
+                                $template['template']
+                            )
+                        );
+                    }
+                }
+            }
+        }
+
+        if($config['content_nodes']) {
+
+            foreach($config['content_nodes'] as $class => $contentConfig) {
+
+                if($contentConfig['templates']) {
+                    foreach($contentConfig['templates'] as $template) {
+                        $templateManager->addMethodCall(
+                            'registerTemplate', array(
+                                $class,
+                                $template['name'],
+                                $template['template']
+                            )
+                        );
+                    }
+                }
+            }
+        }
     }
 
 
     public function configureContentNodes(ContainerBuilder $container, $config)
     {
         $container->getDefinition('mm_cmf_content.content_parser')
-            ->replaceArgument(0, $config['content_nodes']);
+            ->replaceArgument(1, $config['content_nodes']);
     }
 }

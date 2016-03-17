@@ -1,9 +1,14 @@
 services:
     mm_cmf_content.content_parser:
         class: MandarinMedien\MMCmfContentBundle\Controller\ContentParserController
-        arguments: ["content_nodes"]
-        calls:
-          - [setContainer, ["@service_container"]]
+        arguments: [@service_container, "content_nodes"]
+        #calls:
+        #  - [setContainer, ["@service_container"]]
+
+    mm_cmf_content.template_manager:
+        class: MandarinMedien\MMCmfContentBundle\Templating\TemplateManager
+        arguments: [@service_container]
+
 
     mm_cmf_content.mm_cmf_parse_twig_extension:
           class: MandarinMedien\MMCmfContentBundle\Twig\CmfContentParserExtension
@@ -54,7 +59,7 @@ services:
             - {name: form.type, alias: mm_cmf_content_content_node}
 
     mm_cmf_content.form_type.node_template:
-        class: MandarinMedien\MMCmfContentBundle\Form\Type\ContentNodeTemplateType
+        class: MandarinMedien\MMCmfContentBundle\Form\Type\TemplatableNodeTemplateType
         arguments: ["@service_container"]
         tags:
-            - {name: form.type, alias: mm_cmf_content_content_node_template}
+            - {name: form.type, alias: mm_cmf_content_templatable_node_template}

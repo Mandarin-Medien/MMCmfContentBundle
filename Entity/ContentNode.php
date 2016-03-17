@@ -4,12 +4,13 @@ namespace MandarinMedien\MMCmfContentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
+use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use MandarinMedien\MMCmfContentBundle\FormTypeMeta as FormType;
 
 /**
  * ContentNode
  */
-class ContentNode extends \MandarinMedien\MMCmfNodeBundle\Entity\Node
+class ContentNode extends Node implements TemplatableNodeInterface
 {
 
     /**
