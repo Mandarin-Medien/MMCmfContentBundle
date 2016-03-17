@@ -66,7 +66,11 @@ class TemplateManager
      */
     public function getTemplates($class)
     {
-        return $this->templates[$class];
+        if (isset($this->templates[$class])) {
+            return $this->templates[$class];
+        } else {
+            return array();
+        }
     }
 
 
