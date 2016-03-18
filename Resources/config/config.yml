@@ -6,6 +6,7 @@ mm_cmf_content:
                 - { name: 'default', template: 'MMCmfContentBundle:cmf:Page/default.html.twig' }
 
     content_nodes:
+
         MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
             hiddenFields:
                 - "attributes"

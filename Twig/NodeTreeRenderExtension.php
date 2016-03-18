@@ -45,12 +45,12 @@ class NodeTreeRenderExtension extends \Twig_Extension
      */
     public function renderNodeTreeFunction(\Twig_Environment $twig, NodeInterface $node, array $options=array())
     {
-        return $twig->render('MMCmfContentBundle:Form/NodeTree:list.html.twig', array('node' => $node, 'icon' => $this->getIcon($node), 'options' => $options));
+        return $twig->render('MMCmfContentBundle:Form/NodeTree:list.html.twig', array('node' => $node, 'icon' => $this->getIcon(get_class($node)), 'options' => $options));
     }
 
     public function renderNodeTreeItemFunction(\Twig_Environment $twig, NodeInterface $node, array $options=array())
     {
-        return $twig->render('MMCmfContentBundle:Form/NodeTree:item.html.twig', array('node' => $node, 'icon' => $this->getIcon($node), 'options' => $options));
+        return $twig->render('MMCmfContentBundle:Form/NodeTree:item.html.twig', array('node' => $node, 'icon' => $this->getIcon(get_class($node)), 'options' => $options));
     }
 
     function getIcon($node)

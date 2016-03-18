@@ -4,6 +4,7 @@ namespace MandarinMedien\MMCmfContentBundle\Controller;
 
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\CssSelector\Node\NodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -16,7 +17,6 @@ class ContentParserController
 {
 
     protected $container;
-
 
     private $contentNodeHiddenFields = array();
     private $contentNodeSimpleForms = array();
@@ -38,15 +38,7 @@ class ContentParserController
 
             $className = ucfirst($nodeName);
 
-            // templates
-           /* $this->contentNodeTemplates[$className] = array();
-
-            if (isset($nodeAttributes['templates']))
-                foreach ($nodeAttributes['templates'] as $templateItem) {
-                    $this->contentNodeTemplates[$className][$templateItem['name']] = $templateItem['template'];
-                }*/
-
-            // hiddenFields
+             // hiddenFields
             $this->contentNodeHiddenFields[$className] = array();
 
             if (isset($nodeAttributes['hiddenFields']))
@@ -74,62 +66,57 @@ class ContentParserController
     }
 
     /**
-     * @param $node
+     * @param $nodeClassName
+     * @return string
+     */
+    public function getIcon($nodeClassName)
+    {
+        return (isset($this->contentNodeIcons[$nodeClassName])) ? $this->contentNodeIcons[$nodeClassName] : '';
+    }
+
+    /**
+     * @param $nodeClassName
      * @return array|null
      */
-    public function getIcon($node)
+    public function getSimpleForm($nodeClassName)
     {
-        $classNameing = $this->getNativeClassnamimg($node);
-
-        return (isset($this->contentNodeIcons[$classNameing['name']])) ? $this->contentNodeIcons[$classNameing['name']] : '';
+        return (isset($this->contentNodeSimpleForms[$nodeClassName])) ? $this->contentNodeSimpleForms[$nodeClassName] : null;
     }
 
     /**
-     * @param $node
-     * @return array|null
-     */
-    public function getSimpleForm($node)
-    {
-        $classNameing = $this->getNativeClassnamimg($node);
-
-        return (isset($this->contentNodeSimpleForms[$classNameing['name']])) ? $this->contentNodeSimpleForms[$classNameing['name']] : null;
-    }
-
-    /**
-     * @param $node
+     * @param $nodeClassName
      * @return array
      */
-    public function getHiddenFields($node)
+    public function getHiddenFields($nodeClassName)
     {
-        $classNameing = $this->getNativeClassnamimg($node);
 
-        return (isset($this->contentNodeHiddenFields[$classNameing['name']])) ? $this->contentNodeHiddenFields[$classNameing['name']] : array();
+        return (isset($this->contentNodeHiddenFields[$nodeClassName])) ? $this->contentNodeHiddenFields[$nodeClassName] : array();
     }
 
     /**
-     * @param $node
+     * @deprecated Look at the new MandarinMedien\MMCmfContentBundle\Templating\TemplateManager.
+     *
+     * @param $nodeClassName
+     *
      * @return array
      */
-    public function getTemplates($node)
+    public function getTemplates($nodeClassName)
     {
-        //$classNameing = $this->getNativeClassnamimg($node);
-
-        $this->templateManager->getTemplates(get_class($node));
-
-
-        //return (isset($this->contentNodeTemplates[$classNameing['name']])) ? $this->contentNodeTemplates[$classNameing['name']] : null;
+        return $this->templateManager->getTemplates($nodeClassName);
     }
 
     /**
-     * @param $node
+     * @param $node NodeInterface
      * @return array
      */
     public function getNativeClassnamimg($node)
     {
+
         $refClass = new \ReflectionClass($node);
         $className = trim(str_replace($refClass->getNamespaceName(), '', $refClass->getName()), '\\');
 
         return array('name' => $className, 'namespace' => $refClass->getNamespaceName());
+
     }
 
     /**
@@ -169,5 +156,4 @@ class ContentParserController
     {
         return $bundleName . ':cmf:' . $className . '/' . $className . '_default.html.twig';
     }
-
 }

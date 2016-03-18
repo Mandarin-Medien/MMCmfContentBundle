@@ -110,8 +110,10 @@ class ContentNodeController extends Controller
      */
     public function getSimpleFormAction(ContentNode $contentNode)
     {
+        $contentNodeClassName = get_class($contentNode);
+
         $contentNodeParser = $this->get('mm_cmf_content.content_parser');
-        $simpleFormData = $contentNodeParser->getSimpleForm($contentNode);
+        $simpleFormData = $contentNodeParser->getSimpleForm($contentNodeClassName);
 
         //set FormTemplate
         if (isset($simpleFormData['template']))
@@ -122,7 +124,7 @@ class ContentNodeController extends Controller
         $simpleFormType = $this->getSimpleEditForm($contentNode);
 
         // load icon
-        $icon = $contentNodeParser->getIcon($contentNode);
+        $icon = $contentNodeParser->getIcon($contentNodeClassName);
 
         //generates html-dom-node-id
         $modal_dom_id = 'modal_content_node_'.$contentNode->getId();
@@ -195,9 +197,11 @@ class ContentNodeController extends Controller
      */
     public function getSimpleEditForm(ContentNode $contentNode)
     {
+        $contentNodeClassName = get_class($contentNode);
+
         $contentNodeParser = $this->get('mm_cmf_content.content_parser');
 
-        $simpleFormData = $contentNodeParser->getSimpleForm($contentNode);
+        $simpleFormData = $contentNodeParser->getSimpleForm($contentNodeClassName);
 
         //set FormType
         if (isset($simpleFormData['type']))
@@ -207,7 +211,7 @@ class ContentNodeController extends Controller
 
 
         //get fields to hide
-        $hiddenFields = $contentNodeParser->getHiddenFields($contentNode);
+        $hiddenFields = $contentNodeParser->getHiddenFields($contentNodeClassName);
 
         foreach ($hiddenFields as $field) {
             $simpleFormType->addHiddenField($field);
