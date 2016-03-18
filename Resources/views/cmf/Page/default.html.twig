@@ -1,10 +1,24 @@
 <html>
     <head>
-        <title>{{ node.title }}</title>
-        <meta name="author" content="{{ node.author }}">
-        <meta name="keywords" content="{{ node.author }}">
-        <meta name="discription" content="{{ node.author }}">
-        <meta name="robots" content="{{ node.robots }}">
+
+        <title>{{ node.metaTitle }}</title>
+        <meta property="og:title" content="{{ node.metaTitle }}">
+
+        {% if node.metaDescription is defined %}
+            <meta property="og:description" content="{{ node.metaDescription  }}">
+            <meta name="description" content="{{ node.metaDescription  }}">
+        {% endif %}
+
+        {% if node.metaAuthor is defined %}
+            <meta name="author" content="{{ node.metaAuthor }}">
+        {% endif %}
+
+        {% if node.metaRobtos is defined %}
+            <meta name="robots" content="{{ node.metaRobots }}">
+        {% endif %}
+
+        <meta name="keywords" content="{{ node.metaKeywords }}">
+
     </head>
     <body>
         <!--

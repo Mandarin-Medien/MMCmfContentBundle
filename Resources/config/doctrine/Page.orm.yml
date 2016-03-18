@@ -2,22 +2,22 @@ MandarinMedien\MMCmfContentBundle\Entity\Page:
     type: entity
     table: null
     fields:
-        title:
+        metaTitle:
             type: string
             length: 255
             nullable: true
-        keywords:
+        metaKeywords:
             type: string
             length: 255
             nullable: true
-        description:
+        metaDescription:
             type: text
             nullable: true
-        robots:
+        metaRobots:
             type: string
             length: 255
             nullable: true
-        author:
+        metaAuthor:
             type: string
             length: 255
             nullable: true
