@@ -124,10 +124,14 @@ class ContentNodeController extends Controller
         // load icon
         $icon = $contentNodeParser->getIcon($contentNode);
 
+        //generates html-dom-node-id
+        $modal_dom_id = 'modal_content_node_'.$contentNode->getId();
+
         // render form
         return $this->render($simpleFormTemplate, array(
             'form' => $simpleFormType->createView(),
-            'node_icon' => $icon
+            'node_icon' => $icon,
+            'modal_id' => $modal_dom_id
         ));
     }
 

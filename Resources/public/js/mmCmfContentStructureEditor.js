@@ -176,10 +176,16 @@
 
     };
 
-
-    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url) {
+    /**
+     * loads the contentNode Modal
+     *
+     * @param $url
+     */
+    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url,$contentNode) {
 
         var $this = this;
+
+        var $id = $contentNode.data('cmf-id');
 
         if ($url != "")
             $.ajax({
@@ -187,7 +193,7 @@
                 'method': 'GET',
                 'success': function (request) {
                     $this.modalParent.append(request);
-                    $('.modal')
+                    $('#modal_content_node_' + $id )
                         .modal()
                         .on('hidden.bs.modal', function () {
                             $(this).remove();
@@ -231,7 +237,7 @@
 
             var $route = $contentNode.data('cmf-simple-form');
 
-            $this.loadSettingsForm($route);
+            $this.loadSettingsForm($route,$contentNode);
         });
 
         $div.prepend($gearButton);
