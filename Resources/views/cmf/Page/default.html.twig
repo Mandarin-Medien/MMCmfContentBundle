@@ -4,21 +4,28 @@
         <title>{{ node.metaTitle }}</title>
         <meta property="og:title" content="{{ node.metaTitle }}">
 
-        {% if node.metaDescription is defined %}
+        {% if node.metaDescription is not empty %}
             <meta property="og:description" content="{{ node.metaDescription  }}">
             <meta name="description" content="{{ node.metaDescription  }}">
         {% endif %}
 
-        {% if node.metaAuthor is defined %}
+        {% if node.metaAuthor is not empty %}
             <meta name="author" content="{{ node.metaAuthor }}">
         {% endif %}
 
-        {% if node.metaRobtos is defined %}
+        {% if node.metaRobots is not empty %}
             <meta name="robots" content="{{ node.metaRobots }}">
         {% endif %}
 
-        <meta name="keywords" content="{{ node.metaKeywords }}">
+        {% if node.metaImage is not empty %}
+            <link rel="image_src" href="{{ asset('node.metaImage') }}" >
+            <meta property="og:image" content="{{ absolute_url(asset('node.metaImage')) }}">
+        {% else %}
+            <link rel="image_src" href="asset('bundles/app/img/og-image.jpg')" >
+            <meta property="og:image" content="{{ absolute_url(asset('bundles/app/img/og-image.jpg')) }}">
+        {% endif %}
 
+        <meta name="keywords" content="{{ node.metaKeywords }}">
     </head>
     <body>
         <!--
