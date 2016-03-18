@@ -185,15 +185,15 @@
 
         var $this = this;
 
-        var $id = $contentNode.data('cmf-id');
-
         if ($url != "")
             $.ajax({
                 'url': $url,
                 'method': 'GET',
                 'success': function (request) {
+
                     $this.modalParent.append(request);
-                    $('#modal_content_node_' + $id )
+
+                    $(request)
                         .modal()
                         .on('hidden.bs.modal', function () {
                             $(this).remove();
