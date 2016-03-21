@@ -94,7 +94,7 @@ class TemplateManager
                 $template = reset($this->templates[$meta->name]);
 
             else {
-                $name = str_replace($meta->namespace, '', $meta->name);
+                $name = trim(str_replace($meta->namespace, '', $meta->name), '\\');
                 $bundleName = $this->getBundleNameFromEntity($meta->namespace, $this->container->get('kernel')->getBundles());
                 $template = $this->getDefaultTemplate($name, $bundleName);
             }
