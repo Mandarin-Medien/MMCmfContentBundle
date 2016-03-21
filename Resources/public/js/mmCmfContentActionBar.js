@@ -26,7 +26,7 @@
             var $toolbar = $('<div class="cmf-content-action-bar" />');
             var $this = this;
 
-            var $editModusToggle = $('<div class="cmf-content-edit-modus-toggle"><i class="fa fa-pencil-square-o">&nbsp;</i></div>');
+            var $editModusToggle = $('<div class="cmf-content-edit-modus-toggle"><i class="fa fa-pencil-square-o"></i></div>');
             $editModusToggle.click(function(){
                 $this.parent.toggleClass('cmf-content-edit-modus');
             });

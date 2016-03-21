@@ -37,14 +37,23 @@
 
         $.ajax({
                 method: "POST",
-                url: this.settings.saveRoute,
+                url: this.settings.save_route,
                 data: {nodes: $this.prepareJson()}
             })
             .done(function (msg) {
 
-                $(document).trigger('saved.MMCmfContentFieldEditor');
+                if(msg.status == "saved")
+                    $this.getSaveContainer().addClass('done');
+                else
+                    $this.getSaveContainer().addClass('failed');
 
-                $this.hideSaveButton();
+                setTimeout(function(){
+                    $(document).trigger('saved.MMCmfContentFieldEditor');
+
+                    $this.hideSaveButton();
+                },400);
+
+
             });
 
 
@@ -81,7 +90,15 @@
      *
      */
     MMCmfContentEditor.prototype.hideSaveButton = function () {
-        this.getSaveContainer().removeClass('enable');
+
+        var $saveContainer = this.getSaveContainer();
+
+        $saveContainer.removeClass('enable');
+
+
+        setTimeout(function(){
+            $saveContainer.removeClass('done').removeClass('failed');
+        },400);
     };
 
     /**
@@ -98,7 +115,7 @@
         if (typeof $this._saveBtn == "undefined")
             $this._saveBtn = $(
                 '<div class="cmf-save-container">' +
-                '<div class="cmf-save-btn ' + this.settings.classes.save_btn + '">' +
+                '<div class="cmf-save-btn ' + this.settings.classes.save_btn + '"><i class="fa fa-save"></i>&nbsp;' +
                 this.settings.lang.save_btn +
                 '</div>' +
                 '</div>')
@@ -125,13 +142,15 @@
                 save_btn: 'Seite speichern'
             },
             classes: {
-                save_btn: 'btn btn-primary'
+                save_btn: 'btn btn-success'
             },
 
             // MmCmfContentController
-            saveRoute: '/app_dev.php/admin/mmcmfcontent/save'
+            save_route: '/app_dev.php/admin/mmcmfcontent/save'
 
         }, options);
+
+        console.log('mmCmfContentEditor::settings',settings);
 
         new MMCmfContentEditor(this, settings);
     };

@@ -3,6 +3,9 @@
 
 @fa-font-path: "/bundles/mmcmfcontent/vendor/font-awesome/fonts";
 
+@color_success: #5cb85c;
+@color_failed: #d9534f;
+
 *[data-cmf-field] {
   cursor: text;
 }
@@ -12,31 +15,48 @@
     bottom: 0;
   }
 
+  &.failed,
+  &.done {
+
+    background: @color_success;
+
+    .btn {
+      visibility: hidden
+    }
+
+    &.failed {
+      background: @color_failed;
+    }
+
+  }
+
   -webkit-transition: all 0.8s ease;
   -moz-transition: all 0.8s ease;
   transition: all 0.8s ease;
 
   display: block;
 
-  border: 1px solid #d4d4d4;
+  border-top: 1px solid #d4d4d4;
 
   padding: 10px;
   position: fixed;
   bottom: -100px;
   left: 0;
-  background: #FFF;
+  background: rgba(34, 34, 34, 1);
   width: 100%;
   text-align: center;
 
   .cmf-save-btn {
+
     cursor: pointer;
     margin: 0 auto;
     display: inline-block;
     padding: 3px 10px;
+
     &:hover {
-      text-decoration: underline;
 
     }
+
   }
 }
 
@@ -71,22 +91,34 @@
 }
 
 body.cmf-content-edit-modus .ContentNode-settings {
+
   display: block;
+
 }
 
 .RowContentNode,
 .ContainerContentNode {
 
   &.RowContentNode > .ContentNode-settings {
-    top: -40px;
+    top: -30px;
     margin-left: 40px;
-    background: rgba(0, 0, 0, .2);
+    background: fadeOut(#222, 10%);
+    color: #d4d4d4;
+    .fa {
+      text-shadow: none;
+    }
   }
 
   &.ContainerContentNode > .ContentNode-settings {
-    top: -40px;
+    top: -30px;
     margin-right: 40px;
-    background: rgba(0, 0, 0, .5);
+    background: fadeOut(#222, 10%);
+    color: #d4d4d4;
+
+    .fa {
+      text-shadow: none;
+    }
+
   }
 
   /*  &:hover > .ContentNode-settings
@@ -96,15 +128,15 @@ body.cmf-content-edit-modus .ContentNode-settings {
 }
 
 .ContentNode-settings {
-  display: none;
-  text-align: right;
 
-  &,
-  .inner {
-    -moz-transition: all .8s;
-    -webkit-transition: all .8s;
-    transition: all .8s linear;
-  }
+  display: none;
+  text-align: center;
+
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 30px;
+
+  color: fadeOut(#222, 10%);
 
   position: absolute;
   top: 0;
@@ -113,7 +145,21 @@ body.cmf-content-edit-modus .ContentNode-settings {
   width: 58px;
   left: -29px;
 
-  padding: 10px;
+  padding: 5px;
+
+  .fa {
+    vertical-align: middle;
+    font-size: 17px;
+    text-shadow: #FFF 0px 0px 1px;
+  }
+
+  > &
+    //,.inner
+  {
+    -moz-transition: all .8s;
+    -webkit-transition: all .8s;
+    transition: all .8s linear;
+  }
 
   .inner {
     display: none;
@@ -137,9 +183,9 @@ body.cmf-content-edit-modus .ContentNode-settings {
   }
 
   &.open {
-    background: rgba(140, 140, 140, 0.5);
 
     display: block;
+    height: auto;
 
     width: 120px;
     b {
@@ -201,11 +247,18 @@ body.cmf-content-edit-modus .ContentNode-settings {
   bottom: 0;
   left: 0;
 
-  background: #d4d4d4;
+  background: fadeOut(#222, 10%);
+
+  border-top-right-radius: 4px;
 
   .cmf-content-edit-modus-toggle {
     cursor: pointer;
-    margin: 10px;
+    margin: 6px;
 
+    .fa {
+      vertical-align: middle;
+      font-size: 20px;
+      color: #d4d4d4;
+    }
   }
 }
