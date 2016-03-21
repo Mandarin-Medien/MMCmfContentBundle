@@ -269,7 +269,7 @@
 
         var $draguala = dragula($draggableContainers, {
             ignoreInputTextSelection: true,
-
+            disableDragAndDrop: true,
             moves: function (el, source, handle, sibling) {
 
                 if (!($(el).hasClass('ContentNode') ))
