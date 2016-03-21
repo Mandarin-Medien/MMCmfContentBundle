@@ -181,7 +181,7 @@
      *
      * @param $url
      */
-    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url,$contentNode) {
+    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url, $contentNode) {
 
         var $this = this;
 
@@ -189,6 +189,7 @@
             $.ajax({
                 'url': $url,
                 'method': 'GET',
+                'data': {'root_node': $this.settings.root_node},
                 'success': function (request) {
 
                     $this.modalParent.append(request);
@@ -237,7 +238,7 @@
 
             var $route = $contentNode.data('cmf-simple-form');
 
-            $this.loadSettingsForm($route,$contentNode);
+            $this.loadSettingsForm($route, $contentNode);
         });
 
         $div.prepend($gearButton);
@@ -357,7 +358,8 @@
             gridCount: 12,
             gridSizes: ['xs', 'sm', 'md', 'lg'],
             highlightClass: 'ContentNode-highlighted',
-            hoverClass: 'hover'
+            hoverClass: 'hover',
+            root_node: null
 
         }, options);
 

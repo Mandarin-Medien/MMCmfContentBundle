@@ -7,7 +7,11 @@ var mmCmfContentEditorIntilized = false;
 function BootUpMmCmfContentBundle()
 {
     var $contentNodes = $('.ContentNode');
-    var $options = {};
+
+    /**
+     * defined in cmf_javascript_vars.html.twig
+     */
+    var $options = document.mm_cmf_content;
 
     if(!mmCmfContentEditorIntilized)
         $contentNodes.mmCmfContentEditor($options);
@@ -65,5 +69,4 @@ var submitForm = function (form) {
 
 var addContentNode = function (markup) {
     $('body').append(markup);
-
 }

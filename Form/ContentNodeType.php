@@ -67,7 +67,7 @@ class ContentNodeType extends AbstractType
             $builder->add($field, $formTypeReader->get($className, $field));
         }
 
-        $builder->add('parent', $this->container->get('mm_cmf_content.form_type.node_tree')->setParentNode($options['parent_node']));
+        $builder->add('parent', $this->container->get('mm_cmf_content.form_type.node_tree')->setParentNode($options['root_node']));
         $builder->add('template', $this->container->get('mm_cmf_content.form_type.node_template')->setClass($className));
     }
 
@@ -76,9 +76,9 @@ class ContentNodeType extends AbstractType
     {
 
         $resolver
-            ->setDefined(array('parent_node'))
-            ->setAllowedTypes('parent_node', array(Node::class, 'null'))
-            ->setDefault('parent_node', null);
+            ->setDefined(array('root_node'))
+            ->setAllowedTypes('root_node', array(Node::class, 'null'))
+            ->setDefault('root_node', null);
 
     }
 
