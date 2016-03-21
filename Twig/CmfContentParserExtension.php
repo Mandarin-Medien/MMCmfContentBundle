@@ -2,9 +2,13 @@
 
 namespace MandarinMedien\MMCmfContentBundle\Twig;
 
+use FOS\UserBundle\Entity\User;
 use MandarinMedien\MMCmfContentBundle\Controller\ContentParserController;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+
 
 class CmfContentParserExtension extends \Twig_Extension
 {
@@ -13,9 +17,46 @@ class CmfContentParserExtension extends \Twig_Extension
      */
     protected $cmfContentParser;
 
-    public function __construct(ContentParserController $cmfContentParser = null)
+    /**
+     * @var TokenStorage
+     */
+    protected $tokenStorage;
+
+
+    public function __construct(TokenStorage $tokenStorage, ContentParserController $cmfContentParser = null)
     {
         $this->cmfContentParser = $cmfContentParser;
+        $this->tokenStorage = $tokenStorage;
+
+
+    }
+
+    /**
+     * checks if the current User is ROLE_USER
+     *
+     * @return bool
+     */
+    private function checkUser()
+    {
+        static $enabled;
+
+        if (!isset($enabled)) {
+
+            $token = $this->tokenStorage->getToken();
+
+            if ($token) {
+
+                $user = $token->getUser();
+
+                if ($user instanceof User) {
+                    if ($user->hasRole('ROLE_USER'))
+                        $enabled = $token->isAuthenticated();
+                }
+            } else
+                $enabled = false;
+        }
+
+        return $enabled;
     }
 
     /**
@@ -47,7 +88,7 @@ class CmfContentParserExtension extends \Twig_Extension
     {
         $html = "";
 
-        if ($node instanceof ContentNode ) {
+        if ($node instanceof ContentNode) {
 
             /**
              * @var ContentNode $node
@@ -80,9 +121,23 @@ class CmfContentParserExtension extends \Twig_Extension
             );
         }
 
+        /**
+         * if user is not authenticated, strip all cmf data
+         */
+
+        if (!$this->checkUser())
+            $html = $this->stripCmfData($html);
+
         return $html;
 
+    }
 
+    private function stripCmfData($html)
+    {
+        $pattern = '$data-cmf-([^=]+)="[^"]+"$im';
+        $html = preg_replace($pattern, '', $html);
+
+        return $html;
     }
 
     /**
@@ -92,5 +147,4 @@ class CmfContentParserExtension extends \Twig_Extension
     {
         return 'mm_cmf_content_parser_twig_extension';
     }
-
 }

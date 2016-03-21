@@ -1,18 +1,18 @@
 services:
     mm_cmf_content.content_parser:
         class: MandarinMedien\MMCmfContentBundle\Controller\ContentParserController
-        arguments: [@service_container, "content_nodes"]
+        arguments: ["@service_container", "content_nodes"]
         #calls:
         #  - [setContainer, ["@service_container"]]
 
     mm_cmf_content.template_manager:
         class: MandarinMedien\MMCmfContentBundle\Templating\TemplateManager
-        arguments: [@service_container]
+        arguments: ["@service_container"]
 
 
     mm_cmf_content.mm_cmf_parse_twig_extension:
           class: MandarinMedien\MMCmfContentBundle\Twig\CmfContentParserExtension
-          arguments: [@mm_cmf_content.content_parser]
+          arguments: ["@security.token_storage","@mm_cmf_content.content_parser"]
           tags:
               - { name: twig.extension }
 
