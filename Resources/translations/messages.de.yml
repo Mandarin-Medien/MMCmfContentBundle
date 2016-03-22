@@ -9,3 +9,11 @@ Position: Position/Sortierung
 Draggable: Drag'n'Drop für Unterelemente aktivieren
 Save changes: Änderungen speichern
 Close: schließen
+
+Tooltip ContainerContentNode: Bereich
+Tooltip RowContentNode: Zeile
+Tooltip ParagraphContentNode: Absatz
+
+ContainerContentNode: Bereich
+RowContentNode: Zeile
+ParagraphContentNode: Absatz
