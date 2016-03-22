@@ -23,8 +23,10 @@
                 $this.appendSettingsMenu($($contentNode));
                 $($contentNode).data('mmCmfContentStructureEditor', $this);
             }
-
         });
+
+        if(typeof $.fn.tooltip != "undefined")
+            $('.ContentNode-settings').tooltip({html:true});
     };
 
     /**
@@ -169,7 +171,7 @@
         }
 
         var $selectContainer = $('<div class="select-container select-container-' + $gridSize + '" />');
-        $selectContainer.append('<label>' + $gridSize.toUpperCase() + '</label>');
+        $selectContainer.append('<label class="icon-' + $gridSize.toLowerCase() + '"><span>' + $gridSize.toUpperCase() + '</span></label>');
         $selectContainer.append($select);
 
         return $selectContainer;
@@ -215,7 +217,10 @@
 
         var $this = this;
 
-        var $div = $('<div class="ContentNode-settings">' +
+        var $title = $contentNode.data('cmf-tooltip');
+
+
+        var $div = $('<div class="ContentNode-settings" data-toggle="tooltip" title="' + $title + '">' +
             '<b class="ContentNode-settings-arrows"><i class="fa fa-arrows"></i></b>' +
             '<br>' +
             '</div>');

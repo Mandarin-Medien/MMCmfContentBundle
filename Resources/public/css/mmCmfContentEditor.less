@@ -52,6 +52,9 @@
     margin: 0 auto;
     display: inline-block;
     padding: 3px 10px;
+    border-radius: 0;
+    font-weight: 100;
+    letter-spacing: 1px;
 
     &:hover {
 
@@ -66,29 +69,45 @@
   .gu-transit {
     background-color: rgba(255, 0, 255, .5);
   }
-  /*
-    body > & {
-      .gu-transit{
-        height: inherit;
-        border-bottom: inherit;
-        overflow: auto;
-      }
-    }*/
 
-  /*&.hover {
-    & > .ContentNode-settings {
-      display: block;
+}
+
+.cmf-content-edit-modus {
+
+
+
+
+  .ContentNode:hover,
+  .ContentNode-highlighted {
+
+    box-shadow: 0 0 4px rgba(0, 0, 100, .5);
+
+  }
+}
+
+
+
+.modal-dialog > .modal-content {
+
+  &,
+  .form-control {
+    border-radius: 0;
+
+    &.form-control {
+      box-shadow: none;
     }
-  }*/
 
+    .modal-footer .btn{
+      border-radius: 0;
+
+      font-weight: 100;
+      letter-spacing: 1px;
+    }
+
+  }
 }
 
-.ContentNode:hover,
-.ContentNode-highlighted {
 
-  box-shadow: 0 0 1px #FFF;
-
-}
 
 body.cmf-content-edit-modus .ContentNode-settings {
 
@@ -177,12 +196,44 @@ body.cmf-content-edit-modus .ContentNode-settings {
   .select-container {
     display: inline-block;
 
+    label {
+
+      .fa;
+      text-shadow: none;
+      &:before {
+        .fa-icon();
+      }
+
+      span {
+        display: none;
+      }
+
+      &.icon-xs:before {
+        content: @fa-var-mobile;
+      }
+
+      &.icon-sm:before {
+        content: @fa-var-tablet;
+      }
+
+      &.icon-md:before {
+        content: @fa-var-laptop;
+      }
+
+      &.icon-lg:before {
+        content: @fa-var-desktop;
+      }
+
+    }
+
     select {
       float: right;
     }
   }
 
   &.open {
+
+    background: fadeOut(#222, 10%);
 
     display: block;
     height: auto;
@@ -193,6 +244,12 @@ body.cmf-content-edit-modus .ContentNode-settings {
       &.ContentNode-settings-gear {
         display: none;
       }
+    }
+
+    label,
+    .fa {
+      text-shadow: none;
+      color: #d4d4d4;
     }
 
     .inner {
@@ -222,20 +279,6 @@ body.cmf-content-edit-modus .ContentNode-settings {
 
 .ContentNodeChildren.draggable {
   min-height: 50px;
-}
-
-.modal-dialog > .modal-content {
-
-  &,
-  .form-control {
-    border-radius: 0;
-
-    &.form-control {
-      box-shadow: none;
-    }
-
-  }
-
 }
 
 /**
