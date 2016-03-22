@@ -11,20 +11,20 @@ mm_cmf_content:
             hiddenFields:
                 - "attributes"
             templates:
-              - { name: 'default', template: "MMCmfContentBundle:cmf:contentNode/contentNode_default.html.twig" }
+              - { name: 'default', template: "MMCmfContentBundle:cmf:ContentNode/ContentNode_default.html.twig" }
 
         MandarinMedien\MMCmfContentBundle\Entity\RowContentNode:
             icon: 'fa fa-th-list'
             hiddenFields:
                   - "attributes"
             templates:
-              - { name: 'default', template: "MMCmfContentBundle:cmf:rowContentNode/rowContentNode_default.html.twig" }
+              - { name: 'default', template: "MMCmfContentBundle:cmf:RowContentNode/RowContentNode_default.html.twig" }
 
         MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode:
             icon: 'fa fa-paragraph'
             templates:
-                - { name: 'default', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_default.html.twig" }
-                - { name: 'Upside-Down', template: "MMCmfContentBundle:cmf:paragraphContentNode/paragraphContentNode_upside_down.html.twig" }
+                - { name: 'default', template: "MMCmfContentBundle:cmf:ParagraphContentNode/ParagraphContentNode_default.html.twig" }
+                - { name: 'Upside-Down', template: "MMCmfContentBundle:cmf:ParagraphContentNode/ParagraphContentNode_upside_down.html.twig" }
             hiddenFields:
                 - "attributes"
                 #- "headline"
