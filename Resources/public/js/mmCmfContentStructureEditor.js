@@ -25,8 +25,8 @@
             }
         });
 
-        if(typeof $.fn.tooltip != "undefined")
-            $('.ContentNode-settings').tooltip({html:true});
+        if (typeof $.fn.tooltip != "undefined")
+            $('.ContentNode-settings').tooltip({html: true, placement: 'auto top'});
     };
 
     /**
