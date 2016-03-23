@@ -1,10 +1,12 @@
 <!-- MMCmfContentBundle Variables -->
 <script>
 {% block mm_cmf_javascript_vars %}
-    document.mm_cmf_content = {};
-    document.mm_cmf_content.save_route = '{{ path('mm_cmf_content_save') }}';
-    {% if node is defined %}
-        document.mm_cmf_content.root_node = {{ node.id }};
+    {% if app.user is defined and app.user is not null %}
+        document.mm_cmf_content = {};
+        document.mm_cmf_content.save_route = '{{ path('mm_cmf_content_save') }}';
+        {% if node is defined %}
+            document.mm_cmf_content.root_node = {{ node.id }};
+        {% endif %}
     {% endif %}
 {% endblock %}
 </script>

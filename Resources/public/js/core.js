@@ -27,13 +27,13 @@ function BootUpMmCmfContentBundle()
 
 $(document).ready(function () {
 
-    BootUpMmCmfContentBundle();
+    if(typeof document.mm_cmf_content != 'undefined') {
+        BootUpMmCmfContentBundle();
 
-
-    // admin form field types
-    mmFormFieldhandler = new FormHandler();
-    mmFormFieldhandler.init();
-
+        // admin form field types
+        mmFormFieldhandler = new FormHandler();
+        mmFormFieldhandler.init();
+    }
 });
 
 
