@@ -21,6 +21,10 @@ MandarinMedien\MMCmfContentBundle\Entity\Page:
             type: string
             length: 255
             nullable: true
+        metaImage:
+            type: string
+            length: 255
+            nullable: true
 
         template:
             type: string
