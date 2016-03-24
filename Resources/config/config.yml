@@ -48,6 +48,7 @@ assetic:
             inputs:
               - '@MMCmfContentBundle/Resources/public/js/summernote/summernote.js'
               - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
+              - '@MMCmfContentBundle/Resources/public/js/jquery.htmlClean.min.js'
 
               #cmfFieldPlugins
               - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldString.js"

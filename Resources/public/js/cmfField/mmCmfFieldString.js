@@ -1,4 +1,3 @@
-
 var mmCmfFieldStringPlugin = function () {
 
     this.fieldType = 'string';
@@ -24,8 +23,10 @@ mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
     if (typeof $field != "undefined") {
         $field.data('mmCmfFieldStringPlugin', $this);
 
+        var pasteTimeoutId;
+
         $field
-            //activate editing by click
+        //activate editing by click
             .on('click', function ($event) {
 
                 console.log("mmCmfField.String.click", $event);
@@ -48,9 +49,23 @@ mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
                     .attr('contenteditable', 'false')
                     .css('display', $cssDisplay);
             })
+
             // fire event to the FieldEditor if something changed
-            .on('DOMCharacterDataModified', function ($event) {
-                 $this.onUpdate($field);
+            .on('DOMCharacterDataModified paste', function ($event) {
+
+                $event.stopPropagation();
+
+
+                clearTimeout(pasteTimeoutId);
+
+                pasteTimeoutId = setTimeout(function () {
+
+                    $field.html($this.cleanHTML($field.html()));
+
+                    $this.onUpdate($field);
+                }, 100);
+
+
             });
     }
 
@@ -78,6 +93,14 @@ mmCmfFieldStringPlugin.prototype.onUpdate = function ($field) {
             'cmf-id': $cmfId
         }
     );
+};
+
+mmCmfFieldStringPlugin.prototype.cleanHTML = function (text) {
+
+    console.log('mmCmfFieldStringPlugin:cleanHTML 2');
+    return $.htmlClean(text,{
+        removeTags: ["basefont", "center", "dir", "font", "frame", "frameset", "iframe", "isindex", "menu", "noframes","span"]
+    });
 };
 
 new mmCmfFieldStringPlugin();
