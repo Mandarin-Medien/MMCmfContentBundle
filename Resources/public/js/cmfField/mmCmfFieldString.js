@@ -1,7 +1,7 @@
 var mmCmfFieldStringPlugin = function () {
 
     this.fieldType = 'string';
-
+    this.enabled = false;
     this.bindEvents();
 
 };
@@ -13,6 +13,15 @@ mmCmfFieldStringPlugin.prototype.bindEvents = function () {
     $(document).on(this.fieldType + '.init.MMCmfContentFieldEditor', function ($event, $data) {
         $this.onInit($event, $data)
     });
+
+    $(document).on('enable.MMCmfContentActionBar', function ($event) {
+        $this.enabled = true;
+    });
+
+    $(document).on('disable.MMCmfContentActionBar', function ($event) {
+        $this.enabled = false;
+    });
+
 };
 
 mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
@@ -29,7 +38,8 @@ mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
         //activate editing by click
             .on('click', function ($event) {
 
-                console.log("mmCmfField.String.click", $event);
+                if($field.data('mmCmfFieldStringPlugin').enabled == false)
+                    return;
 
                 var $this = $(this);
                 var $cssDisplay = $this.css('display');

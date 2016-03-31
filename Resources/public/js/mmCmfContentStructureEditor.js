@@ -18,16 +18,28 @@
         this.initiateDragula($('.ContentNodeChildren.draggable'));
 
 
-        $(this.contentNodes).each(function (key, $contentNode) {
-            if (!$($contentNode).data('mmCmfContentStructureEditor')) {
-                $this.appendSettingsMenu($($contentNode));
-                $($contentNode).data('mmCmfContentStructureEditor', $this);
+        $(this.contentNodes).each(function (key, _contentNode) {
+
+            $contentNode = $(_contentNode);
+
+            if (!$contentNode.data('mmCmfContentStructureEditor')) {
+                $this.appendSettingsMenu($contentNode);
+                $contentNode.data('mmCmfContentStructureEditor', $this);
             }
         });
 
         if (typeof $.fn.tooltip != "undefined")
             $('.ContentNode-settings').tooltip({html: true, placement: 'auto top'});
     };
+
+    mmCmfContentStructureEditor.prototype.isGridable = function ($contentNode) {
+
+        var $this = this;
+
+        return ($this.settings.not_gridable_classes.indexOf($contentNode.data('cmf-class')) === -1);
+
+    };
+
 
     /**
      * creates CmfContentNode settings gui
@@ -36,16 +48,22 @@
 
         var $this = this;
         var $settings = this.settings;
+
+
         /**
          * append to inner box div
          */
         var $box = this.generateSettingsBox($contentNode);
-
         var $boxInner = $('<div class="inner" />');
 
-        for (var i in $settings.gridSizes) {
-            var $selectBox = this.generateColumnSelect($contentNode, $settings.gridSizes[i], $settings.gridCount);
-            $boxInner.append($selectBox);
+        /**
+         * checks if the current contentNode
+         */
+        if ( $this.isGridable($contentNode) ) {
+            for (var i in $settings.gridSizes) {
+                var $selectBox = this.generateColumnSelect($contentNode, $settings.gridSizes[i], $settings.gridCount);
+                $boxInner.append($selectBox);
+            }
         }
 
         /**
@@ -364,7 +382,8 @@
             gridSizes: ['xs', 'sm', 'md', 'lg'],
             highlightClass: 'ContentNode-highlighted',
             hoverClass: 'hover',
-            root_node: null
+            root_node: null,
+            not_gridable_classes: []
 
         }, options);
 

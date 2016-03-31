@@ -1,7 +1,7 @@
 var mmCmfFieldWYSIWYGPlugin = function () {
 
     this.fieldType = 'WYSIWYG';
-
+    this.enabled = false;
     this.bindEvents();
 
 };
@@ -12,6 +12,14 @@ mmCmfFieldWYSIWYGPlugin.prototype.bindEvents = function () {
 
     $(document).on(this.fieldType + '.init.MMCmfContentFieldEditor', function ($event, $data) {
         $this.onInit($event, $data)
+    });
+
+    $(document).on('enable.MMCmfContentActionBar', function ($event) {
+        $this.enabled = true;
+    });
+
+    $(document).on('disable.MMCmfContentActionBar', function ($event) {
+        $this.enabled = false;
     });
 };
 
@@ -26,14 +34,18 @@ mmCmfFieldWYSIWYGPlugin.prototype.onInit = function ($event, $data) {
         $field
             .on('click', function (e) {
 
+                if($field.data('mmCmfFieldWYSIWYGPlugin').enabled == false)
+                    return;
+
                 e.preventDefault();
 
                 var getChangeTimer;
-
-                $(this).summernote({
+                var $dom = $(this);
+                $dom.summernote({
 
                     airMode: true,
                     dialogsFade: true,
+                    disableDragAndDrop: true,
                     codemirror: {theme: 'monokai'},
                     focus: true,
 
@@ -66,6 +78,11 @@ mmCmfFieldWYSIWYGPlugin.prototype.onInit = function ($event, $data) {
                                 300);
                         }
                     },
+                });
+
+
+                $(document).one('disable.MMCmfContentActionBar', function ($event) {
+                    $dom.summernote('destroy');
                 });
 
             });

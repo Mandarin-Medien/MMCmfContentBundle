@@ -18,17 +18,30 @@
 
         };
 
-        mmCmfContentActionBar.prototype.addMenuEntry = function(){};
-        mmCmfContentActionBar.prototype.removeMenuEntry = function(){};
+        mmCmfContentActionBar.prototype.addMenuEntry = function () {
+        };
+        mmCmfContentActionBar.prototype.removeMenuEntry = function () {
+        };
 
-        mmCmfContentActionBar.prototype.generateToolBar = function() {
+        mmCmfContentActionBar.prototype.generateToolBar = function () {
 
             var $toolbar = $('<div class="cmf-content-action-bar" />');
             var $this = this;
 
             var $editModusToggle = $('<div class="cmf-content-edit-modus-toggle"><i class="fa fa-pencil-square-o"></i></div>');
-            $editModusToggle.click(function(){
-                $this.parent.toggleClass('cmf-content-edit-modus');
+
+            $editModusToggle.click(function () {
+
+                var $class = "cmf-content-edit-modus";
+
+                $this.parent.toggleClass($class);
+
+                if ($this.parent.hasClass($class))
+                    $(document).trigger('enable.MMCmfContentActionBar');
+                else
+                    $(document).trigger('disable.MMCmfContentActionBar')
+
+
             });
 
             $toolbar.append($editModusToggle);
@@ -45,10 +58,7 @@
         $.fn.mmCmfContentActionBar = function (options) {
 
             // Establish our default settings
-            var settings = $.extend({
-
-
-            }, options);
+            var settings = $.extend({}, options);
 
 
             new mmCmfContentActionBar(this, settings);
