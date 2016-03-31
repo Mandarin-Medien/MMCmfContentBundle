@@ -8,12 +8,14 @@ mm_cmf_content:
     content_nodes:
 
         MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
+            gridable: false
             hiddenFields:
                 - "attributes"
             templates:
               - { name: 'default', template: "MMCmfContentBundle:cmf:ContentNode/ContentNode_default.html.twig" }
 
         MandarinMedien\MMCmfContentBundle\Entity\RowContentNode:
+            gridable: false
             icon: 'fa fa-th-list'
             hiddenFields:
                   - "attributes"
@@ -31,6 +33,7 @@ mm_cmf_content:
                 #- "text"
 
         MandarinMedien\MMCmfContentBundle\Entity\ContainerContentNode:
+            gridable: false
             icon: 'fa fa-folder-o'
             simpleForm:
                 type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
@@ -38,6 +41,8 @@ mm_cmf_content:
             hiddenFields:
                 - "attributes"
 twig:
+    globals:
+        mm_cmf_content_parser: @mm_cmf_content.content_parser
     form:
         resources:
             - MMCmfContentBundle:Form:nodetree.html.twig

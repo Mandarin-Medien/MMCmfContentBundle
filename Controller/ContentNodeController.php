@@ -225,8 +225,8 @@ class ContentNodeController extends Controller
         $simpleFormData = $contentNodeParser->getSimpleForm($contentNodeClassName);
 
         //set FormType
-        if (isset($simpleFormData['type']))
-            $simpleFormType = $simpleFormData['type'];
+        if (isset($simpleFormData['type']) && is_callable($simpleFormData['type']))
+            $simpleFormType = new $simpleFormData['type']();
         else
             $simpleFormType = $this->get('mm_cmf_content.form_type.content_node');
 

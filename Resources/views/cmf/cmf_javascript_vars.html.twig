@@ -7,6 +7,11 @@
         {% if node is defined %}
             document.mm_cmf_content.root_node = {{ node.id }};
         {% endif %}
+
+        {%  if mm_cmf_content_parser.notGridableClasses is defined and mm_cmf_content_parser.notGridableClasses|length > 0 %}
+            document.mm_cmf_content.not_gridable_classes = {{  mm_cmf_content_parser.notGridableClasses|json_encode|raw }}
+        {% endif %}
     {% endif %}
 {% endblock %}
+
 </script>

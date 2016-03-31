@@ -21,6 +21,8 @@ class ContentParserController
     private $contentNodeHiddenFields = array();
     private $contentNodeSimpleForms = array();
     private $contentNodeIcons = array();
+    private $contentNodeGridable = array();
+
     protected $templateManager;
 
     public function __construct(Container $container, Array $contentNodeConfig)
@@ -55,15 +57,48 @@ class ContentParserController
                 }
 
             // icons
-            $this->contentNodeSimpleForms[$className] = array();
+            $this->contentNodeIcons[$className] = array();
 
             if (isset($nodeAttributes['icon']))
                 $this->contentNodeIcons[$className] = $nodeAttributes['icon'];
             else
                 $this->contentNodeIcons[$className] = 'fa fa-file-o';
 
+            // contentNodeGridable
+            $this->contentNodeGridable[$className] = array();
+
+            if (isset($nodeAttributes['gridable']))
+            {
+                $this->contentNodeGridable[$className] = $nodeAttributes['gridable'];
+            }
+            else
+                $this->contentNodeGridable[$className] = true;
         }
     }
+
+    /**
+     * @param $nodeClassName
+     * @return bool
+     */
+    public function isGridable($nodeClassName)
+    {
+        return (isset($this->contentNodeGridable[$nodeClassName])) ? $this->contentNodeGridable[$nodeClassName] : true;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getNotGridableClasses()
+    {
+        $classes = array();
+        foreach($this->contentNodeGridable as $key => $val)
+            if(!$val)
+                $classes[] = $key;
+
+        return $classes;
+    }
+
 
     /**
      * @param $nodeClassName

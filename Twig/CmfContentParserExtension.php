@@ -22,11 +22,15 @@ class CmfContentParserExtension extends \Twig_Extension
      */
     protected $tokenStorage;
 
+    protected $notGridableContentNodeClasses;
+
 
     public function __construct(TokenStorage $tokenStorage, ContentParserController $cmfContentParser = null)
     {
         $this->cmfContentParser = $cmfContentParser;
         $this->tokenStorage = $tokenStorage;
+
+        $this->notGridableContentNodeClasses = $cmfContentParser->getNotGridableClasses();
 
 
     }
@@ -97,12 +101,23 @@ class CmfContentParserExtension extends \Twig_Extension
 
             $refClass = $this->cmfContentParser->getNativeClassnamimg($node);
 
+            $generated_classes = array("ContentNode", $refClass['name']);
+
             /**
              * parse css classes
              */
-            $display_classes = explode(" ", trim($node->getClasses()));
+            $display_classes = array();
+            $class_string = trim($node->getClasses());
 
-            $generated_classes = array("ContentNode", $refClass['name']);
+            if ($class_string)
+                $display_classes = explode(" ", $class_string);
+
+            /*
+             * workaround to avoid broken grid-layouts couz of missing xs sizing
+             */
+            if ( strpos($class_string,'col-xs') === false && !in_array(get_class($node), $this->notGridableContentNodeClasses))
+                $generated_classes[] = "col-xs-12";
+
 
             $display_classes = array_merge($display_classes, $generated_classes);
             $display_classes = array_unique($display_classes);
