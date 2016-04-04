@@ -29,30 +29,30 @@ class ContentNodeFactory
 
 
     /**
-     * create a new ContentNode instance by discrimator value
-     * @param string $discrimator
+     * create a new ContentNode instance by discriminator value
+     * @param string $discriminator
      * @return ContentNode
      * @throws \Exception
      */
-    public function createContentNode($discrimator = 'default')
+    public function createContentNode($discriminator = 'default')
     {
-        $reflection = new \ReflectionClass($this->getClassByDiscrimator($discrimator));
+        $reflection = new \ReflectionClass($this->getClassByDiscriminator($discriminator));
         return $reflection->newInstance();
     }
 
 
     /**
-     * get all available discrimator values of ContentNode entity
-     * @param array $exclude exclude specific discrimators
+     * get all available discriminator values of ContentNode entity
+     * @param array $exclude exclude specific discriminators
      * @return array
      */
-    public function getDiscrimators($exclude = array())
+    public function getDiscriminators($exclude = array())
     {
 
-        // prefilter discrimators by subclasses
+        // prefilter discriminators by subclasses
         $subclasses = $this->meta->subClasses;
 
-        $discrimators = array_filter(
+        $discriminators = array_filter(
             $this->meta->discriminatorMap,
             function($class) use ($subclasses)
             {
@@ -61,31 +61,41 @@ class ContentNodeFactory
         );
 
 
-        // filter discrimators by exlude array
-        return array_diff(array_keys($discrimators), $exclude);
+        // filter discriminators by exlude array
+        return array_diff(array_keys($discriminators), $exclude);
     }
 
 
     /**
-     * get the discrimator value by the given instance
+     * get the discriminator value by the given instance
      * @param ContentNode $contentNode
      * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
-    public function getDiscrimatorByClass(ContentNode $contentNode)
+    public function getDiscriminatorByClass(ContentNode $contentNode)
     {
         return $this->manager->getClassMetadata(get_class($contentNode))->discriminatorValue;
     }
 
+    /**
+     * get the discriminator value by the given className
+     * @param string $contentNodeClassName
+     * @return \Doctrine\ORM\Mapping\ClassMetadata
+     */
+    public function getDiscriminatorByClassName($contentNodeClassName)
+    {
+        return $this->manager->getClassMetadata($contentNodeClassName)->discriminatorValue;
+    }
+
 
     /**
-     * get the ContentNode subclass by discrimator value
-     * @param string $discrimator
+     * get the ContentNode subclass by discriminator value
+     * @param string $discriminator
      * @return string
      * @throws \Exception
      */
-    public function getClassByDiscrimator($discrimator)
+    public function getClassByDiscriminator($discriminator)
     {
-        if ($class = ($this->meta->discriminatorMap[$discrimator])) {
+        if ($class = ($this->meta->discriminatorMap[$discriminator])) {
             return $class;
         } else {
             throw new \Exception('class not found');
