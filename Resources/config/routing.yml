@@ -6,13 +6,13 @@ mm_cmf_content_save:
         _format: json
         _method: POST
 
-mm_cmf_content_node_form:
+mm_cmf_content_node_edit:
     path:     /{id}/edit
-    defaults: { _controller: MMCmfContentBundle:ContentNode:getForm}
+    defaults: { _controller: MMCmfContentBundle:ContentNode:edit}
 
-mm_cmf_content_node_simple_form:
+mm_cmf_content_node_simple_edit:
     path:     /{id}/simple/edit
-    defaults: { _controller: MMCmfContentBundle:ContentNode:getSimpleForm}
+    defaults: { _controller: MMCmfContentBundle:ContentNode:simpleEdit}
 
 mm_cmf_content_node_update:
     path: /{id}/update
@@ -23,6 +23,23 @@ mm_cmf_content_node_simple_update:
     defaults:  { _controller: MMCmfContentBundle:ContentNode:simpleUpdate}
 
 
-mm_cmf_content_node_select:
-    path: /discrimators
-    defaults:  { _controller: MMCmfContentBundle:ContentNode:getDiscrimatorsModal}
+mm_cmf_content_node_discriminator_child_select:
+    path: /{id}/discriminator
+    defaults:  { _controller: MMCmfContentBundle:ContentNode:getDiscriminatorModal}
+
+
+mm_cmf_content_node_add_child:
+    path:     /{parent_node}/add/{contentNode_type}
+    defaults: { _controller: MMCmfContentBundle:ContentNode:newChild}
+
+mm_cmf_content_node_create_child:
+    path: /{parent_node}/{contentNode_type}/create
+    defaults:  { _controller: MMCmfContentBundle:ContentNode:createChild}
+
+mm_cmf_content_node_simple_add_child:
+    path:     /{parent_node}/simple/add/{contentNode_type}
+    defaults: { _controller: MMCmfContentBundle:ContentNode:simpleNewChild}
+
+mm_cmf_content_node_simple_create_child:
+    path: /{parent_node}/{contentNode_type}/simple/create
+    defaults:  { _controller: MMCmfContentBundle:ContentNode:simpleCreateChild}

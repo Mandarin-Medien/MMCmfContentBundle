@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,7 +22,7 @@ class ContentNodeController extends Controller
     }
 
     /**
-     * AJAX save endpoint
+     * AJAX save endpoint, not related to the CRUD
      *
      * @param Request $request
      * @return JsonResponse
@@ -91,8 +92,11 @@ class ContentNodeController extends Controller
 
     /**
      * return the general ContentNode Form
+     *
+     * @param ContentNode $contentNode
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getFormAction(ContentNode $contentNode)
+    public function editAction(ContentNode $contentNode)
     {
         $contentNodeParser = $this->get('mm_cmf_content.content_parser');
         $icon = $contentNodeParser->getIcon($contentNode);
@@ -111,7 +115,7 @@ class ContentNodeController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getSimpleFormAction(Request $request,ContentNode $contentNode)
+    public function simpleEditAction(Request $request, ContentNode $contentNode)
     {
         $contentNodeClassName = get_class($contentNode);
 
@@ -124,8 +128,8 @@ class ContentNodeController extends Controller
         /**
          * load root node if set
          */
-        $rootNode = null ;
-        if((int) $request->get('root_node')) {
+        $rootNode = null;
+        if ((int)$request->get('root_node')) {
             $rootNode = $repository->find((int)$request->get('root_node'));
         }
 
@@ -135,7 +139,7 @@ class ContentNodeController extends Controller
         else
             $simpleFormTemplate = '@MMCmfContent/Form/general_form.html.twig';
 
-        $simpleFormType = $this->getSimpleEditForm($contentNode,$rootNode);
+        $simpleFormType = $this->createSimpleEditForm($contentNode, $rootNode);
 
         // load icon
         $icon = $contentNodeParser->getIcon($contentNodeClassName);
@@ -164,6 +168,168 @@ class ContentNodeController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param ContentNode $parent_node
+     * @param $contentNode_type
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function simpleNewChildAction(Request $request, ContentNode $parent_node, $contentNode_type)
+    {
+        return $this->newChildAction($request, $parent_node, $contentNode_type, true);
+    }
+
+    /**
+     * @param Request $request
+     * @param ContentNode $parent_node
+     * @param $contentNode_type
+     * @param bool $isSimpleForm
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function newChildAction(Request $request, ContentNode $parent_node, $contentNode_type, $isSimpleForm = false)
+    {
+        $factory = $this->get('mm_cmf_content.content_node_factory');
+        $repository = $this->getDoctrine()->getRepository('MMCmfNodeBundle:Node');
+
+        //$parent_node = null;
+        $entity = $factory->createContentNode($contentNode_type);
+
+        $entity->setParent($parent_node);
+
+        //check if node need "simple" validation
+        if ($isSimpleForm)
+            $form = $this->createSimpleCreateForm($entity);
+        else
+            $form = $this->createCreateForm($entity);
+
+        return $this->render('@MMCmfContent/Modal/Form/content_node_new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'modal_id' => ''
+        ));
+    }
+
+    public function simpleCreateChildAction(Request $request, ContentNode $parent_node, $contentNode_type)
+    {
+        return $this->createChildAction($request, $parent_node, $contentNode_type, true);
+    }
+
+    /**
+     * @param Request $request
+     * @param ContentNode $parent_node
+     * @param $contentNode_type
+     * @return JsonResponse
+     */
+    public function createChildAction(Request $request, ContentNode $parent_node, $contentNode_type, $isSimpleForm = false)
+    {
+
+        $factory = $this->get('mm_cmf_content.content_node_factory');
+
+        $entity = $factory->createContentNode($contentNode_type);
+
+        $entity->setParent($parent_node);
+
+        //check if node need "simple" validation
+        if ($isSimpleForm)
+            $form = $this->createSimpleCreateForm($entity);
+        else
+            $form = $this->createCreateForm($entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $markup = $this->get('mm_cmf_content.mm_cmf_parse_twig_extension')->cmfParse(
+                $this->get('twig'),
+                $entity
+            );
+            return new JsonResponse(array(
+                    'success' => true,
+                    'data' => array(
+                        'id' => $entity->getId(),
+                        'append_id' => $entity->getParent()->getId(),
+                        'markup' => $markup
+                    ))
+            );
+        }
+
+        return new JsonResponse(array('success' => false));
+    }
+
+
+    /**
+     * @param ContentNode $entity
+     * @return \Symfony\Component\Form\Form
+    */
+    private function createCreateForm(ContentNode $entity)
+    {
+        $form = $this->createForm(
+            $this->get('mm_cmf_content.form_type.content_node'),
+            $entity,
+            array(
+                'root_node' => $entity->getParent(),
+                'action' => $this->generateUrl('mm_cmf_content_node_create_child',
+                    array(
+                        'contentNode_type' => $this->get('mm_cmf_content.content_node_factory')->getDiscriminatorByClass($entity),
+                        'parent_node' => $entity->getParent()->getId()
+                    )),
+                'method' => 'POST',
+            )
+        );
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
+    }
+
+    public function createSimpleCreateForm(ContentNode $contentNode)
+    {
+        $contentNodeClassName = get_class($contentNode);
+
+        $contentNodeParser = $this->get('mm_cmf_content.content_parser');
+
+        $simpleFormData = $contentNodeParser->getSimpleForm($contentNodeClassName);
+
+        //set FormType
+        if (isset($simpleFormData['type']) && class_exists($simpleFormData['type']))
+            $simpleFormType = new $simpleFormData['type']($this->container);
+        else
+            $simpleFormType = $this->get('mm_cmf_content.form_type.content_node');
+
+
+        //get fields to hide
+        $hiddenFields = $contentNodeParser->getHiddenFields($contentNodeClassName);
+
+        foreach ($hiddenFields as $field) {
+            $simpleFormType->addHiddenField($field);
+        }
+
+        $templateVars = array(
+            'action' => $this->get('router')->generate('mm_cmf_content_node_simple_create_child', array(
+                'parent_node' => $contentNode->getParent()->getId(),
+                'contentNode_type' => $this->get('mm_cmf_content.content_node_factory')->getDiscriminatorByClass($contentNode),
+            ))
+        );
+
+        if ($contentNode->getParent())
+            $templateVars['root_node'] = $contentNode->getParent();
+
+        $form = $this->createForm(
+            $simpleFormType,
+            $contentNode,
+            $templateVars
+        );
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
+    }
+
+    /**
      * validates the general ContentNode Form
      *
      * @param Request $request
@@ -178,15 +344,15 @@ class ContentNodeController extends Controller
 
         $rootNode = null;
 
-        if((int) $request->get('root_node')) {
+        if ((int)$request->get('root_node')) {
             $rootNode = $repository->find((int)$request->get('root_node'));
         }
 
         //check if node need "simple" validation
         if ($isSimpleForm)
-            $editForm = $this->getSimpleEditForm($contentNode, $rootNode);
+            $editForm = $this->createSimpleEditForm($contentNode, $rootNode);
         else
-            $editForm = $this->getEditForm($contentNode, $rootNode);
+            $editForm = $this->createEditForm($contentNode, $rootNode);
 
         $editForm->handleRequest($request);
 
@@ -214,19 +380,21 @@ class ContentNodeController extends Controller
      * Returns the configured Simple Form for Frontend Editing purpose
      *
      * @param ContentNode $contentNode
+     * @param Node|null $rootNode
      * @return \Symfony\Component\Form\Form
      */
-    public function getSimpleEditForm(ContentNode $contentNode, Node $rootNode = null)
+    public function createSimpleEditForm(ContentNode $contentNode, Node $rootNode = null)
     {
         $contentNodeClassName = get_class($contentNode);
 
         $contentNodeParser = $this->get('mm_cmf_content.content_parser');
 
         $simpleFormData = $contentNodeParser->getSimpleForm($contentNodeClassName);
-
         //set FormType
-        if (isset($simpleFormData['type']) && is_callable($simpleFormData['type']))
-            $simpleFormType = new $simpleFormData['type']();
+        if (isset($simpleFormData['type']) && class_exists($simpleFormData['type']))
+        {
+            $simpleFormType = new $simpleFormData['type']($this->container);
+        }
         else
             $simpleFormType = $this->get('mm_cmf_content.form_type.content_node');
 
@@ -260,7 +428,7 @@ class ContentNodeController extends Controller
      *
      * @return \Symfony\Component\Form\Form
      */
-    public function getEditForm(ContentNode $contentNode, Node $rootNode = null)
+    public function createEditForm(ContentNode $contentNode, Node $rootNode = null)
     {
 
         $templateVars = array(
@@ -280,15 +448,19 @@ class ContentNodeController extends Controller
     }
 
     /**
+     * @param ContentNode $contentNode
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getDiscrimatorsModalAction()
+    public function getDiscriminatorModalAction(ContentNode $contentNode)
     {
+        $classes = $this->get('mm_cmf_content.content_parser')->getContentNodeTypes();
+
+
         return $this->render('@MMCmfContent/Modal/Form/content_node_select.html.twig', array(
-            'discrimators' => $this->get('mm_cmf_content.content_node_factory')->getDiscrimators()
+            'classes' => $classes,
+            'contentNode' => $contentNode
         ));
     }
-
 
     /**
      * @param $className
@@ -298,4 +470,5 @@ class ContentNodeController extends Controller
     {
         return $this->em->getClassMetadata($className);
     }
+
 }

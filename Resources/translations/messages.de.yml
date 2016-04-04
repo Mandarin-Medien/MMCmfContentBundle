@@ -10,10 +10,17 @@ Draggable: Drag'n'Drop für Unterelemente aktivieren
 Save changes: Änderungen speichern
 Close: schließen
 
-Tooltip ContainerContentNode: Bereich
+Tooltip ContainerContentNode: Inhalts-Bereich
 Tooltip RowContentNode: Zeile
 Tooltip ParagraphContentNode: Absatz
+Tooltip ContentNode: Bereich
 
-ContainerContentNode: Bereich
-RowContentNode: Zeile
+ContainerContentNode: Inhalts-Bereich
 ParagraphContentNode: Absatz
+RowContentNode: Zeile
+ContentNode: Bereich
+
+containercontentnode: Inhalts-Bereich
+paragraphcontentnode: Absatz
+rowcontentnode: Zeile
+contentnode: Bereich

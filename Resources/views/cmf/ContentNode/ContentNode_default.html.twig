@@ -15,9 +15,10 @@
         data-cmf-css-generated-classes="{{ generated_classes }}"
         data-cmf-tooltip="{{ ('Tooltip ' ~ node_class)|trans }} - <i>{{ node.name }}</i>"
         {% if node.id > 0 %}
-            data-cmf-simple-form="{{ path('mm_cmf_content_node_simple_form', {'id': node.id }) }}"
+            data-cmf-simple-form="{{ path('mm_cmf_content_node_simple_edit', {'id': node.id }) }}"
         {% endif %}
 
+        data-cmf-add-child-form="{{ path('mm_cmf_content_node_discriminator_child_select', {'id': node.id }) }}"
         >
     {% endblock %}
 

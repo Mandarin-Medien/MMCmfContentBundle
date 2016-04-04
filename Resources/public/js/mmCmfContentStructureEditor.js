@@ -59,7 +59,7 @@
         /**
          * checks if the current contentNode
          */
-        if ( $this.isGridable($contentNode) ) {
+        if ($this.isGridable($contentNode)) {
             for (var i in $settings.gridSizes) {
                 var $selectBox = this.generateColumnSelect($contentNode, $settings.gridSizes[i], $settings.gridCount);
                 $boxInner.append($selectBox);
@@ -96,7 +96,7 @@
     mmCmfContentStructureEditor.prototype.onChangeGridsystem = function ($contentNode, $boxInner, $box) {
 
         $box.parent().removeClass(function (index, css) {
-            return (css.match(/col-[a-z1-9\-]*/g) || []).join(' ');
+            return (css.match(/col-[a-z0-9\-]*/g) || []).join(' ');
         });
 
         $boxInner.find('select').each(function () {
@@ -201,7 +201,7 @@
      *
      * @param $url
      */
-    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url, $contentNode) {
+    mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url, __callback) {
 
         var $this = this;
 
@@ -214,13 +214,17 @@
 
                     $this.modalParent.append(request);
 
-                    $(request)
+                    var $modal = $(request)
                         .modal()
                         .on('hidden.bs.modal', function () {
                             $(this).remove();
                         });
 
                     mmFormFieldhandler.init();
+
+                    if ( typeof __callback == "function")
+                        __callback(request, $modal, $this.modalParent);
+
                 }
             });
 
@@ -261,10 +265,42 @@
 
             var $route = $contentNode.data('cmf-simple-form');
 
-            $this.loadSettingsForm($route, $contentNode);
+            $this.loadSettingsForm($route);
         });
 
         $div.prepend($gearButton);
+
+        /**
+         *
+         * append add-children-button simple form opener
+         *
+         */
+
+        var $addButton = $('<b class="ContentNode-settings-plus"><i class="fa fa-plus"></i></b>');
+
+        $addButton.click(function (e) {
+
+            e.preventDefault();
+
+            var $route = $contentNode.data('cmf-add-child-form');
+
+            $this.loadSettingsForm($route, function( request, $modal, $modalParent ){
+
+                console.log('a.contentNodeType',$modal,$modal.find('a.contentNodeType'));
+
+                $modal.on('click','a.contentNodeType',function(e){
+
+                    e.preventDefault();
+
+                    $this.loadSettingsForm($(this).attr('href'));
+
+                    $modal.modal('hide');
+
+                });
+            });
+        });
+
+        $div.prepend($addButton);
 
 
         return $div;
@@ -347,7 +383,7 @@
     };
 
     /**
-     * triggeres update functions to the MainController
+     * triggers update functions to the MainController
      *
      * @param $contentNode
      * @param $value

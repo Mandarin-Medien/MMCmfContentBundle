@@ -36,7 +36,7 @@ mm_cmf_content:
             gridable: false
             icon: 'fa fa-folder-o'
             simpleForm:
-                type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
+                type: '\MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
                 template: "MMCmfContentBundle:Form:container_form.html.twig"
             hiddenFields:
                 - "attributes"

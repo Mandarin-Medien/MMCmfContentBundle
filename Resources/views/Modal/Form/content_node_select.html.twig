@@ -1,11 +1,16 @@
 {% extends "@MMCmfContent/Modal/default_modal.html.twig" %}
 
-{% block modal_title %}Bitte wählen Sie einen Inhaltstypen{% endblock %}
+{% block modal_title %}{{ 'Bitte wählen Sie einen Inhaltstypen'|trans }}{% endblock %}
 
 {% block modal_body %}
-    {% for discrimator in discrimators %}
-        <a href="#">{{ discrimator }}</a>
+
+    {{ 'Hinzufügen zu '|trans }}<b>{{ contentNode }}</b>
+    <hr>
+    <ul class="list-unstyled">
+    {% for class in classes %}
+        <li><a class="contentNodeType" href="{{ path('mm_cmf_content_node_simple_add_child',{ 'parent_node': contentNode.id , 'contentNode_type': class.discriminator }) }}"><span class="{{ class.icon }}"></span> {{ class.discriminator|trans }}</a></li>
     {% endfor %}
+    </ul>
 {% endblock %}
 
 {% block modal_footer %}{% endblock %}
