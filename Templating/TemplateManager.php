@@ -132,7 +132,7 @@ class TemplateManager
      * @param string $bundleName
      * @return string
      */
-    protected function getDefaultTemplate($className, $bundleName = "MMCmfContentBundle")
+    public function getDefaultTemplate($className, $bundleName = "MMCmfContentBundle")
     {
         return $bundleName . ':cmf:' . $className . '/' . $className . '_default.html.twig';
     }

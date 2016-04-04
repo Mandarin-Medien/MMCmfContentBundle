@@ -10,70 +10,107 @@ use Symfony\Component\DependencyInjection\Container;
 /**
  * @todo: may need a new name couz of new purpose
  *
- * Class ContentParserController
+ * Class ContentNodeConfigurationController
  * @package MandarinMedien\MMCmfContentBundle\Controller
  */
-class ContentParserController
+class ContentNodeConfigurationController
 {
-
+    /**
+     * @var Container
+     */
     protected $container;
 
-    private $contentNodeHiddenFields = array();
-    private $contentNodeSimpleForms = array();
-    private $contentNodeIcons = array();
-    private $contentNodeGridable = array();
+    /**
+     * @var array
+     */
+    protected $contentNodeTypes = array();
 
+    /**
+     * @var \MandarinMedien\MMCmfContentBundle\Templating\TemplateManager
+     */
     protected $templateManager;
 
+    /**
+     * ContentNodeConfigurationController constructor.
+     *
+     * @param Container $container
+     * @param array $contentNodeConfig
+     */
     public function __construct(Container $container, Array $contentNodeConfig)
     {
-
         $this->container = $container;
         $this->templateManager = $this->container->get('mm_cmf_content.template_manager');
 
         $this->parseContentNodeConfig($contentNodeConfig);
     }
 
+    /**
+     * @param $contentNodeConfig
+     */
     private function parseContentNodeConfig($contentNodeConfig)
     {
-        foreach ($contentNodeConfig as $nodeName => $nodeAttributes) {
 
-            $className = ucfirst($nodeName);
+        $content_node_factory = $this->container->get('mm_cmf_content.content_node_factory');
 
-             // hiddenFields
-            $this->contentNodeHiddenFields[$className] = array();
+        foreach ($contentNodeConfig as $nodeClassName => $nodeAttributes) {
 
+            /**
+             * new solution to hold configuartions
+             */
+
+            $this->contentNodeTypes[$nodeClassName] = $nodeAttributes;
+            $this->contentNodeTypes[$nodeClassName]['name'] = $nodeClassName;
+            $this->contentNodeTypes[$nodeClassName]['discriminator'] = $content_node_factory->getDiscriminatorByClassName($nodeClassName);
+
+            /**
+             * fields to hide
+             */
             if (isset($nodeAttributes['hiddenFields']))
                 foreach ($nodeAttributes['hiddenFields'] as $field) {
-                    $this->contentNodeHiddenFields[$className][] = $field;
+                    $this->contentNodeTypes[$nodeClassName]['hiddenFields'][] = $field;
                 }
 
-            // simpleFormType
-            $this->contentNodeSimpleForms[$className] = array();
-
+            /**
+             * simpleform
+             */
             if (isset($nodeAttributes['simpleForm']))
                 foreach ($nodeAttributes['simpleForm'] as $key => $field) {
-                    $this->contentNodeSimpleForms[$className][$key] = $field;
+                    $this->contentNodeTypes[$nodeClassName]['simpleForm'][$key] = $field;
                 }
 
-            // icons
-            $this->contentNodeIcons[$className] = array();
-
+            /**
+             * icon
+             */
             if (isset($nodeAttributes['icon']))
-                $this->contentNodeIcons[$className] = $nodeAttributes['icon'];
+                $this->contentNodeTypes[$nodeClassName]['icon'] = $nodeAttributes['icon'];
             else
-                $this->contentNodeIcons[$className] = 'fa fa-file-o';
+                $this->contentNodeTypes[$nodeClassName]['icon'] = 'fa fa-file-o';
 
-            // contentNodeGridable
-            $this->contentNodeGridable[$className] = array();
-
-            if (isset($nodeAttributes['gridable']))
-            {
-                $this->contentNodeGridable[$className] = $nodeAttributes['gridable'];
-            }
-            else
-                $this->contentNodeGridable[$className] = true;
+            /**
+             * gridable
+             */
+            if (isset($nodeAttributes['gridable'])) {
+                $this->contentNodeTypes[$nodeClassName]['gridable'] = $nodeAttributes['gridable'];
+            } else
+                $this->contentNodeTypes[$nodeClassName]['gridable'] = true;
         }
+    }
+
+    /**
+     * @param $nodeClassName
+     * @return array|null
+     */
+    function getContentNodeType($nodeClassName)
+    {
+        return (isset($this->contentNodeTypes[$nodeClassName])) ? $this->contentNodeTypes[$nodeClassName] : null;
+    }
+
+    /**
+     * @return array[]
+     */
+    function getContentNodeTypes()
+    {
+        return $this->contentNodeTypes;
     }
 
     /**
@@ -82,7 +119,7 @@ class ContentParserController
      */
     public function isGridable($nodeClassName)
     {
-        return (isset($this->contentNodeGridable[$nodeClassName])) ? $this->contentNodeGridable[$nodeClassName] : true;
+        return (isset($this->contentNodeTypes[$nodeClassName]['gridable'])) ? $this->contentNodeTypes[$nodeClassName]['gridable'] : true;
     }
 
     /**
@@ -92,9 +129,9 @@ class ContentParserController
     public function getNotGridableClasses()
     {
         $classes = array();
-        foreach($this->contentNodeGridable as $key => $val)
-            if(!$val)
-                $classes[] = $key;
+        foreach ($this->contentNodeTypes as $nodeClassName => $attr)
+            if (!$this->isGridable($nodeClassName))
+                $classes[] = $nodeClassName;
 
         return $classes;
     }
@@ -106,7 +143,7 @@ class ContentParserController
      */
     public function getIcon($nodeClassName)
     {
-        return (isset($this->contentNodeIcons[$nodeClassName])) ? $this->contentNodeIcons[$nodeClassName] : '';
+        return (isset($this->contentNodeTypes[$nodeClassName]['icon'])) ? $this->contentNodeTypes[$nodeClassName]['icon'] : '';
     }
 
     /**
@@ -115,7 +152,7 @@ class ContentParserController
      */
     public function getSimpleForm($nodeClassName)
     {
-        return (isset($this->contentNodeSimpleForms[$nodeClassName])) ? $this->contentNodeSimpleForms[$nodeClassName] : null;
+        return (isset($this->contentNodeTypes[$nodeClassName]['simpleForm'])) ? $this->contentNodeTypes[$nodeClassName]['simpleForm'] : null;
     }
 
     /**
@@ -125,7 +162,7 @@ class ContentParserController
     public function getHiddenFields($nodeClassName)
     {
 
-        return (isset($this->contentNodeHiddenFields[$nodeClassName])) ? $this->contentNodeHiddenFields[$nodeClassName] : array();
+        return (isset($this->contentNodeTypes[$nodeClassName]['hiddenFields'])) ? $this->contentNodeTypes[$nodeClassName]['hiddenFields'] : array();
     }
 
     /**
@@ -184,11 +221,13 @@ class ContentParserController
     }
 
     /**
+     * @deprecated Look at the new MandarinMedien\MMCmfContentBundle\Templating\TemplateManager.
+     *
      * @param string $bundleName
      * @return string
      */
     public function getDefaultTemplate($className, $bundleName = "MMCmfContentBundle")
     {
-        return $bundleName . ':cmf:' . $className . '/' . $className . '_default.html.twig';
+        return $this->templateManager->getDefaultTemplate($className, $bundleName);
     }
 }

@@ -3,7 +3,7 @@
 namespace MandarinMedien\MMCmfContentBundle\Twig;
 
 use FOS\UserBundle\Entity\User;
-use MandarinMedien\MMCmfContentBundle\Controller\ContentParserController;
+use MandarinMedien\MMCmfContentBundle\Controller\ContentNodeConfigurationController;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use Symfony\Component\DependencyInjection\Container;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 class CmfContentParserExtension extends \Twig_Extension
 {
     /**
-     * @var ContentParserController
+     * @var ContentNodeConfigurationController
      */
     protected $cmfContentParser;
 
@@ -25,7 +25,7 @@ class CmfContentParserExtension extends \Twig_Extension
     protected $notGridableContentNodeClasses;
 
 
-    public function __construct(TokenStorage $tokenStorage, ContentParserController $cmfContentParser = null)
+    public function __construct(TokenStorage $tokenStorage, ContentNodeConfigurationController $cmfContentParser = null)
     {
         $this->cmfContentParser = $cmfContentParser;
         $this->tokenStorage = $tokenStorage;

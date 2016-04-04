@@ -1,6 +1,6 @@
 services:
     mm_cmf_content.content_parser:
-        class: MandarinMedien\MMCmfContentBundle\Controller\ContentParserController
+        class: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeConfigurationController
         arguments: ["@service_container", "content_nodes"]
         #calls:
         #  - [setContainer, ["@service_container"]]
