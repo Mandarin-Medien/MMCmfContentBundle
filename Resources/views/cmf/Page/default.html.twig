@@ -27,6 +27,18 @@
 
         <meta name="keywords" content="{{ node.metaKeywords }}">
 
+        {% stylesheets
+        '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap-theme.min.css'
+        '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css'
+        '@mmmedia_assets_css'
+        '@mm_cmf_content_assets_css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+
+        {% stylesheets 'bundles/mmcmfcontent/vendor/summernote/dist/summernote.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
 
         {#  NEED !!! #}
         {% include '@MMCmfContent/cmf/cmf_javascript_vars.html.twig' %}
@@ -40,8 +52,29 @@
         -------------------------------------------------------------------
         -->
 
-        {% for node in node.nodes %}
-            {{ node|cmfParse }}
-        {% endfor %}
+        {% block body %}
+            <div>
+                <h1>{{ node.name }}</h1>
+
+                <div class="ContentNodeChildren">
+                    {% for childNode in node.nodes %}
+                        {{ childNode|cmfParse }}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block javascripts %}
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+            {% javascripts
+            '@MMCmfContentBundle/Resources/public/vendor/jquery/dist/jquery.min.js'
+            '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js'
+            '@mm_cmf_content_assets_js'
+
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>

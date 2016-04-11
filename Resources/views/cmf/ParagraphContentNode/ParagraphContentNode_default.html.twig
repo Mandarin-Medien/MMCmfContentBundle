@@ -7,7 +7,7 @@
         {{ node.headline|raw }}
         {%  if node.headlineType %}</{{ node.headlineType }}>{% endif %}
 
-        {%  if node.imageSource %}<img src="{{ node.imageSource }}" class="image" alt="" title="" />{% endif %}
+        {%  if node.imageSource %}<img src="{{ node.imageSource }}" class="image img-responsive" alt="" title="" />{% endif %}
 
         <div data-cmf-field="text" data-cmf-field-type="WYSIWYG">{{ node.text|raw }}</div>
 
