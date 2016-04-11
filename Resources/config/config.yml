@@ -48,6 +48,8 @@ twig:
             - MMCmfContentBundle:Form:nodetree.html.twig
 
 assetic:
+    bundles:
+        - MMCmfContentBundle
     assets:
         mm_cmf_content_assets_js:
             inputs:
