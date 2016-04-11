@@ -54,8 +54,6 @@
 
         {% block body %}
             <div>
-                <h1>{{ node.name }}</h1>
-
                 <div class="ContentNodeChildren">
                     {% for childNode in node.nodes %}
                         {{ childNode|cmfParse }}

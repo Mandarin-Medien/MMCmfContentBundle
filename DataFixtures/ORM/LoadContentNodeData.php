@@ -53,11 +53,36 @@ class LoadContentNodeData extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($containerFixed);
 
         /**
-         * row
+         * row text
          */
 
+        $rowText = new RowContentNode();
+        $rowText->setName('Intro Text Paragraphs');
+        $rowText->setVisible(true);
+        $rowText->setParent($containerFixed);
+        $manager->persist($rowText);
+
+
+        /**
+         * Text
+         */
+        $paragraphText = new ParagraphContentNode();
+        $paragraphText->setClasses('col-xs-12');
+        $paragraphText->setName('Intro text');
+        #$paragraphText->setHeadline('');
+        #$paragraphText->setHeadlineType('h1');
+        $paragraphText->setText('We have a new range of truly mouthwatering gift hampers and baskets in store now. They range from a mini snack basket for £10, perfect for someone’s desk at work, to a beautifully presented luxury wine, cheese, biscuits, chutney and chocolates hamper for £100.');
+        $paragraphText->setParent($rowText);
+        $paragraphText->setVisible(true);
+        $manager->persist($paragraphText);
+
+
+
+        /**
+         * row
+         */
         $row = new RowContentNode();
-        $row->setName('Intro Paragraphs');
+        $row->setName('Feature Paragraphs');
         $row->setVisible(true);
         $row->setParent($containerFixed);
         $manager->persist($row);
