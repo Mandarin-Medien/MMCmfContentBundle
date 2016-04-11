@@ -18,7 +18,7 @@ MandarinMedien\MMCmfContentBundle\Entity\ParagraphContentNode:
             options:
         imageSource:
             type: string
-            length: 100
+            length: 255
             nullable: true
 
     lifecycleCallbacks: {  }
