@@ -15,6 +15,7 @@ class ContainerContentNodeType extends ContentNodeType
     {
         $builder
             ->add('name')
+            ->add('classes')
             ->add('fluid')
             ->add('parent', $this->container->get('mm_cmf_content.form_type.node_tree')->setParentNode($options['root_node']));
         ;
