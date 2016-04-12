@@ -29,6 +29,7 @@ mm_cmf_content:
                 - { name: 'Upside-Down', template: "MMCmfContentBundle:cmf:ParagraphContentNode/ParagraphContentNode_upside_down.html.twig" }
             hiddenFields:
                 - "attributes"
+                - "position"
                 #- "headline"
                 #- "text"
 
