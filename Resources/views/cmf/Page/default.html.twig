@@ -1,12 +1,12 @@
 <html>
-    <head>
-
+<head>
+    {% block head %}
         <title>{{ node.metaTitle }}</title>
         <meta property="og:title" content="{{ node.metaTitle }}">
 
         {% if node.metaDescription is not empty %}
-            <meta property="og:description" content="{{ node.metaDescription  }}">
-            <meta name="description" content="{{ node.metaDescription  }}">
+            <meta property="og:description" content="{{ node.metaDescription }}">
+            <meta name="description" content="{{ node.metaDescription }}">
         {% endif %}
 
         {% if node.metaAuthor is not empty %}
@@ -18,10 +18,10 @@
         {% endif %}
 
         {% if node.metaImage is not empty %}
-            <link rel="image_src" href="{{ asset('node.metaImage') }}" >
+            <link rel="image_src" href="{{ asset('node.metaImage') }}">
             <meta property="og:image" content="{{ absolute_url(asset('node.metaImage')) }}">
         {% else %}
-            <link rel="image_src" href="asset('bundles/app/img/og-image.jpg')" >
+            <link rel="image_src" href="asset('bundles/app/img/og-image.jpg')">
             <meta property="og:image" content="{{ absolute_url(asset('bundles/app/img/og-image.jpg')) }}">
         {% endif %}
 
@@ -31,48 +31,46 @@
         '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap-theme.min.css'
         '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css'
         '@mmmedia_assets_css'
-        '@mm_cmf_content_assets_css'
-        %}
+        '@mm_cmf_content_assets_css' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
 
         {% stylesheets 'bundles/mmcmfcontent/vendor/summernote/dist/summernote.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
 
         {#  NEED !!! #}
         {% include '@MMCmfContent/cmf/cmf_javascript_vars.html.twig' %}
+    {% endblock %}
 
-    </head>
-    <body>
-        <!--
-        -------------------------------------------------------------------
-        | this is the Page default template                               |
-        | you can overwrite and configure your own in your app config     |
-        -------------------------------------------------------------------
-        -->
+</head>
+<body>
+<!--
+-------------------------------------------------------------------
+| this is the Page default template                               |
+| you can overwrite and configure your own in your app config     |
+-------------------------------------------------------------------
+-->
 
-        {% block body %}
-            <div>
-                <div class="ContentNodeChildren">
-                    {% for childNode in node.nodes %}
-                        {{ childNode|cmfParse }}
-                    {% endfor %}
-                </div>
-            </div>
-        {% endblock %}
+{% block body %}
+    <div>
+        <div class="ContentNodeChildren">
+            {% for childNode in node.nodes %}
+                {{ childNode|cmfParse }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
 
-        {% block javascripts %}
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
+{% block javascripts %}
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
 
-            {% javascripts
-            '@MMCmfContentBundle/Resources/public/vendor/jquery/dist/jquery.min.js'
-            '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js'
-            '@mm_cmf_content_assets_js'
-
-            %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-    </body>
+    {% javascripts
+    '@MMCmfContentBundle/Resources/public/vendor/jquery/dist/jquery.min.js'
+    '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js'
+    '@mm_cmf_content_assets_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
 </html>
