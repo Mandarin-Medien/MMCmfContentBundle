@@ -2,7 +2,7 @@ $.fn.NodeTreeType = function()
 {
     return this.each(function()
     {
-        var target =  $('[name="'+$(this).attr('rel')+'"]');
+        var target =  $(this).parent().find('[name="'+$(this).attr('rel')+'"]');
         var root = this;
 
         var setActive = function(item)
