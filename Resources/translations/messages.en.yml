@@ -1,0 +1,26 @@
+Visible: Visible
+Headline: Headline
+Headline type: Typ of Headline
+Parent: Parent element
+Classes: Classes
+Template: Templates/Views
+Image source: Image source
+Position: Position
+Draggable: enable Drag'n'Drop
+Save changes: save changes
+Close: close
+
+Tooltip ContainerContentNode: Content-Section
+Tooltip RowContentNode: Row
+Tooltip ParagraphContentNode: Parapgraph
+Tooltip ContentNode: Content
+
+ContainerContentNode: Content-Section
+ParagraphContentNode: Parapgraph
+RowContentNode: Row
+ContentNode: Content
+
+containercontentnode: Content-Section
+paragraphcontentnode: Parapgraph
+rowcontentnode: Row
+contentnode: Content
