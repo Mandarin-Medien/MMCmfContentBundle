@@ -200,6 +200,7 @@
      * loads the contentNode Modal
      *
      * @param $url
+     * @param __callback
      */
     mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url, __callback) {
 
@@ -212,18 +213,27 @@
                 'data': {'root_node': $this.settings.root_node},
                 'success': function (request) {
 
-                    $this.modalParent.append(request);
+
 
                     var $modal = $(request)
                         .modal()
                         .on('hidden.bs.modal', function () {
+
+                            console.log('modalClose.settingsForm.MMCmfContentFieldEditor', $(this).remove());
                             $(this).remove();
+
+                            $(document).trigger('modalClose.settingsForm.MMCmfContentFieldEditor', {});
+
                         });
+
+                    $this.modalParent.append($modal);
 
                     mmFormFieldhandler.init();
 
-                    if ( typeof __callback == "function")
+                    if (typeof __callback == "function")
                         __callback(request, $modal, $this.modalParent);
+
+                    $(document).trigger('modalOpen.settingsForm.MMCmfContentFieldEditor');
 
                 }
             });
@@ -248,6 +258,7 @@
             '</div>');
 
         $div.on('click', 'b.ContentNode-settings-arrows', function (e) {
+
 
             e.preventDefault();
 
@@ -284,11 +295,11 @@
 
             var $route = $contentNode.data('cmf-add-child-form');
 
-            $this.loadSettingsForm($route, function( request, $modal, $modalParent ){
+            $this.loadSettingsForm($route, function (request, $modal, $modalParent) {
 
-                console.log('a.contentNodeType',$modal,$modal.find('a.contentNodeType'));
+                console.log('a.contentNodeType', $modal, $modal.find('a.contentNodeType'));
 
-                $modal.on('click','a.contentNodeType',function(e){
+                $modal.on('click', 'a.contentNodeType', function (e) {
 
                     e.preventDefault();
 
