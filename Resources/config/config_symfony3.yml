@@ -1,0 +1,6 @@
+imports:
+    - { resource: 'config_core.yml' };
+
+twig:
+    form_themes:
+        - "MMCmfContentBundle:Form:nodetree.html.twig"
