@@ -1,5 +1,5 @@
 imports:
-    - { resource: 'config_core.yml' };
+    - { resource: 'config_core.yml' }
 
 twig:
     form_themes:
