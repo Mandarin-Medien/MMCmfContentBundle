@@ -45,9 +45,8 @@ mm_cmf_content:
 twig:
     globals:
         mm_cmf_content_parser: '@mm_cmf_content.content_parser'
-    form:
-        resources:
-            - "MMCmfContentBundle:Form:nodetree.html.twig"
+    form_themes:
+        - "MMCmfContentBundle:Form:nodetree.html.twig"
 assetic:
     bundles:
         - MMCmfContentBundle
