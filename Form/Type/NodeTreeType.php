@@ -12,19 +12,20 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 
 
 class NodeTreeType extends AbstractType
 {
-    protected $class = 'MandarinMedien\MMCmfNodeBundle\Entity\Node';
+    protected $class;
     protected $manager;
     protected $parentNode = null;
 
     public function __construct(ObjectManager $manager)
     {
         $this->manager = $manager;
+
+        $this->class = Node::class;
     }
 
     /**
@@ -53,7 +54,7 @@ class NodeTreeType extends AbstractType
      */
     protected function getRootNodes()
     {
-        return $this->manager->getRepository($this->class)->findByParent(null);
+        return $this->manager->getRepository($this->class)->findBy(array('parent'=>null));
     }
 
     /**
@@ -65,15 +66,17 @@ class NodeTreeType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
+        $this->setParentNode($options['parentNode']);
+
         $view->vars['nodes'] = $this->getParentNode() ? array($this->getParentNode()) : $this->getRootNodes();
     }
 
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $parent = $this->parentNode;
+        parent::configureOptions($resolver);
+
+        $resolver->setDefined(array('parentNode'));
+        $resolver->setAllowedTypes('parentNode', array('NULL','string',NodeInterface::class));
 
         $resolver->setDefaults(array(
             'class' => $this->class
@@ -83,7 +86,7 @@ class NodeTreeType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'mm_cmf_content_node_tree';
     }
@@ -93,6 +96,6 @@ class NodeTreeType extends AbstractType
      */
     public function getParent()
     {
-        return 'entity_hidden';
+        return EntityHiddenType::class;
     }
 }

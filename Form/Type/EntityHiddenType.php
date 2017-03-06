@@ -4,9 +4,11 @@ namespace MandarinMedien\MMCmfContentBundle\Form\Type;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use MandarinMedien\MMCmfContentBundle\Form\DataTransformer\IdToEntityTransformer;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntityHiddenType extends AbstractType
 {
@@ -20,26 +22,33 @@ class EntityHiddenType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        dump($options);
+
         $transformer = new IdToEntityTransformer($this->objectManager, $options['class']);
         $builder->addModelTransformer($transformer);
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefined(array('class'));
+        $resolver->setAllowedTypes('class', array('NULL','string',NodeInterface::class));
+
         $resolver
             ->setRequired(array('class'))
             ->setDefaults(array(
                 'invalid_message' => 'The entity does not exist.',
-            ))
-        ;
+            ));
     }
+
 
     public function getParent()
     {
-        return 'hidden';
+        return HiddenType::class;
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'entity_hidden';
     }

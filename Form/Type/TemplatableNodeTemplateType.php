@@ -4,12 +4,14 @@ namespace MandarinMedien\MMCmfContentBundle\Form\Type;
 
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfContentBundle\Entity\TemplatableNodeInterface;
+use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TemplatableNodeTemplateType extends AbstractType
 {
@@ -21,39 +23,38 @@ class TemplatableNodeTemplateType extends AbstractType
         $this->container = $container;
     }
 
-    /**
-     * define a node as entry point for the node tree
-     *
-     * @param TemplatableNodeInterface|string $node
-     * @return TemplatableNodeTemplateType
-     */
-    public function setClass($node = null)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $this->class = $node;
-        return $this;
-    }
 
-    /**
-     * @return TemplatableNodeInterface|string
-     */
-    protected function getClass()
-    {
-        return $this->class;
-    }
+        $resolver->setDefined(array('className'));
+        $resolver->setAllowedTypes('className', array('string',NodeInterface::class));
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $templates =$this->getTemplates($this->class);
+        /**
+         * @var $tempThis TemplatableNodeTemplateType
+         */
+        $tempThis = $this;
 
-        // null detault template to avoid unnessary database entry
-        $templates['default'] = "";
-
-        $templates = array_flip($templates);
 
         $resolver->setDefaults(array(
-            'choices' => $templates,
+            'choices' => function (Options $options) use ($tempThis, $resolver) {
+
+                $templates = array();
+                if ($options['className']) {
+                    $templates = $tempThis->getTemplates($options['className']);
+
+                    // null detault template to avoid unnessary database entry
+                    $templates['default'] = "";
+
+                    //$templates = array_flip($templates);
+
+                }
+
+                return $templates;
+
+
+            },
             'required' => false,
-            'placeholder' => false
+            'placeholder' => false,
         ));
     }
 
@@ -92,7 +93,7 @@ class TemplatableNodeTemplateType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'mm_cmf_content_templatable_node_template';
     }

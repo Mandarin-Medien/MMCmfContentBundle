@@ -3,8 +3,10 @@
 namespace MandarinMedien\MMCmfContentBundle\Controller;
 
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
+use MandarinMedien\MMCmfContentBundle\Form\ContentNodeType;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Container;
@@ -13,7 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ContentNodeController extends Controller
 {
-
+    /**
+     * @var $em EntityManager
+     */
     private $em;
 
     function __construct()
@@ -264,11 +268,11 @@ class ContentNodeController extends Controller
     /**
      * @param ContentNode $entity
      * @return \Symfony\Component\Form\Form
-    */
+     */
     private function createCreateForm(ContentNode $entity)
     {
         $form = $this->createForm(
-            $this->get('mm_cmf_content.form_type.content_node'),
+            ContentNodeType::class,
             $entity,
             array(
                 'root_node' => $entity->getParent(),
@@ -391,22 +395,17 @@ class ContentNodeController extends Controller
 
         $simpleFormData = $contentNodeParser->getSimpleForm($contentNodeClassName);
         //set FormType
-        if (isset($simpleFormData['type']) && class_exists($simpleFormData['type']))
-        {
-            $simpleFormType = new $simpleFormData['type']($this->container);
-        }
-        else
-            $simpleFormType = $this->get('mm_cmf_content.form_type.content_node');
+        if (isset($simpleFormData['type']) && class_exists($simpleFormData['type'])) {
+            $simpleFormType = $simpleFormData['type'];
+        } else
+            $simpleFormType = ContentNodeType::class;
 
 
         //get fields to hide
         $hiddenFields = $contentNodeParser->getHiddenFields($contentNodeClassName);
 
-        foreach ($hiddenFields as $field) {
-            $simpleFormType->addHiddenField($field);
-        }
-
         $templateVars = array(
+            'hiddenFields' => $hiddenFields,
             'action' => $this->get('router')->generate('mm_cmf_content_node_simple_update', array(
                 'id' => $contentNode->getId()
             ))
@@ -441,7 +440,7 @@ class ContentNodeController extends Controller
             $templateVars['root_node'] = $rootNode;
 
         return $this->createForm(
-            $this->get('mm_cmf_content.form_type.content_node'),
+            ContentNodeType::class,
             $contentNode,
             $templateVars
         );

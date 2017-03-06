@@ -52,7 +52,7 @@ class CmfContentParserExtension extends \Twig_Extension
 
                 $user = $token->getUser();
 
-                if ($user instanceof User) {
+                if ($user instanceof \FOS\UserBundle\Model\User) {
                     if ($user->hasRole('ROLE_USER'))
                         $enabled = $token->isAuthenticated();
                 }

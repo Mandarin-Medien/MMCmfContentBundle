@@ -33,7 +33,7 @@ class ContainerContentNodeType extends ContentNodeType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'mandarinmedien_mmcmfcontentbundle_containercontentnode';
     }

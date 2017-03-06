@@ -23,12 +23,8 @@ You need to add the bundle to your app/AppKernel.php.
 ...
 imports:
     - ...
-    # Symfony 2
     - { resource: '@MMCmfContentBundle/Resources/config/config.yml' }
-    #   OR    
-    # Symfony 3
-    - { resource: '@MMCmfContentBundle/Resources/config/config_symfony3.yml' }
-    - ...   
+    - ...
 ...
 ```
 
@@ -48,15 +44,7 @@ mm_cmf_content:
 ...
 ```
 
-### install and initiate assets - Symfony 2
-
-```
-...
-shell:PROJECT_ROOT: cd  vendor/mandarinmedien/mmcmfcontentbundle/MandarinMedien/MMCmfContentBundle && bower update && cd ../../../../../ && app/console as:in --symlink && app/console assetic:dump
-...
-```
-
-### install and initiate assets - Symfony 3
+### install and initiate assets
 
 ```
 ...
