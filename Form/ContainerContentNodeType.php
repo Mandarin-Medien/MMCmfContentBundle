@@ -16,9 +16,13 @@ class ContainerContentNodeType extends ContentNodeType
     {
         $builder
             ->add('name')
+
+            ->add('visible')
             ->add('classes')
             ->add('fluid')
-            ->add('parent', NodeTreeType::class, array('parentNode' => $options['root_node']));
+            ->add('parent', NodeTreeType::class, array('parentNode' => $options['root_node']))
+            ->add('position')
+        ;
 
     }
 
