@@ -300,19 +300,15 @@ class ContentNodeController extends Controller
 
         //set FormType
         if (isset($simpleFormData['type']) && class_exists($simpleFormData['type']))
-            $simpleFormType = new $simpleFormData['type']($this->container);
+            $simpleFormType = $simpleFormData['type'];
         else
-            $simpleFormType = $this->get('mm_cmf_content.form_type.content_node');
-
+            $simpleFormType = ContentNodeType::class;
 
         //get fields to hide
         $hiddenFields = $contentNodeParser->getHiddenFields($contentNodeClassName);
 
-        foreach ($hiddenFields as $field) {
-            $simpleFormType->addHiddenField($field);
-        }
-
         $templateVars = array(
+            'hiddenFields' => $hiddenFields,
             'action' => $this->get('router')->generate('mm_cmf_content_node_simple_create_child', array(
                 'parent_node' => $contentNode->getParent()->getId(),
                 'contentNode_type' => $this->get('mm_cmf_content.content_node_factory')->getDiscriminatorByClass($contentNode),
