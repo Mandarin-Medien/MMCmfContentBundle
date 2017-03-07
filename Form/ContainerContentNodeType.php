@@ -2,6 +2,7 @@
 
 namespace MandarinMedien\MMCmfContentBundle\Form;
 
+use MandarinMedien\MMCmfContentBundle\Form\Type\NodeTreeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,8 +18,8 @@ class ContainerContentNodeType extends ContentNodeType
             ->add('name')
             ->add('classes')
             ->add('fluid')
-            ->add('parent', $this->container->get('mm_cmf_content.form_type.node_tree')->setParentNode($options['root_node']));
-        ;
+            ->add('parent', NodeTreeType::class, array('parentNode' => $options['root_node']));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

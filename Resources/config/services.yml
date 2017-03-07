@@ -56,7 +56,13 @@ services:
         class: MandarinMedien\MMCmfContentBundle\Form\ContentNodeType
         arguments: ["@service_container"]
         tags:
-            - {name: form.type, alias: mm_cmf_content_content_node}
+            - {name: form.type}
+
+    mm_cmf_content.form_type.container_content_node:
+        class: MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType
+        arguments: ["@service_container"]
+        tags:
+            - { name: form.type }
 
     mm_cmf_content.form_type.node_template:
         class: MandarinMedien\MMCmfContentBundle\Form\Type\TemplatableNodeTemplateType
