@@ -2,8 +2,7 @@
 
     {#Real headerr#}
     {% block cmf_contentNode_widget_header %}
-        <div
-                class="{{ display_classes }}"
+        <div class="{{ display_classes }}"
 
         {% for key,value in node.attributes %}
             {{ key }}="{{ value }}"
@@ -16,9 +15,8 @@
         data-cmf-tooltip="{{ ('Tooltip ' ~ node_class)|trans }} - <i>{{ node.name }}</i>"
         {% if node.id > 0 %}
             data-cmf-simple-form="{{ path('mm_cmf_content_node_simple_edit', {'id': node.id }) }}"
+            data-cmf-add-child-form="{{ path('mm_cmf_content_node_discriminator_child_select', {'id': node.id }) }}"
         {% endif %}
-
-        data-cmf-add-child-form="{{ path('mm_cmf_content_node_discriminator_child_select', {'id': node.id }) }}"
         >
     {% endblock %}
 
