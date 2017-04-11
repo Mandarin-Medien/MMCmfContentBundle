@@ -10,6 +10,7 @@ use MandarinMedien\MMCmfContentBundle\Form\ContentNodeType;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -285,7 +286,7 @@ class ContentNodeController extends Controller
             )
         );
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
@@ -324,7 +325,7 @@ class ContentNodeController extends Controller
             $templateVars
         );
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', SubmitType::class, array('label' => 'Create'));
 
         return $form;
     }
