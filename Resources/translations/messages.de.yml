@@ -9,6 +9,8 @@ Position: Position/Sortierung
 Draggable: Drag'n'Drop für Unterelemente aktivieren
 Save changes: Änderungen speichern
 Close: schließen
+Delete: löschen
+Create: neu erstellen
 
 Tooltip ContainerContentNode: Inhalts-Bereich
 Tooltip RowContentNode: Zeile

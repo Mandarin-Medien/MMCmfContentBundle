@@ -152,12 +152,33 @@ class ContentNodeController extends Controller
         //generates html-dom-node-id
         $modal_dom_id = 'modal_content_node_' . $contentNode->getId();
 
+        $deleteForm = $this->createDeleteForm($contentNode->getId());
+
         // render form
         return $this->render($simpleFormTemplate, array(
             'form' => $simpleFormType->createView(),
+            'delete_form' => $deleteForm->createView(),
             'node_icon' => $icon,
             'modal_id' => $modal_dom_id
         ));
+    }
+
+
+    /**
+     * Creates a form to delete a Menu entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('mm_cmf_admin_contentnode_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            //->add('submit', SubmitType::class, array('label' => 'Delete'))
+            ->getForm()
+            ;
     }
 
     /**
@@ -371,7 +392,6 @@ class ContentNodeController extends Controller
                         'markup' => $markup
                     ))
             );
-
         }
 
         return new JsonResponse(array('success' => false));
