@@ -30,4 +30,13 @@ MandarinMedien\MMCmfContentBundle\Entity\Page:
             type: string
             nullable: true
 
+
+    oneToMany:
+        routes:
+            targetEntity: MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute
+            mappedBy: node
+            cascade:
+                - all
+
+
     lifecycleCallbacks: {  }

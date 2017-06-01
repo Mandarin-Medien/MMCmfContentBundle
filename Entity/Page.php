@@ -1,13 +1,16 @@
 <?php
 
 namespace MandarinMedien\MMCmfContentBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use MandarinMedien\MMCmfRoutingBundle\Entity\AutoNodeRoute;
+use MandarinMedien\MMCmfRoutingBundle\Entity\NodeRouteInterface;
+use MandarinMedien\MMCmfRoutingBundle\Entity\RoutableNodeInterface;
 
 /**
  * Page
  */
-class Page extends Node implements TemplatableNodeInterface
+class Page extends Node implements RoutableNodeInterface, TemplatableNodeInterface
 {
 
     /**
@@ -51,6 +54,71 @@ class Page extends Node implements TemplatableNodeInterface
      * @var boolean
      */
     protected $routeGeneration = true;
+
+
+
+    protected $routes;
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->routes = new ArrayCollection();
+    }
+
+
+    /**
+     * @return NodeRoute[]
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+    /**
+     * @param ArrayCollection $routes
+     * @return Node
+     */
+    public function setRoutes(ArrayCollection $routes)
+    {
+        $this->routes = $routes;
+        return $this;
+    }
+
+    /**
+     * @param NodeRouteInterface $route
+     * @return $this
+     */
+    public function addRoute(NodeRouteInterface $route)
+    {
+        $this->routes->add($route);
+        $route->setNode($this);
+        return $this;
+    }
+
+
+    /**
+     * @param NodeRouteInterface $route
+     * @return $this
+     */
+    public function removeRoute(NodeRouteInterface $route)
+    {
+        $this->routes->removeElement($route);
+        $route->setNode(null);
+        return $this;
+    }
+
+
+    public function setAutoNodeRouteGeneration($autoNodeRouteGeneration)
+    {
+        $this->routeGeneration = true;
+    }
+
+    public function hasAutoNodeRouteGeneration()
+    {
+        return $this->routeGeneration;
+    }
+
 
     /**
      * @return string
