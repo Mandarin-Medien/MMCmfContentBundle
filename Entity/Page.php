@@ -10,7 +10,7 @@ use MandarinMedien\MMCmfRoutingBundle\Entity\RoutableNodeInterface;
 /**
  * Page
  */
-class Page extends Node implements RoutableNodeInterface, TemplatableNodeInterface
+class Page extends Node implements PageNodeInterface, RoutableNodeInterface, TemplatableNodeInterface
 {
 
     /**
@@ -91,8 +91,8 @@ class Page extends Node implements RoutableNodeInterface, TemplatableNodeInterfa
      */
     public function addRoute(NodeRouteInterface $route)
     {
+        dump('add', $route);
         $this->routes->add($route);
-        $route->setNode($this);
         return $this;
     }
 
@@ -104,7 +104,6 @@ class Page extends Node implements RoutableNodeInterface, TemplatableNodeInterfa
     public function removeRoute(NodeRouteInterface $route)
     {
         $this->routes->removeElement($route);
-        $route->setNode(null);
         return $this;
     }
 

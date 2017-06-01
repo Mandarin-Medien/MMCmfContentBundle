@@ -31,10 +31,18 @@ MandarinMedien\MMCmfContentBundle\Entity\Page:
             nullable: true
 
 
-    oneToMany:
+    manyToMany:
         routes:
             targetEntity: MandarinMedien\MMCmfRoutingBundle\Entity\NodeRoute
-            mappedBy: node
+            joinTable:
+                name: page_routes
+                joinColumns:
+                  node_id:
+                    referencedColumnName: id
+                inverseJoinColumns:
+                  route_id:
+                    referencedColumnName: id
+                    unique: true
             cascade:
                 - all
 
