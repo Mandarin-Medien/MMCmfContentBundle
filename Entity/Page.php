@@ -176,9 +176,10 @@ class Page extends Node implements TemplatableNodeInterface
 	/**
 	 * @param string $metaCanonical
 	 */
-	public function setMetaCanonical(string $metaCanonical)
+	public function setMetaCanonical($metaCanonical)
 	{
 		$this->metaCanonical = $metaCanonical;
+		return $this;
 	}
 
 
