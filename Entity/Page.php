@@ -40,6 +40,11 @@ class Page extends Node implements TemplatableNodeInterface
      */
     protected $metaImage;
 
+	/**
+	 * @var string
+	 */
+    protected $metaCanonical;
+
 
     /**
      * @var string
@@ -159,6 +164,24 @@ class Page extends Node implements TemplatableNodeInterface
         $this->metaImage = $metaImage;
         return $this;
     }
+
+	/**
+	 * @return string
+	 */
+	public function getMetaCanonical()
+	{
+		return $this->metaCanonical;
+	}
+
+	/**
+	 * @param string $metaCanonical
+	 */
+	public function setMetaCanonical(string $metaCanonical)
+	{
+		$this->metaCanonical = $metaCanonical;
+	}
+
+
 
     /**
      * @return boolean

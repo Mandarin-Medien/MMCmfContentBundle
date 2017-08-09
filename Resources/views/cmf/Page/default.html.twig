@@ -25,6 +25,10 @@
             <meta property="og:image" content="{{ absolute_url(asset('bundles/app/img/og-image.jpg')) }}">
         {% endif %}
 
+        {% if node.metaCanonical is not empty %}
+            <link rel="canonical" href="{{ node.metaCanonical }}" />
+        {% endif %}
+
         <meta name="keywords" content="{{ node.metaKeywords }}">
 
         {% stylesheets
