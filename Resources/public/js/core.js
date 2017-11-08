@@ -4,6 +4,15 @@
 var mmFormFieldhandler;
 var mmCmfContentEditorIntilized = false;
 
+
+function mmInIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
 function BootUpMmCmfContentBundle()
 {
     var $contentNodes = $('.ContentNode');
@@ -27,7 +36,7 @@ function BootUpMmCmfContentBundle()
 
 $(document).ready(function () {
 
-    if(typeof document.mm_cmf_content != 'undefined') {
+    if(mmInIframe() && typeof document.mm_cmf_content != 'undefined') {
         BootUpMmCmfContentBundle();
 
         // admin form field types
@@ -69,4 +78,4 @@ var submitForm = function (form) {
 
 var addContentNode = function (markup) {
     $('body').append(markup);
-}
+};
