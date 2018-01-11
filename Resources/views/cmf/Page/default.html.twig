@@ -27,10 +27,12 @@
 
         <meta name="keywords" content="{{ node.metaKeywords }}">
 
+
+        <link href="{{ asset('@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap-theme.min.css') }}" media="screen" type="text/css" rel="stylesheet">
+        <link href="{{ asset('@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css') }}" media="screen" type="text/css" rel="stylesheet">
+        <link href="{{ asset('@MMMedia/Resources/public/dist/css/mmmedia.css') }}" media="screen" type="text/css" rel="stylesheet">
+
         {% stylesheets
-        '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap-theme.min.css'
-        '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/css/bootstrap.min.css'
-        '@mmmedia_assets_css'
         '@mm_cmf_content_assets_css' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
@@ -65,10 +67,11 @@
 {% block javascripts %}
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 
+    <script src="{{ asset("@MMMediaBundle/Resources/public/dist/js/mmmedia.js") }}"></script>
+
     {% javascripts
-    '@MMCmfContentBundle/Resources/public/vendor/jquery/dist/jquery.min.js'
-    '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js'
-    '@mm_cmf_content_assets_js' %}
+        '@MMCmfContentBundle/Resources/public/vendor/bootstrap/dist/js/bootstrap.min.js'
+     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

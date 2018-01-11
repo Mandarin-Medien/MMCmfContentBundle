@@ -6,7 +6,11 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 
-
+/**
+ * Class ContentNodeFactory
+ * @deprecated
+ * @package MandarinMedien\MMCmfContentBundle\Entity\Factory
+ */
 class ContentNodeFactory
 {
 

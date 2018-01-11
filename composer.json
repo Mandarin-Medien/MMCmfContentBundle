@@ -20,6 +20,7 @@
   },
   "target-dir": "MandarinMedien/MMCmfContentBundle",
   "require": {
+    "mandarinmedien/mmmediabundle": "^2.2.0",
     "mandarinmedien/mmcmfnodebundle": "^0.2",
     "twig/twig": "^1.0||^2.0"
   }
