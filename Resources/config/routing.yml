@@ -6,6 +6,10 @@ mm_cmf_content_save:
         _format: json
         _method: POST
 
+mm_cmf_content_node_delete:
+    path:     /{id}/edit
+    defaults: { _controller: MMCmfContentBundle:ContentNode:delete}
+
 mm_cmf_content_node_edit:
     path:     /{id}/edit
     defaults: { _controller: MMCmfContentBundle:ContentNode:edit}

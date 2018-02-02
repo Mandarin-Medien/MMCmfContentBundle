@@ -174,12 +174,39 @@ class ContentNodeController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('mm_cmf_admin_contentnode_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('mm_cmf_content_node_delete', array('id' => $id)))
             ->setMethod('DELETE')
             //->add('submit', SubmitType::class, array('label' => 'Delete'))
-            ->getForm()
-            ;
+            ->getForm();
     }
+
+
+    public function deleteAction(Request $request, $id)
+    {
+
+
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        //if ($form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('MMCmfContentBundle:ContentNode')->find($id);
+
+        if (!$entity) {
+            return new JsonResponse(array('success' => false, 'msg' => 'Unable to find Node-Entity.'), 404);
+        }
+
+        if ($parent = $entity->getParent()) {
+            $parent->removeNode($entity);
+        }
+
+        $em->remove($entity);
+        $em->flush();
+        //}
+
+        return new JsonResponse(array('success' => true));
+    }
+
 
     /**
      * validates the simple ContentNode Form
