@@ -8,7 +8,7 @@ var mmCmfFieldStringPlugin = function () {
 
 mmCmfFieldStringPlugin.prototype.bindEvents = function () {
 
-    var $this = this;
+    const $this = this;
 
     $(document).on(this.fieldType + '.init.MMCmfContentFieldEditor', function ($event, $data) {
         $this.onInit($event, $data)
@@ -26,81 +26,78 @@ mmCmfFieldStringPlugin.prototype.bindEvents = function () {
 
 mmCmfFieldStringPlugin.prototype.onInit = function ($event, $data) {
 
-    var $this = this;
-    var $field = $data.field;
+    const $this = this;
+    let field = $data.field;
 
-    if (typeof $field != "undefined") {
-        $field.data('mmCmfFieldStringPlugin', $this);
+    if (typeof field !== "undefined") {
+        field.data('mmCmfFieldStringPlugin', $this);
 
-        var pasteTimeoutId;
+        let pasteTimeoutId;
 
-        $field
+        field
         //activate editing by click
-            .on('click', function ($event) {
+            .on('click', () => {
 
-                if($field.data('mmCmfFieldStringPlugin').enabled == false)
+                if(field.data('mmCmfFieldStringPlugin').enabled === false)
                     return;
 
-                var $this = $(this);
-                var $cssDisplay = $this.css('display');
+                const $cssDisplay = field.css('display');
 
-                $this
+                field
                     .attr('contenteditable', 'true')
                     .data('pre-css-display', $cssDisplay)
                     .css('display', 'inline-block').focus();
             })
             // disabele editing if use clicks away
-            .on('blur', function () {
+            .on('blur', () => {
 
-                var $this = $(this);
-                var $cssDisplay = $(this).data('pre-css-display');
+                const $cssDisplay = field.data('pre-css-display');
 
-                $this
+                field
                     .attr('contenteditable', 'false')
                     .css('display', $cssDisplay);
             })
 
             // fire event to the FieldEditor if something changed
-            .on('DOMCharacterDataModified paste', function ($event) {
+            .on('DOMCharacterDataModified paste', (event) => {
 
-                $event.stopPropagation();
-
+                event.stopPropagation();
 
                 clearTimeout(pasteTimeoutId);
 
-                pasteTimeoutId = setTimeout(function () {
+                pasteTimeoutId = setTimeout(() => {
+                    //$field.html($this.cleanHTML($field.html()));
 
-                    $field.html($this.cleanHTML($field.html()));
-
-                    $this.onUpdate($field);
+                    $this.onUpdate(field);
                 }, 100);
 
 
-            });
+            })
+        ;
     }
 
 };
 
-mmCmfFieldStringPlugin.prototype.getPreparedData = function ($field) {
-    return $field.html();
+mmCmfFieldStringPlugin.prototype.getPreparedData = function (field) {
+    return field.html();
 };
 
 
-mmCmfFieldStringPlugin.prototype.onUpdate = function ($field) {
+mmCmfFieldStringPlugin.prototype.onUpdate = function (field) {
 
-    var $type = $field.data('cmf-field-type');
-    var $fieldName = $field.data('cmf-field');
-    var $cmfId = $field.data('cmf-id');
+    const type = field.data('cmf-field-type');
+    const fieldName = field.data('cmf-field');
+    const cmfId = field.data('cmf-id');
 
-    var $value = $field.data('mmCmfFieldStringPlugin').getPreparedData($field);
+    const value = field.data('mmCmfFieldStringPlugin').getPreparedData(field);
 
     $(document).trigger('updated.MMCmfContentFieldEditor',
         {
-            field: $field,
-            value: $value,
-            name: $fieldName,
-            type: $type,
-            'cmf-id': $cmfId
+            field: field,
+            value: value,
+            name: fieldName,
+            type: type,
+            'cmf-id': cmfId
         }
     );
 };

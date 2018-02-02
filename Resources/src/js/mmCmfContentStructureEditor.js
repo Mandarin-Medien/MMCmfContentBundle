@@ -1,5 +1,6 @@
-var $ = require('jquery');
-var dragula = require('dragula');
+const dragula = require('dragula');
+import FormHandler from './form/FormHandler';
+
 /**
  * This jQuery plugin will be the javascript hub for all contentNodeField actions of the MMCmfContentBundle
  */
@@ -7,22 +8,22 @@ var dragula = require('dragula');
 
     /**
      *
-     * @param $contentNode
+     * @param $contentNodes
      * @param $options
      */
-    var mmCmfContentStructureEditor = function ($contentNodes, $options) {
+    const mmCmfContentStructureEditor = function ($contentNodes, $options) {
 
-        var $this = this;
+        const $this = this;
         this.contentNodes = $contentNodes;
         this.settings = $options;
-        this.modalParent = $('body');
+        this.modalParent = jQuery('body');
 
-        this.initiateDragula($('.ContentNodeChildren.draggable'));
+        this.initiateDragula(jQuery('.ContentNodeChildren.draggable'));
 
 
-        $(this.contentNodes).each(function (key, _contentNode) {
+        jQuery(this.contentNodes).each(function (key, _contentNode) {
 
-            $contentNode = $(_contentNode);
+            const $contentNode = jQuery(_contentNode);
 
             if (!$contentNode.data('mmCmfContentStructureEditor')) {
                 $this.appendSettingsMenu($contentNode);
@@ -30,13 +31,13 @@ var dragula = require('dragula');
             }
         });
 
-        if (typeof $.fn.tooltip != "undefined")
-            $('.ContentNode-settings').tooltip({html: true, placement: 'auto top'});
+        if (typeof jQuery.fn.tooltip != "undefined")
+            jQuery('.ContentNode-settings').tooltip({html: true, placement: 'auto top'});
     };
 
     mmCmfContentStructureEditor.prototype.isGridable = function ($contentNode) {
 
-        var $this = this;
+        const $this = this;
 
         return ($this.settings.not_gridable_classes.indexOf($contentNode.data('cmf-class')) === -1);
 
@@ -48,22 +49,22 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.appendSettingsMenu = function ($contentNode) {
 
-        var $this = this;
-        var $settings = this.settings;
+        let $this = this;
+        let $settings = this.settings;
 
 
         /**
          * append to inner box div
          */
-        var $box = this.generateSettingsBox($contentNode);
-        var $boxInner = $('<div class="inner" />');
+        let $box = this.generateSettingsBox($contentNode);
+        let $boxInner = jQuery('<div class="inner" />');
 
         /**
          * checks if the current contentNode
          */
         if ($this.isGridable($contentNode)) {
-            for (var i in $settings.gridSizes) {
-                var $selectBox = this.generateColumnSelect($contentNode, $settings.gridSizes[i], $settings.gridCount);
+            for (let i in $settings.gridSizes) {
+                let $selectBox = this.generateColumnSelect($contentNode, $settings.gridSizes[i], $settings.gridCount);
                 $boxInner.append($selectBox);
             }
         }
@@ -81,7 +82,7 @@ var dragula = require('dragula');
         /**
          * append position switch widget
          */
-        var $posSwitch = this.generatePositionSwitchControls($contentNode);
+        let $posSwitch = this.generatePositionSwitchControls($contentNode);
         $boxInner.append($posSwitch);
 
 
@@ -102,25 +103,25 @@ var dragula = require('dragula');
         });
 
         $boxInner.find('select').each(function () {
-            $box.parent().addClass($(this).val());
+            $box.parent().addClass(jQuery(this).val());
         });
 
-        var $fieldName = 'classes';
-        var $value = $contentNode.attr('class');
+        let $fieldName = 'classes';
+        let $value = $contentNode.attr('class');
 
-        var $cmfId = $contentNode.data('cmf-id');
+        let $cmfId = $contentNode.data('cmf-id');
 
-        var $cmfForbiddenClasses = $contentNode.data('cmf-css-generated-classes') +
+        let $cmfForbiddenClasses = $contentNode.data('cmf-css-generated-classes') +
             " " + this.settings.highlightClass +
             " " + this.settings.hoverClass;
 
-        var $cmfForbiddenClassesArray = $cmfForbiddenClasses.split(" ");
+        let $cmfForbiddenClassesArray = $cmfForbiddenClasses.split(" ");
 
-        for (var i = 0; i < $cmfForbiddenClassesArray.length; i++) {
+        for (let i = 0; i < $cmfForbiddenClassesArray.length; i++) {
             $value = $value.replace($cmfForbiddenClassesArray[i], '');
         }
 
-        $(document).trigger('updated.MMCmfContentFieldEditor',
+        jQuery(document).trigger('updated.MMCmfContentFieldEditor',
             {
                 value: $value.trim(),
                 name: $fieldName,
@@ -137,11 +138,11 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.generatePositionSwitchControls = function ($contentNode) {
 
-        var $this = this;
+        let $this = this;
         /**
          * manual position switcher
          */
-        var $posiswitch = $('<div class="posiswitch"><div class="upper"><i class="fa fa-chevron-up"></i></div><div class="downer"><i class="fa fa-chevron-down"></i></div></div>');
+        let $posiswitch = jQuery('<div class="posiswitch"><div class="upper"><i class="fa fa-chevron-up"></i></div><div class="downer"><i class="fa fa-chevron-down"></i></div></div>');
 
         /**
          * bind events
@@ -150,7 +151,7 @@ var dragula = require('dragula');
 
             e.preventDefault();
 
-            var $ele = $(this);
+            let $ele = jQuery(this);
 
             if ($ele.hasClass('upper')) {
                 if ($contentNode.prev().hasClass('ContentNode'))
@@ -175,14 +176,14 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.generateColumnSelect = function ($contentNode, $gridSize, $gridCount) {
 
-        var $select = $('<select />').data('grid-size', $gridSize);
+        let $select = jQuery('<select />').data('grid-size', $gridSize);
 
         $select.append('<option></option>');
 
-        for (var i = 1; i <= $gridCount; i++) {
+        for (let i = 1; i <= $gridCount; i++) {
 
-            var $colClass = 'col-' + $gridSize + '-' + i;
-            var $option = $('<option value="' + $colClass + '">' + i + '</option>');
+            let $colClass = 'col-' + $gridSize + '-' + i;
+            let $option = jQuery('<option value="' + $colClass + '">' + i + '</option>');
 
             if ($contentNode.hasClass($colClass))
                 $option.attr('selected', 'selected');
@@ -190,7 +191,7 @@ var dragula = require('dragula');
             $select.append($option);
         }
 
-        var $selectContainer = $('<div class="select-container select-container-' + $gridSize + '" />');
+        let $selectContainer = jQuery('<div class="select-container select-container-' + $gridSize + '" />');
         $selectContainer.append('<label class="icon-' + $gridSize.toLowerCase() + '"><span>' + $gridSize.toUpperCase() + '</span></label>');
         $selectContainer.append($select);
 
@@ -206,36 +207,35 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.loadSettingsForm = function ($url, __callback) {
 
-        var $this = this;
+        let $this = this;
 
         if ($url != "")
-            $.ajax({
+            jQuery.ajax({
                 'url': $url,
                 'method': 'GET',
                 'data': {'root_node': $this.settings.root_node},
                 'success': function (request) {
 
 
-
-                    var $modal = $(request)
+                    let $modal = jQuery(request)
                         .modal()
                         .on('hidden.bs.modal', function () {
 
-                            console.log('modalClose.settingsForm.MMCmfContentFieldEditor', $(this).remove());
-                            $(this).remove();
+                            console.log('modalClose.settingsForm.MMCmfContentFieldEditor', jQuery(this).remove());
+                            jQuery(this).remove();
 
-                            $(document).trigger('modalClose.settingsForm.MMCmfContentFieldEditor', {});
+                            jQuery(document).trigger('modalClose.settingsForm.MMCmfContentFieldEditor', {});
 
                         });
 
                     $this.modalParent.append($modal);
 
-                    mmFormFieldhandler.init();
+                    new FormHandler();
 
-                    if (typeof __callback == "function")
+                    if (typeof __callback === "function")
                         __callback(request, $modal, $this.modalParent);
 
-                    $(document).trigger('modalOpen.settingsForm.MMCmfContentFieldEditor');
+                    jQuery(document).trigger('modalOpen.settingsForm.MMCmfContentFieldEditor');
 
                 }
             });
@@ -249,12 +249,12 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.generateSettingsBox = function ($contentNode) {
 
-        var $this = this;
+        let $this = this;
 
-        var $title = $contentNode.data('cmf-tooltip');
+        let $title = $contentNode.data('cmf-tooltip');
 
 
-        var $div = $('<div class="ContentNode-settings" data-toggle="tooltip" title="' + $title + '">' +
+        let $div = jQuery('<div class="ContentNode-settings" data-toggle="tooltip" title="' + $title + '">' +
             '<b class="ContentNode-settings-arrows"><i class="fa fa-arrows"></i></b>' +
             '<br>' +
             '</div>');
@@ -264,19 +264,19 @@ var dragula = require('dragula');
 
             e.preventDefault();
 
-            $(this).parent().toggleClass('open');
-            $(this).parent().parent().toggleClass($this.settings.highlightClass);
+            jQuery(this).parent().toggleClass('open');
+            jQuery(this).parent().parent().toggleClass($this.settings.highlightClass);
 
         });
 
 
         // append settings simple form opener
-        var $gearButton = $('<b class="ContentNode-settings-gear"><i class="fa fa-gear"></i></b>');
+        let $gearButton = jQuery('<b class="ContentNode-settings-gear"><i class="fa fa-gear"></i></b>');
         $gearButton.click(function (e) {
 
             e.preventDefault();
 
-            var $route = $contentNode.data('cmf-simple-form');
+            let $route = $contentNode.data('cmf-simple-form');
 
             $this.loadSettingsForm($route);
         });
@@ -289,13 +289,13 @@ var dragula = require('dragula');
          *
          */
 
-        var $addButton = $('<b class="ContentNode-settings-plus"><i class="fa fa-plus"></i></b>');
+        let $addButton = jQuery('<b class="ContentNode-settings-plus"><i class="fa fa-plus"></i></b>');
 
         $addButton.click(function (e) {
 
             e.preventDefault();
 
-            var $route = $contentNode.data('cmf-add-child-form');
+            let $route = $contentNode.data('cmf-add-child-form');
 
             $this.loadSettingsForm($route, function (request, $modal, $modalParent) {
 
@@ -305,7 +305,7 @@ var dragula = require('dragula');
 
                     e.preventDefault();
 
-                    $this.loadSettingsForm($(this).attr('href'));
+                    $this.loadSettingsForm(jQuery(this).attr('href'));
 
                     $modal.modal('hide');
 
@@ -326,26 +326,24 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.initiateDragula = function ($elements) {
 
-        var $this = this;
+        let $this = this;
 
         /**
          * declaration of draggable Container should be more complex in the future
          * @type {*|jQuery|HTMLElement}
          */
-        var $draggableContainers = new Array();
-        var $draggableContainersObjects = $elements;
+        const $draggableContainers = [];
 
-        $draggableContainersObjects.each(function (k, v) {
+        $elements.each(function (k, v) {
             $draggableContainers.push(v);
-
         });
 
-        var $draguala = dragula($draggableContainers, {
+        let $draguala = dragula($draggableContainers, {
             ignoreInputTextSelection: true,
             disableDragAndDrop: true,
             moves: function (el, source, handle, sibling) {
 
-                if (!($(el).hasClass('ContentNode') ))
+                if (!(jQuery(el).hasClass('ContentNode')))
                     return false;
 
                 return true;
@@ -353,7 +351,7 @@ var dragula = require('dragula');
 
             accepts: function (el, target, source, sibling) {
 
-                if (!($(el).hasClass('ContentNode') || $(el).hasClass('ParagraphContentNode')))
+                if (!(jQuery(el).hasClass('ContentNode') || jQuery(el).hasClass('ParagraphContentNode')))
                     return false;
 
                 return true; // elements can be dropped in any of the `containers` by default
@@ -380,12 +378,12 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.refreshPositions = function ($contentNode) {
 
-        var $this = this;
+        let $this = this;
 
-        $($contentNode).parent().children('.ContentNode').each(function (i) {
+        jQuery($contentNode).parent().children('.ContentNode').each(function (i) {
 
-            var $contentNodeInner = $(this);
-            var prefIndex = $contentNodeInner.attr('data-cmf-position');
+            let $contentNodeInner = jQuery(this);
+            let prefIndex = $contentNodeInner.attr('data-cmf-position');
 
             if (i != prefIndex) {
                 $contentNodeInner.attr('data-cmf-position', i);
@@ -403,9 +401,9 @@ var dragula = require('dragula');
      */
     mmCmfContentStructureEditor.prototype.onObjectPositionChanged = function ($contentNode, $value) {
 
-        var $cmfId = $contentNode.data('cmf-id');
+        let $cmfId = $contentNode.data('cmf-id');
 
-        $(document).trigger('updated.MMCmfContentFieldEditor',
+        jQuery(document).trigger('updated.MMCmfContentFieldEditor',
             {
                 value: $value,
                 name: 'position',
@@ -421,10 +419,10 @@ var dragula = require('dragula');
      *
      * @param options
      */
-    $.fn.mmCmfContentStructureEditor = function (options) {
+    jQuery.fn.mmCmfContentStructureEditor = function (options) {
 
         // Establish our default settings
-        var settings = $.extend({
+        let settings = jQuery.extend({
 
             // mmCmfContentStructureEditor
             gridCount: 12,

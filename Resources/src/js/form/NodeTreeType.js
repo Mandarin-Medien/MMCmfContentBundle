@@ -1,25 +1,23 @@
-$.fn.NodeTreeType = function()
-{
-    return this.each(function()
-    {
-        var target =  $(this).parent().find('[name="'+$(this).attr('rel')+'"]');
-        var root = this;
+jQuery.fn.NodeTreeType = function () {
+    return this.each(function () {
+        let target = $(this).parent().find('[name="' + $(this).attr('rel') + '"]');
+        let root = this;
 
-        var setActive = function(item)
-        {
+        let setActive = function (item) {
             $(root).find('.node-tree-item').removeClass('active');
             $(item).addClass('active');
-        }
+        };
 
-        $(this).find('.node-tree-item').each(function() {
+        $(this).find('.node-tree-item').each(function () {
 
-            var id = $(this).data('id');
-            var item = this;
+            let id = $(this).data('id');
+            let item = this;
 
-            if(id == target.val()) setActive(item);
+            if (id == target.val())
+                setActive(item);
 
 
-            $(this).children('span').on('click', function(e) {
+            $(this).children('span').on('click', function (e) {
 
                 e.preventDefault();
 

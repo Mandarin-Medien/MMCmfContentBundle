@@ -1,8 +1,7 @@
-var $ = require('jquery');
+import jQuery from 'jquery';
 
 require('summernote');
 require('dragula');
-require('./jquery.htmlClean.min.js');
 
 require('./cmfField/mmCmfFieldString.js');
 require("./cmfField/mmCmfFieldWYSIWYG.js");
@@ -13,57 +12,47 @@ require("./mmCmfContentStructureEditor.js");
 require("./mmCmfContentActionBar.js");
 require("./core.js");
 
-require('./form/HTMLType.js');
-require('./form/NodeTreeType.js');
-require('./form/MenuType.js');
-import FormHandler from "./form/FormHandler";
-
-
 /**
  * @todo: needs to be refactored to not sit in global scope
  */
-var mmFormFieldhandler;
-var mmCmfContentEditorIntilized = false;
+global.mmCmfContentEditorIntilized = false;
 
 function BootUpMmCmfContentBundle()
 {
-    var $contentNodes = $('.ContentNode');
+    const $contentNodes = jQuery('.ContentNode');
 
     /**
      * defined in cmf_javascript_vars.html.twig
      */
-    var $options = document.mm_cmf_content;
+    const $options = document.mm_cmf_content;
 
-    if(!mmCmfContentEditorIntilized)
+    if(!global.mmCmfContentEditorIntilized)
         $contentNodes.mmCmfContentEditor($options);
 
-    mmCmfContentEditorIntilized = true;
+    global.mmCmfContentEditorIntilized = true;
 
     $contentNodes.mmCmfContentFieldEditor($options);
     $contentNodes.mmCmfContentStructureEditor($options);
 
-    $('body').mmCmfContentActionBar();
+    jQuery('body').mmCmfContentActionBar();
 }
 
 
-$(document).ready(function () {
+jQuery(document).ready(function () {
 
-    if(typeof document.mm_cmf_content != 'undefined') {
+    if(typeof document.mm_cmf_content !== 'undefined') {
         BootUpMmCmfContentBundle();
-
-        // admin form field types
-        mmFormFieldhandler = new FormHandler();
     }
 });
 
 
-var submitForm = function (form) {
+global.submitForm = function (form) {
 
-    var formData = new FormData(form);
-    var action = form.getAttribute('action');
-    var method = form.getAttribute('method');
+    const formData = new FormData(form);
+    const action = form.getAttribute('action');
+    const method = form.getAttribute('method');
 
-    $.ajax({
+    jQuery.ajax({
         'url': action,
         'type': method,
         'data': formData,
@@ -72,10 +61,10 @@ var submitForm = function (form) {
         'success': function (data) {
             if (data.success = true) {
 
-                var target = $("[data-cmf-id='" + data.data.id + "']");
+                const target = jQuery("[data-cmf-id='" + data.data.id + "']");
 
-                $(target).replaceWith(data.data.markup);
-                $('.modal').modal('hide');
+                jQuery(target).replaceWith(data.data.markup);
+                jQuery('.modal').modal('hide');
 
                 BootUpMmCmfContentBundle();
 
@@ -87,6 +76,6 @@ var submitForm = function (form) {
 };
 
 
-var addContentNode = function (markup) {
-    $('body').append(markup);
-}
+global.addContentNode = function (markup) {
+    jQuery('body').append(markup);
+};
