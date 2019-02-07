@@ -29,11 +29,11 @@ services:
 
 
     # Doctrine Event Listener
-    mm_cmf_content.page_listener:
-        class: MandarinMedien\MMCmfContentBundle\EventListeners\PageHookListener
-        arguments: ["@service_container"]
-        tags:
-            - {name: doctrine.orm.entity_listener, entity: MandarinMedien\MMCmfContentBundle\Entity\Page, event: postLoad }
+    #mm_cmf_content.page_listener:
+    #    class: MandarinMedien\MMCmfContentBundle\EventListeners\PageHookListener
+    #    arguments: ["@service_container"]
+    #    tags:
+    #        - {name: doctrine.orm.entity_listener, entity: MandarinMedien\MMCmfContentBundle\Entity\Page, event: postLoad }
 
     mm_cmf_content.content_node_factory:
         class: MandarinMedien\MMCmfContentBundle\Entity\Factory\ContentNodeFactory
