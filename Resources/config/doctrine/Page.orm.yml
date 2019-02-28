@@ -39,10 +39,12 @@ MandarinMedien\MMCmfContentBundle\Entity\Page:
                 joinColumns:
                   node_id:
                     referencedColumnName: id
+                    onDelete: cascade
                 inverseJoinColumns:
                   route_id:
                     referencedColumnName: id
                     unique: true
+                    onDelete: cascade
             cascade:
                 - all
 
