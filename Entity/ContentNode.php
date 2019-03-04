@@ -3,6 +3,7 @@
 namespace MandarinMedien\MMCmfContentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use MandarinMedien\MMCmfContentBundle\FormTypeMeta as FormType;
@@ -89,7 +90,7 @@ class ContentNode extends Node implements TemplatableNodeInterface
      *
      * @return Node
      */
-    public function setNodes(ArrayCollection $nodes)
+    public function setNodes(Collection $nodes)
     {
         $finalNodes = array();
 
