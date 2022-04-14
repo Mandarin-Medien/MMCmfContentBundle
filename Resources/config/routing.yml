@@ -1,49 +1,49 @@
 mm_cmf_content_save:
     path:     /save
-    defaults: { _controller: MMCmfContentBundle:ContentNode:save}
+    defaults: { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::saveAction}
     condition: "request.isXmlHttpRequest()"
+    methods: ['POST']
     requirements:
         _format: json
-        _method: POST
 
 mm_cmf_content_node_delete:
     path:     /{id}/edit
-    defaults: { _controller: MMCmfContentBundle:ContentNode:delete}
+    defaults: { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::deleteAction}
 
 mm_cmf_content_node_edit:
     path:     /{id}/edit
-    defaults: { _controller: MMCmfContentBundle:ContentNode:edit}
+    defaults: { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::editAction}
 
 mm_cmf_content_node_simple_edit:
     path:     /{id}/simple/edit
-    defaults: { _controller: MMCmfContentBundle:ContentNode:simpleEdit}
+    defaults: { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::simpleEditAction}
 
 mm_cmf_content_node_update:
     path: /{id}/update
-    defaults:  { _controller: MMCmfContentBundle:ContentNode:update}
+    defaults:  { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::updateAction}
 
 mm_cmf_content_node_simple_update:
     path: /{id}/simple/update
-    defaults:  { _controller: MMCmfContentBundle:ContentNode:simpleUpdate}
+    defaults:  { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::simpleUpdateAction}
 
 
 mm_cmf_content_node_discriminator_child_select:
     path: /{id}/discriminator
-    defaults:  { _controller: MMCmfContentBundle:ContentNode:getDiscriminatorModal}
+    defaults:  { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::getDiscriminatorModalAction}
 
 
 mm_cmf_content_node_add_child:
     path:     /{parent_node}/add/{contentNode_type}
-    defaults: { _controller: MMCmfContentBundle:ContentNode:newChild}
+    defaults: { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::newChildAction}
 
 mm_cmf_content_node_create_child:
     path: /{parent_node}/{contentNode_type}/create
-    defaults:  { _controller: MMCmfContentBundle:ContentNode:createChild}
+    defaults:  { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::createChildAction}
 
 mm_cmf_content_node_simple_add_child:
     path:     /{parent_node}/simple/add/{contentNode_type}
-    defaults: { _controller: MMCmfContentBundle:ContentNode:simpleNewChild}
+    defaults: { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::simpleNewChildAction}
 
 mm_cmf_content_node_simple_create_child:
     path: /{parent_node}/{contentNode_type}/simple/create
-    defaults:  { _controller: MMCmfContentBundle:ContentNode:simpleCreateChild}
+    defaults:  { _controller: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeController::simpleCreateChildAction}

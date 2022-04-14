@@ -2,8 +2,8 @@
 
 namespace MandarinMedien\MMCmfContentBundle\Form\Type;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
@@ -21,7 +21,7 @@ class NodeTreeType extends AbstractType
     protected $manager;
     protected $parentNode = null;
 
-    public function __construct(ObjectManager $manager)
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
 

@@ -4,7 +4,7 @@ namespace MandarinMedien\MMCmfContentBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use MandarinMedien\MMCmfContentBundle\Entity\ContainerContentNode;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfContentBundle\Entity\Page;
@@ -30,7 +30,7 @@ class LoadContentNodeData extends AbstractFixture implements OrderedFixtureInter
         $this->container = $container;
     }
 
-    private function createLoremPage(ObjectManager $manager)
+    private function createLoremPage(EntityManagerInterface $manager)
     {
         $pageLorem = new Page();
         $pageLorem->setName('Lorem');
@@ -101,7 +101,7 @@ Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(EntityManagerInterface $manager)
     {
 
         $page = new Page();

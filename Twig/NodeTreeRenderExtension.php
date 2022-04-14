@@ -4,8 +4,11 @@ namespace MandarinMedien\MMCmfContentBundle\Twig;
 
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class NodeTreeRenderExtension extends \Twig_Extension
+class NodeTreeRenderExtension extends AbstractExtension
 {
 
     private $container;
@@ -24,11 +27,11 @@ class NodeTreeRenderExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('renderNodeTree', array($this, "renderNodeTreeFunction"), array(
+            new TwigFunction('renderNodeTree', array($this, "renderNodeTreeFunction"), array(
                 'is_safe' => array('html'),
                 'needs_environment' => true
             )),
-            new \Twig_SimpleFunction('renderNodeTreeItem', array($this, "renderNodeTreeItemFunction"), array(
+            new TwigFunction('renderNodeTreeItem', array($this, "renderNodeTreeItemFunction"), array(
                 'is_safe' => array('html'),
                 'needs_environment' => true
             ))
@@ -38,19 +41,19 @@ class NodeTreeRenderExtension extends \Twig_Extension
     /**
      * renders the menu
      *
-     * @param \Twig_Environment $twig
+     * @param Environment $twig
      * @param NodeInterface $node
      * @param array $options
      * @return string
      */
-    public function renderNodeTreeFunction(\Twig_Environment $twig, NodeInterface $node, array $options=array())
+    public function renderNodeTreeFunction(Environment $twig, NodeInterface $node, array $options=array())
     {
-        return $twig->render('MMCmfContentBundle:Form/NodeTree:list.html.twig', array('node' => $node, 'icon' => $this->getIcon(get_class($node)), 'options' => $options));
+        return $twig->render('@MMCmfContent/Form/NodeTree/list.html.twig', array('node' => $node, 'icon' => $this->getIcon(get_class($node)), 'options' => $options));
     }
 
-    public function renderNodeTreeItemFunction(\Twig_Environment $twig, NodeInterface $node, array $options=array())
+    public function renderNodeTreeItemFunction(Environment $twig, NodeInterface $node, array $options=array())
     {
-        return $twig->render('MMCmfContentBundle:Form/NodeTree:item.html.twig', array('node' => $node, 'icon' => $this->getIcon(get_class($node)), 'options' => $options));
+        return $twig->render('@MMCmfContent/Form/NodeTree/item.html.twig', array('node' => $node, 'icon' => $this->getIcon(get_class($node)), 'options' => $options));
     }
 
     function getIcon($node)

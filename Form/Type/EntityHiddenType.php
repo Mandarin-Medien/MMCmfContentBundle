@@ -2,7 +2,7 @@
 
 namespace MandarinMedien\MMCmfContentBundle\Form\Type;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use MandarinMedien\MMCmfContentBundle\Form\DataTransformer\IdToEntityTransformer;
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use Symfony\Component\Form\AbstractType;
@@ -15,7 +15,7 @@ class EntityHiddenType extends AbstractType
 
     protected $objectManager;
 
-    function __construct(ObjectManager $om)
+    function __construct(EntityManagerInterface $om)
     {
         $this->objectManager = $om;
     }

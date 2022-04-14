@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfContentBundle\Form\ContentNodeType;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class ContentNodeController extends Controller
+class ContentNodeController extends AbstractController
 {
     /**
      * @var $em EntityManager
