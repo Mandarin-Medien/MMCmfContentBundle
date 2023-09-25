@@ -89,7 +89,7 @@ Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
         $paragraphText->setText($loremText);
         $paragraphText->setParent($rowText);
         $paragraphText->setVisible(true);
-        $paragraphText->setTemplate('MMCmfContentBundle:cmf:ParagraphContentNode/ParagraphContentNode_upside_down.html.twig');
+        $paragraphText->setTemplate('@MMCmfContent/cmf/ParagraphContentNode/ParagraphContentNode_upside_down.html.twig');
 
         $manager->persist($paragraphText);
 
@@ -146,7 +146,7 @@ Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
         $paragraphText->setText('<center>We have a new range of truly mouthwatering gift hampers and baskets in store now. They range from a mini snack basket for £10, perfect for someone’s desk at work, to a beautifully presented luxury wine, cheese, biscuits, chutney and chocolates hamper for £100.</center>');
         $paragraphText->setParent($rowText);
         $paragraphText->setVisible(true);
-        $paragraphText->setTemplate('MMCmfContentBundle:cmf:ParagraphContentNode/ParagraphContentNode_upside_down.html.twig');
+        $paragraphText->setTemplate('@MMCmfContent/cmf/ParagraphContentNode/ParagraphContentNode_upside_down.html.twig');
 
         $manager->persist($paragraphText);
 

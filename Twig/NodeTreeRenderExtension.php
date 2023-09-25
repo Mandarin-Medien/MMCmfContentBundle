@@ -23,8 +23,9 @@ class NodeTreeRenderExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('renderNodeTree', array($this, "renderNodeTreeFunction"), array(

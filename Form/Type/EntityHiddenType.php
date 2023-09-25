@@ -20,12 +20,22 @@ class EntityHiddenType extends AbstractType
         $this->objectManager = $om;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new IdToEntityTransformer($this->objectManager, $options['class']);
         $builder->addModelTransformer($transformer);
     }
 
+
+    /**
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -41,11 +51,18 @@ class EntityHiddenType extends AbstractType
     }
 
 
+    /**
+     * @return string
+     */
     public function getParent()
     {
         return HiddenType::class;
     }
 
+
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'entity_hidden';
