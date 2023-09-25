@@ -2,14 +2,15 @@
 
 namespace MandarinMedien\MMCmfContentBundle\Form\DataTransformer;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\Enti;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class IdToEntityTransformer implements DataTransformerInterface
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     protected $objectManager;
 
@@ -18,7 +19,7 @@ class IdToEntityTransformer implements DataTransformerInterface
      */
     protected $class;
 
-    public function __construct(ObjectManager $objectManager, $class)
+    public function __construct(EntityManagerInterface $objectManager, $class)
     {
         $this->objectManager = $objectManager;
         $this->class = $class;

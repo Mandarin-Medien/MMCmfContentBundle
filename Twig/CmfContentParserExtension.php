@@ -8,9 +8,14 @@ use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 
-class CmfContentParserExtension extends \Twig_Extension
+class CmfContentParserExtension extends AbstractExtension
 {
     /**
      * @var ContentNodeConfigurationController
@@ -25,7 +30,7 @@ class CmfContentParserExtension extends \Twig_Extension
     protected $notGridableContentNodeClasses;
 
 
-    public function __construct(TokenStorage $tokenStorage, ContentNodeConfigurationController $cmfContentParser = null)
+    public function __construct(TokenStorageInterface $tokenStorage, ContentNodeConfigurationController $cmfContentParser = null)
     {
         $this->cmfContentParser = $cmfContentParser;
         $this->tokenStorage = $tokenStorage;
@@ -52,7 +57,7 @@ class CmfContentParserExtension extends \Twig_Extension
 
                 $user = $token->getUser();
 
-                if ($user instanceof \FOS\UserBundle\Model\User) {
+                if ($user instanceof UserInterface) {
                     if ($user->hasRole('ROLE_USER'))
                         $enabled = $token->isAuthenticated();
                 }
@@ -71,7 +76,7 @@ class CmfContentParserExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('cmfParse',
+            new TwigFilter('cmfParse',
                 array($this, 'cmfParse'),
                 array(
                     'is_safe' => array('html'),
@@ -82,13 +87,13 @@ class CmfContentParserExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param Environment $twig
      * @param Node $node
      * @param array $options
      *
      * @return string
      */
-    public function cmfParse(\Twig_Environment $twig, Node $node, array $options = array())
+    public function cmfParse(Environment $twig, Node $node, array $options = array())
     {
         $html = "";
 

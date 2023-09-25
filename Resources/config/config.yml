@@ -38,7 +38,7 @@ mm_cmf_content:
             icon: 'fa fa-folder-o'
             simpleForm:
                 type: 'MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType'
-                template: "MMCmfContentBundle:Form:container_form.html.twig"
+                template: "@MMCmfContent/Form/container_form.html.twig"
             hiddenFields:
                 - "attributes"
 
@@ -46,38 +46,38 @@ twig:
     globals:
         mm_cmf_content_parser: '@mm_cmf_content.content_parser'
     form_themes:
-        - "MMCmfContentBundle:Form:nodetree.html.twig"
-assetic:
-    bundles:
-        - MMCmfContentBundle
-    assets:
-        mm_cmf_content_assets_js:
-            inputs:
-              - '@MMCmfContentBundle/Resources/public/js/summernote/summernote.js'
-              - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
-              - '@MMCmfContentBundle/Resources/public/js/jquery.htmlClean.min.js'
+        - "@MMCmfContent/Form/nodetree.html.twig"
+#assetic:
+#    bundles:
+#        - MMCmfContentBundle
+#    assets:
+#        mm_cmf_content_assets_js:
+#            inputs:
+#              - '@MMCmfContentBundle/Resources/public/js/summernote/summernote.js'
+#              - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.js'
+#              - '@MMCmfContentBundle/Resources/public/js/jquery.htmlClean.min.js'
 
               #cmfFieldPlugins
-              - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldString.js"
-              - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldWYSIWYG.js"
+#              - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldString.js"
+#              - "@MMCmfContentBundle/Resources/public/js/cmfField/mmCmfFieldWYSIWYG.js"
 
-              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
-              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentFieldEditor.js"
-              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentStructureEditor.js"
-              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentActionBar.js"
-              - "@MMCmfContentBundle/Resources/public/js/core.js"
+#              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentEditor.js"
+#              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentFieldEditor.js"
+#              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentStructureEditor.js"
+#              - "@MMCmfContentBundle/Resources/public/js/mmCmfContentActionBar.js"
+#              - "@MMCmfContentBundle/Resources/public/js/core.js"
 
               #formType Types
-              - '@MMCmfContentBundle/Resources/public/js/form/HTMLType.js'
-              - '@MMCmfContentBundle/Resources/public/js/form/NodeTreeType.js'
-              - '@MMCmfContentBundle/Resources/public/js/form/MenuType.js'
-              - '@MMCmfContentBundle/Resources/public/js/form/FormHandler.js'
+#              - '@MMCmfContentBundle/Resources/public/js/form/HTMLType.js'
+#              - '@MMCmfContentBundle/Resources/public/js/form/NodeTreeType.js'
+#              - '@MMCmfContentBundle/Resources/public/js/form/MenuType.js'
+#              - '@MMCmfContentBundle/Resources/public/js/form/FormHandler.js'
 
-        mm_cmf_content_summernote_assets_css:
-            filters:
-                - 'cssrewrite'
-            inputs:
-                - 'bundles/mmcmfcontent/vendor/summernote/dist/summernote.css'
+#        mm_cmf_content_summernote_assets_css:
+#            filters:
+#                - 'cssrewrite'
+#            inputs:
+#                - 'bundles/mmcmfcontent/vendor/summernote/dist/summernote.css'
 #               - '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css'
 #               - '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css'
 
@@ -89,10 +89,10 @@ assetic:
 #                #- '//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js'
 #                #- '//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js'
 
-        mm_cmf_content_assets_css:
-            filters:
-                - 'less'
-            inputs:
-                - "@MMCmfContentBundle/Resources/public/css/mmCmfContentEditor.less"
-                - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.css'
-                - '@mm_cmf_content_summernote_assets_css'
+#        mm_cmf_content_assets_css:
+#            filters:
+#                - 'less'
+#            inputs:
+#                - "@MMCmfContentBundle/Resources/public/css/mmCmfContentEditor.less"
+#                - '@MMCmfContentBundle/Resources/public/vendor/dragula.js/dist/dragula.min.css'
+#                - '@mm_cmf_content_summernote_assets_css'

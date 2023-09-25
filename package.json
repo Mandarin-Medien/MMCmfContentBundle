@@ -1,0 +1,31 @@
+{
+  "name": "mmcmfcontentbundle",
+  "version": "0.3.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "./node_modules/.bin/encore dev --watch",
+    "compile": "./node_modules/.bin/encore production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Mandarin-Medien/MMCmfContentBundle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mandarin-Medien/MMCmfContentBundle/issues"
+  },
+  "homepage": "https://github.com/Mandarin-Medien/MMCmfContentBundle#readme",
+  "dependencies": {
+    "dragula": "^3.7.2",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "summernote": "^0.8.9",
+    "codemirror": "^5.34.0"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.17.1"
+  }
+}

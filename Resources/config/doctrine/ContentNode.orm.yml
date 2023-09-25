@@ -8,7 +8,7 @@ MandarinMedien\MMCmfContentBundle\Entity\ContentNode:
             length: 100
             nullable: true
         attributes:
-            type: json_array
+            type: json
             nullable: true
         template:
             type: string

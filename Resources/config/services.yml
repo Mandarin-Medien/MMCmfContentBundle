@@ -1,24 +1,30 @@
 services:
+
     mm_cmf_content.content_parser:
         class: MandarinMedien\MMCmfContentBundle\Controller\ContentNodeConfigurationController
         arguments: ["@service_container", "content_nodes"]
+        public: true
         #calls:
         #  - [setContainer, ["@service_container"]]
 
     mm_cmf_content.template_manager:
         class: MandarinMedien\MMCmfContentBundle\Templating\TemplateManager
         arguments: ["@service_container"]
+        public: true
 
+    MandarinMedien\MMCmfContentBundle\Templating\TemplateManager: '@mm_cmf_content.template_manager'
 
     mm_cmf_content.mm_cmf_parse_twig_extension:
           class: MandarinMedien\MMCmfContentBundle\Twig\CmfContentParserExtension
           arguments: ["@security.token_storage","@mm_cmf_content.content_parser"]
+          public: true
           tags:
               - { name: twig.extension }
 
     mm_cmf_admin.twig_node_tree_extension:
         class: MandarinMedien\MMCmfContentBundle\Twig\NodeTreeRenderExtension
         arguments: ["@service_container"]
+        public: true
         tags:
             - {name: twig.extension }
 
@@ -26,46 +32,54 @@ services:
     # to add PageHooks, tag your service with mm_cmf_content.page_hook
     mm_cmf_content.page_hook_manager:
         class: MandarinMedien\MMCmfContentBundle\Services\PageHookManager
+        public: true
 
 
     # Doctrine Event Listener
-    #mm_cmf_content.page_listener:
-    #    class: MandarinMedien\MMCmfContentBundle\EventListeners\PageHookListener
-    #    arguments: ["@service_container"]
-    #    tags:
-    #        - {name: doctrine.orm.entity_listener, entity: MandarinMedien\MMCmfContentBundle\Entity\Page, event: postLoad }
+    mm_cmf_content.page_listener:
+        class: MandarinMedien\MMCmfContentBundle\EventListeners\PageHookListener
+        arguments: ["@service_container"]
+        public: true
+        tags:
+            - {name: doctrine.orm.entity_listener, entity: MandarinMedien\MMCmfContentBundle\Entity\Page, event: postLoad }
 
     mm_cmf_content.content_node_factory:
         class: MandarinMedien\MMCmfContentBundle\Entity\Factory\ContentNodeFactory
         arguments: ["@doctrine.orm.entity_manager"]
+        public: true
 
     ### FORMTYPES ####
     mm_cmf_content.form_type.entity_hidden:
         class: MandarinMedien\MMCmfContentBundle\Form\Type\EntityHiddenType
         arguments: ["@doctrine.orm.entity_manager"]
+        public: true
         tags:
             - {name: form.type, alias: entity_hidden}
 
     mm_cmf_content.form_type.node_tree:
         class: MandarinMedien\MMCmfContentBundle\Form\Type\NodeTreeType
         arguments: ["@doctrine.orm.entity_manager"]
+        public: true
         tags:
             - {name: form.type, alias: mm_cmf_content_node_tree}
 
     mm_cmf_content.form_type.content_node:
         class: MandarinMedien\MMCmfContentBundle\Form\ContentNodeType
         arguments: ["@service_container"]
+        public: true
         tags:
             - {name: form.type}
 
     mm_cmf_content.form_type.container_content_node:
         class: MandarinMedien\MMCmfContentBundle\Form\ContainerContentNodeType
         arguments: ["@service_container"]
+        public: true
         tags:
             - { name: form.type }
 
     mm_cmf_content.form_type.node_template:
         class: MandarinMedien\MMCmfContentBundle\Form\Type\TemplatableNodeTemplateType
         arguments: ["@service_container"]
+        public: true
         tags:
             - {name: form.type, alias: mm_cmf_content_templatable_node_template}

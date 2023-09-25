@@ -5,9 +5,9 @@ namespace MandarinMedien\MMCmfContentBundle\Controller;
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
 use MandarinMedien\MMCmfContentBundle\Entity\RowContentNode;
 use MandarinMedien\MMCmfNodeBundle\Entity\Node;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     public function indexAction()
     {
@@ -33,7 +33,7 @@ class DefaultController extends Controller
         $node3->setName("Child Node 3");
         $nodeRow->addNode($node3);
 
-        return $this->render('MMCmfContentBundle:Default:index.html.twig',
+        return $this->render('@MMCmfContent/Default/index.html.twig',
             array(
                 'node' => $nodeRow
             )

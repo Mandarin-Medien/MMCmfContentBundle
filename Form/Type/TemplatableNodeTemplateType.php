@@ -23,6 +23,10 @@ class TemplatableNodeTemplateType extends AbstractType
         $this->container = $container;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
 
@@ -85,6 +89,9 @@ class TemplatableNodeTemplateType extends AbstractType
     }
 
 
+    /**
+     * @return ?string
+     */
     public function getParent()
     {
         return ChoiceType::class;
