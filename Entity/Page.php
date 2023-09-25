@@ -91,7 +91,6 @@ class Page extends Node implements PageNodeInterface, RoutableNodeInterface, Tem
      */
     public function addRoute(NodeRouteInterface $route)
     {
-        dump('add', $route);
         $this->routes->add($route);
         return $this;
     }

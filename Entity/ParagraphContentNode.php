@@ -10,16 +10,15 @@ namespace MandarinMedien\MMCmfContentBundle\Entity;
 
 use MandarinMedien\MMCmfNodeBundle\Entity\NodeInterface;
 use MandarinMedien\MMCmfContentBundle\Form\FormTypeMeta as FormType;
-use MandarinMedien\MMCmfContentBundle\Form\Type\HTMLType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use MandarinMedien\MMCmfContentBundle\Form\Type\HeadlineType;
 
 class ParagraphContentNode extends ContentNode
 {
     protected $headline;
 
-
     /**
-     * @FormType(HTMLType::class)
+     * @FormType(TextareaType::class, options={"wysiwyg"=true})
      */
     protected $text;
 
