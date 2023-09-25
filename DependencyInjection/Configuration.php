@@ -18,8 +18,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('mm_cmf_content');
+        $treeBuilder = new TreeBuilder('mm_cmf_content');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->addContentNodesSection($rootNode);
         // Here you should define the parameters that are allowed to

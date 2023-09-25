@@ -3,7 +3,6 @@
 namespace MandarinMedien\MMCmfContentBundle\Controller;
 
 use MandarinMedien\MMCmfContentBundle\Entity\ContentNode;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\CssSelector\Node\NodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 

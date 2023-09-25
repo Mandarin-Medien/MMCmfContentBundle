@@ -1,0 +1,12 @@
+{
+  "dist/js/mmcmfcontent.js": "/bundles/mmcmfcontent/dist/js/mmcmfcontent.js",
+  "dist/css/mmCmfContentEditor.css": "/bundles/mmcmfcontent/dist/css/mmCmfContentEditor.css",
+  "dist/fonts/fontawesome-webfont.eot?v=4.7.0": "/bundles/mmcmfcontent/dist/fonts/fontawesome-webfont.674f50d2.eot",
+  "dist/fonts/fontawesome-webfont.ttf?v=4.7.0": "/bundles/mmcmfcontent/dist/fonts/fontawesome-webfont.b06871f2.ttf",
+  "dist/fonts/fontawesome-webfont.woff2?v=4.7.0": "/bundles/mmcmfcontent/dist/fonts/fontawesome-webfont.af7ae505.woff2",
+  "dist/fonts/fontawesome-webfont.woff?v=4.7.0": "/bundles/mmcmfcontent/dist/fonts/fontawesome-webfont.fee66e71.woff",
+  "dist/images/fontawesome-webfont.svg?v=4.7.0": "/bundles/mmcmfcontent/dist/images/fontawesome-webfont.912ec66d.svg",
+  "dist/fonts/summernote.eot?e557617934c52ea068954af79ed7c221": "/bundles/mmcmfcontent/dist/fonts/summernote.6e72b5d1.eot",
+  "dist/fonts/summernote.ttf?e557617934c52ea068954af79ed7c221": "/bundles/mmcmfcontent/dist/fonts/summernote.6887f295.ttf",
+  "dist/fonts/summernote.woff?e557617934c52ea068954af79ed7c221": "/bundles/mmcmfcontent/dist/fonts/summernote.6286ad0a.woff"
+}
