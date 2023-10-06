@@ -4,8 +4,10 @@ namespace MandarinMedien\MMCmfContentBundle\Form;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Annotations\PsrCachedReader;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Cache\ArrayCache;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class FormTypeMetaReader
 {
@@ -24,7 +26,10 @@ class FormTypeMetaReader
      */
     public function __construct(Reader $reader = null)
     {
-        $this->reader = $reader ?: new CachedReader(new AnnotationReader(), new ArrayCache());
+        $this->reader = $reader ?: new PsrCachedReader(
+            new AnnotationReader(),
+            new FilesystemAdapter()
+        );
     }
 
     /**
